@@ -1,13 +1,151 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@import url("https://fonts.googleapis.com/css2?family=Rubik+Wet+Paint&display=swap");
+
+:root {
+  /* 
+  ===== COLOURS ====== 
+  */
+
+  --white: hsl(0, 0%, 100%);
+  --antique-white: hsl(35, 80%, 90%);
+  --light-grey: hsl(215, 10%, 60%);
+  --dark-grey: hsl(215, 10%, 40%);
+  --sky-blue: hsl(184, 100%, 30%);
+  --light-green: hsla(111, 97%, 49%, 0.75);
+  --deep-light-green: hsla(111, 97%, 49%, 0.85);
+  --dark-navy-blue: rgba(1, 8, 20, 0.75);
+  --transparent-navy-blue: hsla(216, 66%, 10%, 0.75);
+  --deep-green: hsl(167, 90%, 10%, 0.8);
+  --deeper-green: hsl(167, 90%, 10%, 0.95);
+  --transparent-purple: rgba(177, 35, 243, 0.25);
+  --green-blue-gradient: linear-gradient(
+    -45deg,
+    var(--light-green),
+    var(--sky-blue)
+  );
+  --sky-blue-black-gradient: linear-gradient(
+    -200deg,
+    hsl(184, 100%, 30%, 0.75),
+    hsl(160, 94%, 43%, 0.75)
+  );
+  --sky-blue-green-gradient: linear-gradient(
+    -200deg,
+    hsl(184, 100%, 30%, 0.75),
+    hsla(111, 97%, 49%, 0.75),
+    hsl(184, 100%, 30%, 0.75)
+  );
+
+  --deep-green-red-gradient: linear-gradient(
+    to bottom right,
+    rgba(1, 75, 15, 0.5),
+    rgba(230, 45, 5, 0.6)
+  );
+  --btn-deep-green-red-gradient: linear-gradient(
+    to bottom right,
+    rgba(1, 75, 15, 0.85),
+    rgba(230, 45, 5, 0.85)
+  );
+  --deep-red-orange-gradient: linear-gradient(
+    to bottom,
+    rgba(140, 250, 5, 0.782),
+    rgba(230, 45, 5, 0.6)
+  );
+
+  --input-gradient: linear-gradient(
+    to top left,
+    hsl(184, 100%, 30%, 0.75),
+    hsla(111, 97%, 49%, 0.75),
+    hsl(184, 100%, 30%, 0.75)
+  );
+  --blue-black-gradient: linear-gradient(
+    to bottom,
+    rgba(1, 105, 112, 0.75),
+    rgba(4, 157, 106, 0.75)
+  );
+  --dark-blue-black-gradient: linear-gradient(
+    to bottom left,
+    rgba(1, 65, 72, 0.75),
+    rgba(4, 107, 66, 0.75)
+  );
+  /*
+  ======= FONTS ======= FONTS
+  */
+  --font-rubik-wet-paint: "Rubik Wet Paint", cursive;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/*
+======= UNIVERSAL STYLES ======= 
+*/
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  list-style: none;
+}
+
+body {
+  background: var(--deep-green-red-gradient),
+    url("./components/assets/dow-desktop-bg-1440x900.jpeg") no-repeat center
+      center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  min-height: 100vh;
+  min-width: 100vw;
+  /* overflow: hidden; */
+  font-size: 1.2rem;
+  letter-spacing: 0.1rem;
+  font-family: var(--font-rubik-wet-paint);
+  color: var(--antique-white);
+}
+h1,
+h2 {
+  background: -webkit-linear-gradient(
+    hsla(111, 97%, 49%, 0.75) 20%,
+    hsla(25, 97%, 49%, 0.75),
+    hsla(0, 98%, 49%, 0.933) 90%
+  );
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+h1 {
+  font-size: 4.5rem;
+}
+h2 {
+  font-size: 2.5rem;
+}
+button {
+  font-family: var(--font-rubik-wet-paint);
+  color: var(--antique-white);
+  background: transparent;
+  border: none;
+  transition: 0.3s ease-out;
+  font-size: 1.2rem;
+  letter-spacing: 0.2rem;
+  word-spacing: 0.3rem;
+  cursor: pointer;
+}
+button:hover {
+  color: var(--light-green);
+}
+input {
+  caret-color: transparent;
+  border-radius: 0.5rem;
+  outline: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+/*
+======= MEDIA QUERIES ======= 
+*/
+
+@media (max-width: 600px) {
+  body {
+    background: var(--deep-green-red-gradient),
+      url("./components/assets/dow-tab-bg-768x1024.jpeg");
+  }
 }
