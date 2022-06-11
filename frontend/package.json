@@ -6,6 +6,7 @@
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.0.0",
     "@testing-library/user-event": "^13.2.1",
+    "@walletconnect/web3-provider": "^1.7.8",
     "clsx": "^1.1.1",
     "deploy-react": "^2.2.11",
     "ethers": "^5.6.6",
@@ -17,7 +18,8 @@
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.0",
     "react-sound": "^1.2.0",
-    "web-vitals": "^2.1.0"
+    "web-vitals": "^2.1.0",
+    "web3modal": "^1.9.7"
   },
   "scripts": {
     "start": "react-scripts start",
