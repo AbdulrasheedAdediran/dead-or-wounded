@@ -10,7 +10,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ethers, utils, Contract } from "ethers";
 import DOW_ABI from "./util/DOW_ABI.json";
 import Footer from "./components/Footer/Footer";
-const DOWContract = "0x73fdb6c756fef146972eeb277373b1638cc6d215";
+const DOWContract = "0x00B02f1D3b5B75279C2931235bE464688dd5dDC4";
 const App = () => {
   const provider = new ethers.providers.Web3Provider(window.ethereum);
   const [connected, setConnected] = useState(false);
@@ -149,27 +149,23 @@ const App = () => {
       alert("Insufficient DOW Tokens, you need at least 5 DOW Tokens to play");
       return;
     }
+    let playGame;
     try {
-      const playGame = await DOWContractInstance.startGame();
+      playGame = await DOWContractInstance.startGame();
       const gameData = await playGame.wait();
-      randomNumbers = gameData.events[1].args.compNum;
+      console.log("randNum", gameData.events[2].args.compNum);
+      randomNumbers = gameData.events[2].args.compNum;
       const convertedValues = randomNumbers.map((randomNumber) =>
         Number(randomNumber)
       );
       setGeneratedValues([...generatedValues, convertedValues]);
-    } catch {
+       setLoader(false);
+       setLoadingSuccess(true);
+    } catch (err){
+      console.log('err', err)
       setLoader(false);
       setLoadingSuccess(false);
     }
-    setTimeout(() => {
-      if (randomNumbers.length === 4) {
-        setLoader(false);
-        setLoadingSuccess(true);
-      } else {
-        setLoader(false);
-        setLoadingSuccess(false);
-      }
-    }, 5000);
   };
   // Check number of trials it took player to win and reward player
   const checkTrials = async (trial) => {
