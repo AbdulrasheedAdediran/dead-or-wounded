@@ -1,0 +1,28 @@
+.about {
+  display: flex;
+  align-items: start;
+  justify-content: center;
+  flex-direction: column;
+  margin-block: 2.5rem;
+  margin-inline: auto;
+  width: clamp(500px, 90%, 750px);
+  line-height: 1.5;
+}
+.about h1,
+p {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+}
+.about .button {
+  margin: 2rem auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+.about p {
+  margin-bottom: 1rem;
+}

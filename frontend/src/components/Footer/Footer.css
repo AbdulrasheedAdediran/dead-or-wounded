@@ -1,0 +1,10 @@
+footer {
+  width: 100%;
+  position: absolute;
+  bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(0.5rem, 5vw, 0.75rem);
+  color: var(--antique-white);
+}

@@ -1,0 +1,39 @@
+.options {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin-block: 2.5rem;
+  margin-inline: auto;
+  width: clamp(500px, 90%, 750px);
+  line-height: 1.5;
+}
+.options h1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+}
+/* p {
+  text-align: justify;
+  margin-bottom: 2rem;
+} */
+.options .button {
+  margin: auto;
+  justify-self: flex-end;
+}
+.music-sound {
+  display: grid;
+  margin-block: 3.5rem;
+  justify-content: space-between;
+  gap: 2rem;
+}
+.div_flex {
+  /* min-width:10rem; */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin: 1.5rem 0;
+}

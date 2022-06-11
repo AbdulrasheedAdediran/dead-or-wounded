@@ -1,0 +1,29 @@
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  color: var(--antique-white);
+}
+nav a {
+  text-decoration: none;
+  color: var(--antique-white);
+}
+.logo {
+  width: 120px;
+}
+.dow-logo {
+  width: 100%;
+}
+
+.btn-connect-wallet {
+  background: var(--sky-blue-black-gradient);
+  color: var(--antique-white);
+  font-size: 1rem;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+}
+.btn-connect-wallet:hover {
+  background: var(--blue-black-gradient);
+  color: var(--antique-white);
+}

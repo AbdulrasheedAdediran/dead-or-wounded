@@ -1,0 +1,93 @@
+input:invalid {
+  border: 3px solid red;
+}
+section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  padding-inline: 2rem;
+}
+
+.input {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding-inline: 7.5rem;
+}
+.input input {
+  background: var(--deep-green);
+  aspect-ratio: 1;
+  width: 4rem;
+  margin: 2rem 0.5rem;
+  color: var(--light-green);
+  text-align: center;
+  font-family: var(--font-rubik-wet-paint);
+  font-size: 2.5rem;
+  /* outline: 1px solid var(--dark-navy-blue); */
+  border-style: solid;
+  border-width: 2px;
+  border-image-source: var(--input-gradient);
+  border-image-slice: 9;
+}
+
+input:focus {
+  background: var(--deeper-green);
+  outline: 2px groove var(--light-green);
+  border: 1px groove var(--dark-navy-blue);
+  transform: scale(1.005);
+}
+.number-btns {
+  margin-bottom: 1.5rem;
+}
+.number-btn {
+  background: var(--sky-blue-black-gradient);
+  color: var(--antique-white);
+  aspect-ratio: 1;
+  width: 3rem;
+  border-radius: 0.5rem;
+  margin-inline: 0.5rem;
+}
+.number-btn:hover {
+  background: var(--blue-black-gradient);
+  color: var(--antique-white);
+}
+.clear-play-btns {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.game-btn {
+  background: var(--sky-blue-black-gradient);
+  color: var(--antique-white);
+  border-radius: 0.5rem;
+  width: 7rem;
+  padding: 0.75rem 1.5rem;
+}
+.game-btn:hover {
+  background: var(--blue-black-gradient);
+  color: var(--antique-white);
+}
+.clear {
+  background: var(--btn-deep-green-red-gradient);
+  opacity: 0.8;
+}
+.clear:hover {
+  opacity: 1;
+  background: var(--btn-deep-green-red-gradient);
+}
+/* .play {
+  background: var(--sky-blue-black-gradient);
+}
+.play:disabled {
+  background: var(--btn-deep-green-red-gradient);
+} */
+.attempts-and-dashboard {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 2rem;
+  width: 100%;
+  margin-block: 1.5rem;
+}

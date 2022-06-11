@@ -1,0 +1,42 @@
+.attempts {
+  height: 23rem;
+  width: 100%;
+  background: var(--deeper-green);
+  color: var(--antique-white);
+  border-radius: 0.5rem;
+  border: 2px solid rgba(3, 48, 39, 0.43);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  display: block;
+}
+@supports (backdrop-filter: blur(10px)) {
+  .attempts {
+    background: var(--deeper-green);
+    backdrop-filter: blur(10px);
+  }
+}
+.attempts h2 {
+  width: 100%;
+  margin-inline: auto;
+  margin-bottom: 0.5rem;
+}
+.attempts table {
+  width: 100%;
+  line-height: 1.5;
+  border-collapse: collapse;
+  text-align: center;
+  opacity: 0.85;
+}
+th,
+td {
+  text-align: left;
+  padding: 0.25rem 0.5rem;
+  text-align: center;
+}
+
+th {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+td {
+  background: rgba(0, 0, 0, 0.1);
+}

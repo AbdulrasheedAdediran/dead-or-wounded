@@ -1,0 +1,15 @@
+.connected {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+  background: var(--dark-blue-black-gradient);
+  color: var(--deep-red-orange-gradient);
+  text-align: center;
+  font-family: var(--font-rubik-wet-paint);
+  font-size: 1rem;
+  outline: 2px groove var(--light-green);
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem;
+}

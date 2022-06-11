@@ -1,0 +1,28 @@
+.howToPlay {
+  display: flex;
+  align-items: start;
+  justify-content: center;
+  flex-direction: column;
+  margin-block: 2.5rem;
+  margin-inline: auto;
+  width: clamp(500px, 90%, 750px);
+  line-height: 1.5;
+}
+.howToPlay h1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+}
+.howToPlay ul li {
+  text-align: justify;
+  margin-bottom: 1rem;
+}
+.howToPlay .button {
+  margin: 2rem auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
