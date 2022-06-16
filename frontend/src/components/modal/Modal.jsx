@@ -45,7 +45,7 @@ const Modal = ({
               >
                 Yes
               </button>
-              <button className="cancelBtn" onClick={() => navigate("/")}>
+              <button className="cancelBtn" onClick={() => { navigate("/") }}>
                 Cancel
               </button>
             </div>

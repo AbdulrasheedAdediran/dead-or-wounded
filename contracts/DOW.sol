@@ -13,7 +13,6 @@ contract DOW is ERC20 {
     VRFv2Consumer vrf;
     uint256[] public compNum;
     address[] players;
-    //   address constant VRFaddr = 0x26338299bef45aaa55b9daecab0d0abcb91324fd;
     mapping(address => Player) public PlayerStruct;
     mapping(address => bool) playerAdded;
     mapping(address => bool) claimTokens;
@@ -28,13 +27,17 @@ contract DOW is ERC20 {
     error PlayerHasNotPlayed();
 
     // --------------------------------Structs--------------------------------
-    struct Player {
+     struct Player {
     uint256 gamesPlayed;
     uint256 unclaimedTokens;
     uint64 gamesLost;
     uint64 currentWinStreak;
     uint64 maxWinStreak;
     uint64 gamesWon;
+    }
+    struct PlayerScore {
+        address playerAddress;
+        uint96 wins;
     }
 
     // --------------------------------Constructor--------------------------------
@@ -68,7 +71,6 @@ contract DOW is ERC20 {
     }
 
     // VRF Address = 0x2e9F028395cd1d925e6A8215F0Af1bD30858ef53
-    // contract address 0xF74FA5d40B3cc4aDF0665e9bF278486a75De6918
 
     function vrfNumbers() internal {
         uint256 _rand = randNum >> randomNumber();
@@ -122,47 +124,47 @@ contract DOW is ERC20 {
         emit PlayerNumbers(playerNumbers);
     }
 
-//     function checkTrials (uint8 trial) external {
-//     Player storage o = PlayerStruct[msg.sender];
-//     if(playerPlaying[msg.sender][o.gamesPlayed] == false) revert PlayerHasNotPlayed();
-//      o.gamesPlayed++;
-//     if (trial == 1) {
-//       o.currentWinStreak++;
-//       o.gamesWon++;
-//       o.unclaimedTokens += 20000000000000000000;
-//     } else if (trial == 2) {
-//       o.currentWinStreak++;
-//       o.gamesWon++;
-//       o.unclaimedTokens+=20000000000000000000;
-//     } else if (trial == 3) {
-//       o.currentWinStreak++;
-//       o.gamesWon++;
-//       o.unclaimedTokens += 20000000000000000000;
-//     } else if (trial == 4) {
-//       o.currentWinStreak++;
-//       o.gamesWon++;
-//       o.unclaimedTokens += 12000000000000000000;
-//     } else if (trial == 5) {
-//       o.currentWinStreak++;
-//       o.gamesWon++;
-//       o.unclaimedTokens += 12000000000000000000;
-//     } else if (trial == 6) {
-//       o.currentWinStreak++;
-//       o.gamesWon++;
-//       o.unclaimedTokens += 7000000000000000000;
-//     } else if (trial == 7) {
-//       o.currentWinStreak++;
-//       o.gamesWon++;
-//       o.unclaimedTokens += 7000000000000000000;
-//     }else if (trial == 8) {
-//       o.currentWinStreak = 0;
-//       o.gamesLost++;
-//       o.unclaimedTokens += 7000000000000000000;
-//     }
-//     if(o.currentWinStreak >= o.maxWinStreak){
-//       o.maxWinStreak = o.currentWinStreak;
-//     }
-//   }
+    function checkTrials (uint8 trial) external {
+    Player storage o = PlayerStruct[msg.sender];
+    if(playerPlaying[msg.sender][o.gamesPlayed] == false) revert PlayerHasNotPlayed();
+     o.gamesPlayed++;
+    if (trial == 1) {
+      o.currentWinStreak++;
+      o.gamesWon++;
+      _transfer(address(this), msg.sender, 20000000000000000000);
+    } else if (trial == 2) {
+      o.currentWinStreak++;
+      o.gamesWon++;
+      _transfer(address(this), msg.sender, 20000000000000000000);
+    } else if (trial == 3) {
+      o.currentWinStreak++;
+      o.gamesWon++;
+      _transfer(address(this), msg.sender, 20000000000000000000);
+    } else if (trial == 4) {
+      o.currentWinStreak++;
+      o.gamesWon++;
+      _transfer(address(this), msg.sender, 15000000000000000000);
+    } else if (trial == 5) {
+      o.currentWinStreak++;
+      o.gamesWon++;
+      _transfer(address(this), msg.sender, 15000000000000000000);
+    } else if (trial == 6) {
+      o.currentWinStreak++;
+      o.gamesWon++;
+      _transfer(address(this), msg.sender, 10000000000000000000);
+    } else if (trial == 7) {
+      o.currentWinStreak++;
+      o.gamesWon++;
+      _transfer(address(this), msg.sender, 10000000000000000000);
+    }else if (trial == 8) {
+      o.currentWinStreak = 0;
+      o.gamesLost++;
+      _transfer(address(this), msg.sender, 10000000000000000000);
+    }
+    if(o.currentWinStreak >= o.maxWinStreak){
+      o.maxWinStreak = o.currentWinStreak;
+    }
+  }
 
   function claimWonTokens (uint256 _amount) external {
     if( _amount < 0) revert InsufficientTokens();
@@ -170,15 +172,19 @@ contract DOW is ERC20 {
     _transfer(address(this),msg.sender, _amount);
   }
 
+  function checkStreak () external view returns (Player memory) {
+    Player storage o = PlayerStruct[msg.sender];
+    return o;
+  }
 
-//   function LeaderBoard () external view returns (PlayerScore[] memory leaderBoard) {
-//     leaderBoard = new PlayerScore[](players.length);
-//     for (uint i = 0; i < players.length; i++) {
-//       Player storage o = PlayerStruct[players[i]];
-//       leaderBoard[i].playerAddress = players[i];
-//       leaderBoard[i].wins = o.gamesWon;
-//     }
-//   }
+  function LeaderBoard () external view returns (PlayerScore[] memory leaderBoard) {
+    leaderBoard = new PlayerScore[](players.length);
+    for (uint i = 0; i < players.length; i++) {
+      Player storage o = PlayerStruct[players[i]];
+      leaderBoard[i].playerAddress = players[i];
+      leaderBoard[i].wins = o.gamesWon;
+    }
+  }
 
   function claimFreeTokens() external {
     if(claimTokens[msg.sender]) revert AlreadyClaimedFreeTokens();
@@ -186,10 +192,9 @@ contract DOW is ERC20 {
     _transfer(address(this), msg.sender, 100000000000000000000);
   }
 
-  function transferToCreator(uint _amount) external{
+  function transferToCreator(uint _amount, address _addr) external{
     if(msg.sender != owner) revert NotOwner();
-    _transfer(address(this), owner, _amount);
+    _transfer(address(this), _addr, _amount);
   }
 
 }
-

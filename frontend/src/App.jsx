@@ -16,7 +16,7 @@ import Main from "./components/Main/Main";
 import Footer from "./components/Footer/Footer";
 import MetaMaskLogo from "./components/assets/metamask.svg";
 import DOW_ABI from "./util/DOW_ABI.json";
-const DOWContract = "0x00B02f1D3b5B75279C2931235bE464688dd5dDC4";
+const DOWContract = "0x3e7369b41371cAa0A3b2995d544B0d5a6f4E5e22";
 
 const App = () => {
   const [connected, setConnected] = useState(false);
@@ -247,30 +247,27 @@ const App = () => {
     try {
       const playGame = await DOWContractInstance.startGame();
       const gameData = await playGame.wait();
-      randomNumbers = gameData.events[1].args.compNum;
+      console.log(gameData.events);
+      randomNumbers = gameData.events[2].args.compNum;
       const convertedValues = randomNumbers.map((randomNumber) =>
         Number(randomNumber)
       );
       setGeneratedValues([...generatedValues, convertedValues]);
+      setLoader(false);
+      setLoadingSuccess(true);
+      getUserBalance();
     } catch {
       setLoader(false);
       setLoadingSuccess(false);
     }
-    setTimeout(() => {
-      if (randomNumbers.length === 4) {
-        setLoader(false);
-        setLoadingSuccess(true);
-      } else {
-        setLoader(false);
-        setLoadingSuccess(false);
-      }
-    }, 5000);
   };
   // Check number of trials it took player to win and reward player
   const checkTrials = async (trial) => {
     const signer = provider.getSigner();
     const DOWContractInstance = new Contract(DOWContract, DOW_ABI, signer);
-    await DOWContractInstance.checkTrials(trial);
+    const trials = await DOWContractInstance.checkTrials(trial);
+    trials.wait()
+    getUserBalance()
   };
 
   const init = async () => {
