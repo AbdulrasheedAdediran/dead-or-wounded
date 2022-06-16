@@ -1,7 +1,6 @@
 import React from "react";
 import "./HowToPlay.css";
 import { Link } from "react-router-dom";
-import Layout from "../../Layout";
 
 const HowToPlay = () => {
   return (

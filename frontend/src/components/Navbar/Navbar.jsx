@@ -3,7 +3,13 @@ import "./Navbar.css";
 import Connected from "./Connected";
 import dowWhite from "../assets/dowWhite.png";
 
-const Navbar = ({ connectWallet, connected, walletAddress, userBalance }) => {
+const Navbar = ({
+  connectWallet,
+  connected,
+  walletAddress,
+  userBalance,
+  disconnectWallet,
+}) => {
   return (
     <nav>
       <div className="logo">
@@ -11,7 +17,13 @@ const Navbar = ({ connectWallet, connected, walletAddress, userBalance }) => {
           <img className="dow-logo" src={dowWhite} alt={"DOW Logo"} />
         </a>
       </div>
-
+      <div>
+        {connected && (
+          <button className="btn-connect-wallet" onClick={disconnectWallet}>
+            Disconnect Wallet
+          </button>
+        )}
+      </div>
       <div>
         {connected ? (
           <Connected

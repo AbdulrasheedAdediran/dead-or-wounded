@@ -1,4 +1,11 @@
-import { React, useState, useEffect } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { ethers, utils, Contract } from "ethers";
+import { useState, useEffect } from "react";
+import Web3Modal from "web3modal";
+import CoinbaseWalletSDK from "@coinbase/wallet-sdk";
+import WalletConnectProvider from "@walletconnect/web3-provider";
+import * as UAuthWeb3Modal from "@uauth/web3modal";
+import UAuthSPA from "@uauth/js";
 import "./App.css";
 import StartGame from "./components/container/StartGame/StartGame";
 import HowToPlay from "./components/container/HowToPlay/HowToPlay";
@@ -6,28 +13,26 @@ import Options from "./components/container/Options/Options";
 import About from "./components/container/About/About";
 import Navbar from "./components/Navbar/Navbar";
 import Main from "./components/Main/Main";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { ethers, utils, Contract } from "ethers";
-import DOW_ABI from "./util/DOW_ABI.json";
 import Footer from "./components/Footer/Footer";
+import MetaMaskLogo from "./components/assets/metamask.svg";
+import DOW_ABI from "./util/DOW_ABI.json";
 const DOWContract = "0x00B02f1D3b5B75279C2931235bE464688dd5dDC4";
+
 const App = () => {
-  const provider = new ethers.providers.Web3Provider(window.ethereum);
   const [connected, setConnected] = useState(false);
+  const [provider, setProvider] = useState();
   const [walletAddress, setWalletAddress] = useState("");
   const [generatedValues, setGeneratedValues] = useState([]);
   const [loader, setLoader] = useState(false);
   const [loadingSuccess, setLoadingSuccess] = useState(null);
+  const [web3Modal, setWeb3Modal] = useState(null);
+  const [account, setAccount] = useState();
+  const [network, setNetwork] = useState();
+  const [chainId, setChainId] = useState();
   const [userBalance, setUserBalance] = useState({
     DOWTokenBalance: 0,
     networkCoinBalance: 0,
   });
-  // const [insufficientTokens, setInsufficientTokens] = useState(false)
-  // useEffect(() => {
-  //   setLoadingSuccess(null);
-  // }, []);
-
-  // Handle player's statistics
   const [playerStatistics, setPlayerStatistics] = useState({
     gamesPlayed: 0,
     gamesLost: 0,
@@ -36,49 +41,140 @@ const App = () => {
     gamesWon: 0,
   });
 
+  //==========================//
+  // WEB3MODAL INTEGRATION
+  //==========================//
+
+  useEffect(() => {
+    // initiate web3modal
+
+    const uauthOptions = {
+      clientID: "client_id",
+      redirectUri: "http://localhost:3000",
+
+      // Must include both the openid and wallet scopes.
+      scope: "openid wallet",
+    };
+    const providerOptions = {
+      injected: {
+        display: {
+          logo: MetaMaskLogo,
+          type: "injected",
+          check: "isMetaMask",
+          description: "Connect to your MetaMask Wallet",
+        },
+        package: true,
+      },
+      walletconnect: {
+        package: WalletConnectProvider,
+        options: {
+          alchemyId: process.env.REACT_APP_ALCHEMY_KEY, // Required
+          rpc: process.env.REACT_APP_MUMBAI_RPC_URL,
+        },
+      },
+
+      coinbasewallet: {
+        package: CoinbaseWalletSDK, // Required
+        options: {
+          appName: "Dead or Wounded", // Required
+          alchemyId: process.env.REACT_APP_ALCHEMY_KEY, // Required
+          rpc: process.env.REACT_APP_MUMBAI_RPC_URL, // Optional if `infuraId` is provided; otherwise it's required
+          chainId: 80001, // Optional. It defaults to 1 if not provided
+          darkMode: true, // Optional. Use dark theme, defaults to false
+        },
+      },
+      "custom-uauth": {
+        // The UI Assets
+        display: UAuthWeb3Modal.display,
+        // The Connector
+        connector: UAuthWeb3Modal.connector,
+        // The SPA libary
+        package: UAuthSPA,
+        // The SPA libary options
+        options: uauthOptions,
+      },
+    };
+    const newWeb3Modal = new Web3Modal({
+      cacheProvider: false, // very important
+      network: "maticmum",
+      disableInjectedProvider: false,
+      displayNoInjectedProvider: false,
+      theme: {
+        background: "rgb(20,30,30, 0.5)",
+        main: "rgb(199, 199, 199)",
+        secondary: "rgb(136, 136, 136)",
+        border: "rgba(40, 240, 5, 0.05)",
+        hover: "rgb(16, 32, 25, 0.9)",
+      },
+      providerOptions,
+    });
+    // Registers the web3modal so the connector has access to it.
+    UAuthWeb3Modal.registerWeb3Modal(newWeb3Modal);
+
+    setWeb3Modal(newWeb3Modal);
+  }, []);
+  //==========================//
+  //==========================//
+  // Eagerly connects user and fetches their account data
+  // const eagerConnect = async () => {
+  //   const networkID = await provider.getNetwork();
+  //   setNetwork(networkID);
+  //   setChainId(await networkID.chainId);
+  //   console.log("Chain ID next");
+  //   console.log(await networkID.chainId);
+  //   if (networkID.chainId !== 80001) {
+  //     setConnected(false);
+  //   } else;
+  //   const accounts = await provider.listAccounts();
+
+  //   if (!accounts.length) {
+  //     return;
+  //   } else {
+  //     const userAccount = await getUserBalance(accounts[0]);
+  //     setUserBalance({
+  //       DOWTokenBalance: userAccount.formartedDOWTokenBalance,
+  //       networkCoinBalance: userAccount.formartedNetworkCoinBalance,
+  //     });
+
+  //     setConnected(true);
+  //     setWalletAddress(accounts[0]);
+  //     getPlayerStatistics();
+  //   }
+  // };
   // Requests wallet connection
   const connectWallet = async () => {
-    if (window.ethereum || window.web3) {
-      try {
-        const accounts = await window.ethereum.request({
-          method: "eth_requestAccounts",
-        });
-        eagerConnect();
-        if (connected) {
-          setWalletAddress(accounts[0]);
-          getUserBalance(accounts[0]);
-          getPlayerStatistics();
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    } else {
-      alert("Please Use a Web3 Enable Browser or Install Metamask");
+    try {
+      const connectedProvider = await web3Modal.connect();
+      const provider = new ethers.providers.Web3Provider(connectedProvider);
+      const accounts = await provider.listAccounts();
+      const networkID = await provider.getNetwork();
+      // eagerConnect();
+      //================
+      //================
+      setNetwork(networkID);
+      setChainId(networkID.chainId);
+      setProvider(provider);
+      setWalletAddress(accounts[0]);
+      setAccount(accounts[0]);
+      getUserBalance(accounts[0]);
+      setConnected(true);
+    } catch (err) {
+      console.log(err);
     }
   };
-  // Eagerly connects user and fetches their account data
-  const eagerConnect = async () => {
-    const networkID = await window.ethereum.request({
-      method: "eth_chainId",
-    });
-    if (Number(networkID) !== 80001) {
-      setConnected(false);
-    } else setConnected(true);
-    const accounts = await provider.listAccounts();
-    const userAccount = await getUserBalance(accounts[0]);
 
-    if (!accounts.length) {
-      return;
-    } else {
-      setUserBalance({
-        DOWTokenBalance: userAccount.formartedDOWTokenBalance,
-        networkCoinBalance: userAccount.formartedNetworkCoinBalance,
-      });
+  const refreshState = () => {
+    // setAccount(null);
+    // setChainId(null);
+    // setNetwork(null);
+    // setWalletAddress();
+    // setUserBalance(undefined);
+    setConnected(false);
+  };
 
-      setConnected(true);
-      setWalletAddress(accounts[0]);
-      getPlayerStatistics();
-    }
+  const handleDisconnect = async () => {
+    await web3Modal.clearCachedProvider();
+    refreshState();
   };
 
   // Airdrop free DOW tokens to new players
@@ -91,12 +187,13 @@ const App = () => {
   };
 
   // Gets user chain balance and DOW token balance
-  const getUserBalance = async () => {
-    const accounts = await provider.listAccounts();
+  const getUserBalance = async (userAccount) => {
+    // const accounts = await provider.listAccounts();
+    if (provider == null) return;
     try {
-      const networkCoinBalance = await provider.getBalance(accounts[0]);
+      const networkCoinBalance = await provider.getBalance(userAccount);
       const DOWContractInstance = new Contract(DOWContract, DOW_ABI, provider);
-      const DOWTokenBalance = await DOWContractInstance.balanceOf(accounts[0]);
+      const DOWTokenBalance = await DOWContractInstance.balanceOf(userAccount);
       const formartedNetworkCoinBalance = utils.formatUnits(
         networkCoinBalance,
         18
@@ -107,8 +204,6 @@ const App = () => {
         DOWTokenBalance: formartedDOWTokenBalance,
         networkCoinBalance: formartedNetworkCoinBalance,
       });
-      console.log("DOWTokenBalance:", DOWTokenBalance);
-      console.log("formartedNetworkCoinBalance:", formartedNetworkCoinBalance);
       return { formartedNetworkCoinBalance, formartedDOWTokenBalance };
     } catch (error) {
       console.error(error);
@@ -149,23 +244,27 @@ const App = () => {
       alert("Insufficient DOW Tokens, you need at least 5 DOW Tokens to play");
       return;
     }
-    let playGame;
     try {
-      playGame = await DOWContractInstance.startGame();
+      const playGame = await DOWContractInstance.startGame();
       const gameData = await playGame.wait();
-      console.log("randNum", gameData.events[2].args.compNum);
-      randomNumbers = gameData.events[2].args.compNum;
+      randomNumbers = gameData.events[1].args.compNum;
       const convertedValues = randomNumbers.map((randomNumber) =>
         Number(randomNumber)
       );
       setGeneratedValues([...generatedValues, convertedValues]);
-       setLoader(false);
-       setLoadingSuccess(true);
-    } catch (err){
-      console.log('err', err)
+    } catch {
       setLoader(false);
       setLoadingSuccess(false);
     }
+    setTimeout(() => {
+      if (randomNumbers.length === 4) {
+        setLoader(false);
+        setLoadingSuccess(true);
+      } else {
+        setLoader(false);
+        setLoadingSuccess(false);
+      }
+    }, 5000);
   };
   // Check number of trials it took player to win and reward player
   const checkTrials = async (trial) => {
@@ -173,59 +272,9 @@ const App = () => {
     const DOWContractInstance = new Contract(DOWContract, DOW_ABI, signer);
     await DOWContractInstance.checkTrials(trial);
   };
-  //Alerts user to switch to a supported network when account is switched from a supported network
-  const handleAccountChanged = async (accounts) => {
-    if (accounts.length) {
-      const networkID = await window.ethereum.request({
-        method: "eth_chainId",
-      });
-      if (Number(networkID) !== 80001) return;
-      const userAccount = await getUserBalance(accounts[0]);
-      setWalletAddress(accounts[0]);
-      getPlayerStatistics();
-      setUserBalance({
-        DOWTokenBalance: userAccount.formartedDOWTokenBalance,
-        networkCoinBalance: userAccount.formartedNetworkCoinBalance,
-      });
-      setConnected(true);
-      window.location.reload();
-    } else {
-      setConnected(false);
-      setUserBalance({
-        DOWTokenBalance: 0,
-        networkCoinBalance: 0,
-      });
-      setPlayerStatistics({
-        gamesPlayed: 0,
-        gamesLost: 0,
-        currentWinStreak: 0,
-        highestWinStreak: 0,
-        gamesWon: 0,
-      });
-    }
-  };
-
-  //Alerts user to switch to a supported network when account is switched from a supported network
-  const handleChainChanged = async () => {
-    const networkID = await window.ethereum.request({
-      method: "eth_chainId",
-    });
-    if (Number(networkID) !== 80001) {
-      setConnected(false);
-
-      alert(
-        "You're currently connected to an unsupported network, please switch to Polygon Mumbai Testnet"
-      );
-      window.location.reload();
-      return;
-    } else {
-      connectWallet();
-      setConnected(true);
-      window.location.reload();
-    }
-  };
 
   const init = async () => {
+    if (provider == null) return;
     const accounts = await provider.listAccounts();
     if (!accounts.length) return;
     const userAccount = await getUserBalance(accounts[0]);
@@ -239,34 +288,78 @@ const App = () => {
   };
   useEffect(() => {
     init();
-    if (!window.ethereum) return;
+    if (provider?.on) {
+      //Alerts user to switch to a supported network when account is switched from a supported network
+      const handleAccountChanged = async (accounts) => {
+        if (accounts.length) {
+          const networkID = await provider.request({
+            method: "eth_chainId",
+          });
+          if (Number(networkID) !== 80001) return;
+          const userAccount = await getUserBalance(accounts[0]);
+          setWalletAddress(accounts[0]);
+          getPlayerStatistics();
+          setUserBalance({
+            DOWTokenBalance: userAccount.formartedDOWTokenBalance,
+            networkCoinBalance: userAccount.formartedNetworkCoinBalance,
+          });
+          setConnected(true);
+          window.location.reload();
+        } else {
+          setConnected(false);
+          setUserBalance({
+            DOWTokenBalance: 0,
+            networkCoinBalance: 0,
+          });
+          setPlayerStatistics({
+            gamesPlayed: 0,
+            gamesLost: 0,
+            currentWinStreak: 0,
+            highestWinStreak: 0,
+            gamesWon: 0,
+          });
+        }
+      };
 
-    window.ethereum.on("connect", eagerConnect);
-    window.ethereum.on("connect", getPlayerStatistics);
-    window.ethereum.on("connect", getUserBalance);
-    window.ethereum.on("accountsChanged", handleAccountChanged);
-    // window.ethereum.removeListener("chainChanged", handleChainChanged);
-    window.ethereum.on("chainChanged", handleChainChanged);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+      //Alerts user to switch to a supported network when account is switched from a supported network
+      const handleChainChanged = async () => {
+        const networkID = await provider.request({
+          method: "eth_chainId",
+        });
+        if (Number(networkID) !== 80001) {
+          setConnected(false);
+
+          alert(
+            "You're currently connected to an unsupported network, please switch to Polygon Mumbai Testnet"
+          );
+          window.location.reload();
+          return;
+        } else {
+          connectWallet();
+          setConnected(true);
+          window.location.reload();
+        }
+      };
+
+      provider.on("disconnect", handleDisconnect);
+      provider.on("connect", getPlayerStatistics);
+      provider.on("connect", getUserBalance);
+      provider.on("accountsChanged", handleAccountChanged);
+      provider.on("chainChanged", handleChainChanged);
+      return () => {
+        if (provider.removeListener) {
+          provider.removeListener("accountsChanged", handleAccountChanged);
+          provider.removeListener("chainChanged", handleChainChanged);
+          provider.removeListener("disconnect", handleDisconnect);
+        }
+      };
+    }
+  }, [provider]);
 
   useEffect(() => {
     if (loadingSuccess === false) alert("Connection Failed");
   }, [loadingSuccess]);
 
-  const getCoinBalance = async () => {
-    const accounts = await provider.listAccounts();
-    const networkCoinBalance = await provider.getBalance(accounts[0]);
-    const formartedNetworkCoinBalance = utils.formatUnits(
-      networkCoinBalance,
-      18
-    );
-
-    console.log("networkCoinBalance:", networkCoinBalance);
-    console.log("formartedNetworkCoinBalance:", formartedNetworkCoinBalance);
-  };
-
-  getCoinBalance();
   return (
     <>
       <Navbar
@@ -274,6 +367,7 @@ const App = () => {
         connected={connected}
         walletAddress={walletAddress}
         userBalance={userBalance}
+        disconnectWallet={handleDisconnect}
       />
       <BrowserRouter>
         <Routes>
@@ -283,6 +377,7 @@ const App = () => {
             element={
               <Main
                 claimFreeTokens={claimFreeTokens}
+                connectWallet={connectWallet}
                 connected={connected}
                 startGame={startGame}
                 userBalance={userBalance}
@@ -301,7 +396,7 @@ const App = () => {
                 playerStatistics={playerStatistics}
                 setPlayerStatistics={setPlayerStatistics}
                 connectWallet={connectWallet}
-                eagerConnect={eagerConnect}
+                // eagerConnect={eagerConnect}
                 startGame={startGame}
                 checkTrials={checkTrials}
                 claimFreeTokens={claimFreeTokens}
@@ -323,16 +418,3 @@ const App = () => {
 };
 
 export default App;
-
-// handleSignMessage = ({ publicAddress, nonce }) => {
-//   return new Promise((resolve, reject) =>
-//     web3.personal.sign(
-//       web3.fromUtf8(`I am signing my one-time nonce: ${nonce}`),
-//       publicAddress,
-//       (err, signature) => {
-//         if (err) return reject(err);
-//         return resolve({ publicAddress, signature });
-//       }
-//     )
-//   );
-// };
