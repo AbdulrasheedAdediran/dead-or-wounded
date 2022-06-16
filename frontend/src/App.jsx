@@ -10,6 +10,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ethers, utils, Contract } from "ethers";
 import DOW_ABI from "./util/DOW_ABI.json";
 import Footer from "./components/Footer/Footer";
+import { Sequelize } from "sequelize";
+import env from "react-dotenv";
 const DOWContract = "0x00B02f1D3b5B75279C2931235bE464688dd5dDC4";
 const App = () => {
   const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -45,6 +47,7 @@ const App = () => {
         });
         eagerConnect();
         if (connected) {
+          addPlayerToDB();
           setWalletAddress(accounts[0]);
           getUserBalance(accounts[0]);
           getPlayerStatistics();
@@ -76,6 +79,7 @@ const App = () => {
       });
 
       setConnected(true);
+       addPlayerToDB();
       setWalletAddress(accounts[0]);
       getPlayerStatistics();
     }
@@ -116,24 +120,69 @@ const App = () => {
   };
   // Get player's statistics
   const getPlayerStatistics = async () => {
-    const signer = provider.getSigner();
-    const DOWContractInstance = new Contract(DOWContract, DOW_ABI, signer);
+     console.log("hello");
+     console.log("connect", window.env.DATABASE_URL);
+     const connectionString = window.env.DATABASE_URL;
+    let playerStats;
+    const sequelize = new Sequelize(connectionString, {
+      host: "localhost",
+      dialect: "mysql",
+    });
+    const Player = sequelize.define("Players", {
+      id: {
+        type: Sequelize.INTEGER,
+        primaryKey: true,
+      },
+      address: {
+        type: Sequelize.STRING,
+      },
+      gamesPlayed: {
+        type: Sequelize.INTEGER,
+      },
+      unclaimedTokens: {
+        type: Sequelize.INTEGER,
+      },
+      gamesLost: {
+        type: Sequelize.INTEGER,
+      },
+      currentWinStreak: {
+        type: Sequelize.INTEGER,
+      },
+      maxWinStreak: {
+        type: Sequelize.INTEGER,
+      },
+      gamesWon: {
+        type: Sequelize.INTEGER,
+      },
+    });
 
-    const playerStats = await DOWContractInstance.checkStreak();
+    Player.sync({
+      force: false,
+    })
+      .then(async () => {
+        playerStats = await Player.findOne({
+          where: { address: walletAddress },
+        });
+        const played = playerStats.gamesPlayed;
+        const won = playerStats.gamesWon;
+        const lost = playerStats.gamesLost;
+        const currentStreak = playerStats.currentWinStreak;
+        const highestStreak = playerStats.maxWinStreak;
+        setPlayerStatistics({
+          gamesPlayed: Number(played),
+          gamesWon: Number(won),
+          gamesLost: Number(lost),
+          currentWinStreak: Number(currentStreak),
+          highestWinStreak: Number(highestStreak),
+        });
+        console.log('player', playerStats);
+      })
+      .catch(function (err) {
+        console.error("error: " + err.message);
+        process.exit(1);
+      });
 
     // await playerStats.wait();
-    const played = playerStats.gamesPlayed;
-    const won = playerStats.gamesWon;
-    const lost = playerStats.gamesLost;
-    const currentStreak = playerStats.currentWinStreak;
-    const highestStreak = playerStats.maxWinStreak;
-    setPlayerStatistics({
-      gamesPlayed: Number(played),
-      gamesWon: Number(won),
-      gamesLost: Number(lost),
-      currentWinStreak: Number(currentStreak),
-      highestWinStreak: Number(highestStreak),
-    });
   };
 
   // Start game
@@ -159,19 +208,163 @@ const App = () => {
         Number(randomNumber)
       );
       setGeneratedValues([...generatedValues, convertedValues]);
-       setLoader(false);
-       setLoadingSuccess(true);
-    } catch (err){
-      console.log('err', err)
+      setLoader(false);
+      setLoadingSuccess(true);
+    } catch (err) {
+      console.log("err", err);
       setLoader(false);
       setLoadingSuccess(false);
     }
   };
+
   // Check number of trials it took player to win and reward player
+  const addPlayerToDB = async () => {
+    console.log('hello')
+    console.log("connect", env.DATABASE_URL);
+    const connectionString = env.DATABASE_URL;
+    const sequelize = new Sequelize(connectionString, {
+      host: "localhost",
+      dialect: "mysql",
+    });
+    const Player = sequelize.define("Players", {
+      id: {
+        type: Sequelize.INTEGER,
+        primaryKey: true,
+      },
+      address: {
+        type: Sequelize.STRING,
+      },
+      gamesPlayed: {
+        type: Sequelize.INTEGER,
+      },
+      unclaimedTokens: {
+        type: Sequelize.INTEGER,
+      },
+      gamesLost: {
+        type: Sequelize.INTEGER,
+      },
+      currentWinStreak: {
+        type: Sequelize.INTEGER,
+      },
+      maxWinStreak: {
+        type: Sequelize.INTEGER,
+      },
+      gamesWon: {
+        type: Sequelize.INTEGER,
+      },
+    });
+
+    Player.sync({
+      force: false,
+    })
+      .then(async () => {
+        const user = await Player.findOne({
+          where: { address: walletAddress },
+        });
+        if (user === null) {
+          return Player.create({
+            id: (new Date().getTime() / 1000).toFixed(),
+            address: walletAddress,
+            gamesPlayed: 0,
+            unclaimedTokens: 0,
+            gamesLost: 0,
+            currentWinStreak: 0,
+            maxWinStreak: 0,
+            gamesWon: 0,
+          });
+        }
+      })
+      .then(async () => {
+        const users = await Player.findAll();
+        console.log("users", users);
+      })
+      .catch(function (err) {
+        console.error("error: " + err.message);
+        process.exit(1);
+      });
+  };
   const checkTrials = async (trial) => {
-    const signer = provider.getSigner();
-    const DOWContractInstance = new Contract(DOWContract, DOW_ABI, signer);
-    await DOWContractInstance.checkTrials(trial);
+    let win;
+    if (trial === 1) {
+      win = 20000000000000000000;
+    } else if (trial === 2) {
+      win = 20000000000000000000;
+    } else if (trial === 3) {
+      win = 20000000000000000000;
+    } else if (trial === 4) {
+      win = 12000000000000000000;
+    } else if (trial === 5) {
+      win = 12000000000000000000;
+    } else if (trial === 6) {
+      win = 7000000000000000000;
+    } else if (trial === 7) {
+      win = 7000000000000000000;
+    } else if (trial === 8) {
+      win = 7000000000000000000;
+    }
+
+    const connectionString = process.env.DATABASE_URL;
+    const sequelize = new Sequelize(connectionString, {
+      host: "localhost",
+      dialect: "mysql",
+    });
+    const Player = sequelize.define("Players", {
+      id: {
+        type: Sequelize.INTEGER,
+        primaryKey: true,
+      },
+      address: {
+        type: Sequelize.STRING,
+      },
+      gamesPlayed: {
+        type: Sequelize.INTEGER,
+      },
+      unclaimedTokens: {
+        type: Sequelize.INTEGER,
+      },
+      gamesLost: {
+        type: Sequelize.INTEGER,
+      },
+      currentWinStreak: {
+        type: Sequelize.INTEGER,
+      },
+      maxWinStreak: {
+        type: Sequelize.INTEGER,
+      },
+      gamesWon: {
+        type: Sequelize.INTEGER,
+      },
+    });
+
+    Player.sync({
+      force: false,
+    })
+      .then(async () => {
+        const user = await Player.findOne({
+          where: { address: walletAddress },
+        });
+        return user.update({
+          gamesPlayed: user.gamesPlayed + 1,
+          unclaimedTokens: user.unclaimedTokens + win,
+          gamesLost: trial === 8 ? user.gamesLost + 1 : user.gamesLost,
+          currentWinStreak: trial < 8 ? user.currentWinStreak + 1 : 0,
+          maxWinStreak:
+            user.currentWinStreak >= user.maxWinStreak
+              ? user.currentWinStreak
+              : user.maxWinStreak,
+          gamesWon: trial < 8 ? user.gamesWon + 1 : user.gamesWon,
+        });
+      })
+      .then(async () => {
+        const user = await Player.findOne({
+          where: { address: walletAddress },
+        });
+        console.log('user', user);
+      })
+      .catch(function (err) {
+        console.error("error: " + err.message);
+        process.exit(1);
+      });
   };
   //Alerts user to switch to a supported network when account is switched from a supported network
   const handleAccountChanged = async (accounts) => {

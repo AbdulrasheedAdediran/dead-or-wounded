@@ -274,15 +274,13 @@ const StartGame = ({
     if (trials <= 7 && dead === 4) {
       setMessage(winMessage);
       setIsLoading(true);
-      const res = await DOWContractInstance.checkTrials(trials);
-      res.wait();
+      checkTrials(trials);
       setIsLoading(false);
       setIsOpen(true);
     } else if (trials >= 7 && dead !== 4) {
       setMessage(loseMessage);
       setIsLoading(true);
-      const res = await DOWContractInstance.checkTrials(8);
-      res.wait();
+      checkTrials(8);
       setIsLoading(false);
       setIsOpen(true);
       entries.reset();
