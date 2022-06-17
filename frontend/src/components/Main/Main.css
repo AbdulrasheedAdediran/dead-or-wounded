@@ -1,22 +1,30 @@
 main {
-  height: 75vh;
+  height: 85vh;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   text-align: center;
   color: var(--antique-white);
+  margin-inline: 1rem;
+  /* border: 2px solid red; */
+  overflow: hidden;
+}
+.dow-text {
+  /* border: 2px solid blue; */
+  padding-inline: 1rem;
 }
 .dow-text h1 {
   padding-bottom: 0.5rem;
+  font-size: clamp(1.5rem, 10vh, 4rem);
 }
 .dead-text {
-  background: -webkit-linear-gradient(
+  background: linear-gradient(
     hsla(111, 97%, 49%, 0.75) 5%,
     hsla(25, 97%, 49%, 0.75) 20%,
     hsla(0, 98%, 49%, 0.933) 50%
   );
-  -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
@@ -24,13 +32,12 @@ main {
   background: var(--sky-blue-green-gradient);
   height: 1.5px;
   width: 100%;
-  margin: 1rem 0;
+  margin: 1rem auto;
 }
 
 .dow-text .dow-text-or::before,
 .dow-text-or::after {
   background: var(--sky-blue-green-gradient);
-  /* background: var(--light-green); */
   content: "";
   display: inline-block;
   height: 1.5px;
@@ -46,6 +53,9 @@ main {
   left: -2.5%;
   margin-left: -50%;
 }
+main button {
+  font-size: clamp(0.75rem, 5.5vw, 1.2rem);
+}
 .main-menu-links {
   display: grid;
   margin-block: 1rem;
@@ -56,7 +66,6 @@ main {
 .claim-dow-button {
   background: var(--sky-blue-black-gradient);
   color: var(--antique-white);
-  font-size: 1rem;
   padding: 0.75rem 1rem;
   border-radius: 0.5rem;
 }
@@ -70,4 +79,21 @@ main {
 }
 .start-game:hover:disabled {
   color: #ccc;
+}
+/* ========================*/
+/* ==== SMALLER SCREENS ==== */
+/* ========================*/
+@media (max-width: 300px) {
+  .dow-text h1 {
+    font-size: clamp(2rem, 10vh, 3rem);
+  }
+}
+/* ========================*/
+/* ==== LARGE SCREENS ==== */
+/* ========================*/
+@media (min-width: 600px) {
+  .dow-text h1 {
+    padding-bottom: 0.5rem;
+    font-size: clamp(3.5rem, 25vh, 5rem);
+  }
 }

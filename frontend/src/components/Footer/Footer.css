@@ -5,6 +5,23 @@ footer {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: clamp(0.5rem, 5vw, 0.75rem);
+  font-size: clamp(0.5rem, 4vw, 0.65rem);
   color: var(--antique-white);
+}
+/* ==========================*/
+/* ==== SMALLER SCREENS ==== */
+/* ==========================*/
+@media (max-width: 300px) {
+  footer {
+    font-size: clamp(0.5rem, 3.5vw, 0.65rem);
+  }
+}
+/* ========================*/
+/* ==== LARGE SCREENS ==== */
+/* ========================*/
+@media (min-width: 600px) {
+  footer {
+    padding-bottom: 0.5rem;
+    font-size: clamp(0.5rem, 5vw, 0.75rem);
+  }
 }

@@ -21,7 +21,7 @@ const DOWContract = "0x3e7369b41371cAa0A3b2995d544B0d5a6f4E5e22";
 const App = () => {
   const [connected, setConnected] = useState(false);
   const [provider, setProvider] = useState();
-  const [walletAddress, setWalletAddress] = useState("");
+  const [walletAddress, setWalletAddress] = useState();
   const [generatedValues, setGeneratedValues] = useState([]);
   const [loader, setLoader] = useState(false);
   const [loadingSuccess, setLoadingSuccess] = useState(null);
@@ -47,12 +47,9 @@ const App = () => {
 
   useEffect(() => {
     // initiate web3modal
-
     const uauthOptions = {
       clientID: "client_id",
       redirectUri: "http://localhost:3000",
-
-      // Must include both the openid and wallet scopes.
       scope: "openid wallet",
     };
     const providerOptions = {
@@ -65,32 +62,30 @@ const App = () => {
         },
         package: true,
       },
+
       walletconnect: {
         package: WalletConnectProvider,
         options: {
-          alchemyId: process.env.REACT_APP_ALCHEMY_KEY, // Required
+          alchemyId: process.env.REACT_APP_ALCHEMY_KEY,
           rpc: process.env.REACT_APP_MUMBAI_RPC_URL,
         },
       },
 
       coinbasewallet: {
-        package: CoinbaseWalletSDK, // Required
+        package: CoinbaseWalletSDK,
         options: {
-          appName: "Dead or Wounded", // Required
-          alchemyId: process.env.REACT_APP_ALCHEMY_KEY, // Required
-          rpc: process.env.REACT_APP_MUMBAI_RPC_URL, // Optional if `infuraId` is provided; otherwise it's required
-          chainId: 80001, // Optional. It defaults to 1 if not provided
-          darkMode: true, // Optional. Use dark theme, defaults to false
+          appName: "Dead or Wounded",
+          alchemyId: process.env.REACT_APP_ALCHEMY_KEY,
+          rpc: process.env.REACT_APP_MUMBAI_RPC_URL,
+          chainId: 80001,
+          darkMode: true,
         },
       },
+
       "custom-uauth": {
-        // The UI Assets
         display: UAuthWeb3Modal.display,
-        // The Connector
         connector: UAuthWeb3Modal.connector,
-        // The SPA libary
         package: UAuthSPA,
-        // The SPA libary options
         options: uauthOptions,
       },
     };
@@ -255,7 +250,7 @@ const App = () => {
       setGeneratedValues([...generatedValues, convertedValues]);
       setLoader(false);
       setLoadingSuccess(true);
-      getUserBalance();
+      getUserBalance(account);
     } catch {
       setLoader(false);
       setLoadingSuccess(false);
@@ -266,8 +261,8 @@ const App = () => {
     const signer = provider.getSigner();
     const DOWContractInstance = new Contract(DOWContract, DOW_ABI, signer);
     const trials = await DOWContractInstance.checkTrials(trial);
-    trials.wait()
-    getUserBalance()
+    trials.wait();
+    getUserBalance(account);
   };
 
   const init = async () => {

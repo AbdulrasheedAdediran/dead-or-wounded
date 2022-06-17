@@ -3,10 +3,7 @@ import "./Footer.css";
 
 const Footer = () => {
   return (
-    <footer>
-      Copyright&copy; {new Date().getFullYear()} Dead or Wounded. All Rights
-      Reserved
-    </footer>
+    <footer>Copyright&copy; {new Date().getFullYear()} Dead or Wounded.</footer>
   );
 };
 
