@@ -30,14 +30,14 @@ Lastly, The user experience is also a major appeal for the game, which is why we
 #
 ### **`Seeting up project`**
 1. Clone this repository
-`git clone https://github.com/AbdulrasheedAdediran/dead-or-wounded.git`
+      `git clone https://github.com/AbdulrasheedAdediran/dead-or-wounded.git`
 2. Install dependencies
-` Yarn add or npm install`
+  ` Yarn add or npm install`
 3. Setup frontend environment variables
-`cd packages/react-app && cp .env.example .env &&  .env`
+  `cd packages/react-app && cp .env.example .env &&  .env`
 4. Start react-app (frontend)
-`yarn react-app:start`
+  `yarn react-app:start`
 5. That's it
 
 # 
-Built with love by @jutivia and @AbdulrasheedAdediran
+Built with intentionality by [@abdulrasheedadediran](https://github.com/AbdulrasheedAdediran) and [@jutivia](https://github.com/jutivia)
