@@ -1,46 +1,43 @@
-# Advanced Sample Hardhat Project
+# **DEAD OR WOUNDED**
+#### Polygon Hackerton Submission
+##
 
-This project demonstrates an advanced Hardhat use case, integrating other tools commonly used alongside Hardhat in the ecosystem.
+<img src="https://github.com/AbdulrasheedAdediran/dow-dApp-frontend/blob/main/src/components/assets/DOW_LandingPage.png" width="768" height="480">
 
-The project comes with a sample contract, a test for that contract, a sample script that deploys that contract, and an example of a task implementation, which simply lists the available accounts. It also comes with a variety of other tools, preconfigured to work with the project code.
+## About
 
-Try running some of the following tasks:
+Dead or Wounded (DOW) is a play-to-earn decentralised game where players can earn DOW tokens (Dead or Wounded dApp native token).
+Early adopters are rewarded with some free DOW tokens on their first interaction with the dApp to gain access to play, as players are required to spend DOW tokens to access the game.
+There are four unique random numbers for each game. The goal is to guess the correct number and correct position of all four numbers.
+Players stand a chance to win more DOW tokens for each round they win. The amount of token a player wins will be determined by their performance in the game.
+A number is considered to be wounded if it is part of the sequence but in the wrong position.
+A number is considered to be dead if it is part of the sequence and you got the position right
+Dead or Wounded is beginner friendly and does not require players to have any technical knowledge as it seeks to improve adoption of Web3 and give users the opportunity to earn while having fun.
 
-```shell
-npx hardhat accounts
-npx hardhat compile
-npx hardhat clean
-npx hardhat test
-npx hardhat node
-npx hardhat help
-REPORT_GAS=true npx hardhat test
-npx hardhat coverage
-npx hardhat run scripts/deploy.ts
-TS_NODE_FILES=true npx ts-node scripts/deploy.ts
-npx eslint '**/*.{js,ts}'
-npx eslint '**/*.{js,ts}' --fix
-npx prettier '**/*.{json,sol,md}' --check
-npx prettier '**/*.{json,sol,md}' --write
-npx solhint 'contracts/**/*.sol'
-npx solhint 'contracts/**/*.sol' --fix
-```
+#
+**Visit Live DApp to [Play Dead or Wounded](https://deadorwounded.io)**.
 
-# Etherscan verification
 
-To try out Etherscan verification, you first need to deploy a contract to an Ethereum network that's supported by Etherscan, such as Ropsten.
+### **`Roadmap & future development`**
+The project is to be developed into a multiplayer/ stake to play platform, where players stake their DOW tokens against their scores on each game.
+Also, as simple as the game seems, it's quite technical to figure out, and requires some form of logical reasoning to win. This is why we are in the process of implementing algorithms that could help reduce and decrease difficulty level per user’s request.
+Lastly, The user experience is also a major appeal for the game, which is why we plan to keep improving the user's experience as we progress, as the goal is to keep it as user intuitive and friendly as possible.
+### **`Tech Stack`**
 
-In this project, copy the .env.example file to a file named .env, and then edit it to fill in the details. Enter your Etherscan API key, your Ropsten node URL (eg from Alchemy), and the private key of the account which will send the deployment transaction. With a valid .env file in place, first deploy your contract:
+* Frontend: React.js, Ethers.js, Unstoppable Domains
+* Backend: Solidity, Hardhat, Chainlink, TypeScript
 
-```shell
-hardhat run --network ropsten scripts/deploy.ts
-```
+#
+### **`Seeting up project`**
+1. Clone this repository
+`git clone https://github.com/AbdulrasheedAdediran/dead-or-wounded.git`
+2. Install dependencies
+` Yarn add or npm install`
+3. Setup frontend environment variables
+`cd packages/react-app && cp .env.example .env &&  .env`
+4. Start react-app (frontend)
+`yarn react-app:start`
+5. That's it
 
-Then, copy the deployment address and paste it in to replace `DEPLOYED_CONTRACT_ADDRESS` in this command:
-
-```shell
-npx hardhat verify --network ropsten DEPLOYED_CONTRACT_ADDRESS "Hello, Hardhat!"
-```
-
-# Performance optimizations
-
-For faster runs of your tests and scripts, consider skipping ts-node's type checking by setting the environment variable `TS_NODE_TRANSPILE_ONLY` to `1` in hardhat's environment. For more details see [the documentation](https://hardhat.org/guides/typescript.html#performance-optimizations).
+# 
+Built with love by @jutivia and @AbdulrasheedAdediran
