@@ -7,16 +7,14 @@ main {
   text-align: center;
   color: var(--antique-white);
   margin-inline: 1rem;
-  /* border: 2px solid red; */
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 .dow-text {
-  /* border: 2px solid blue; */
   padding-inline: 1rem;
 }
 .dow-text h1 {
   padding-bottom: 0.5rem;
-  font-size: clamp(1.5rem, 10vh, 4rem);
+  font-size: clamp(1.5rem, 20vw, 4rem);
 }
 .dead-text {
   background: linear-gradient(
@@ -81,11 +79,25 @@ main button {
   color: #ccc;
 }
 /* ========================*/
-/* ==== SMALLER SCREENS ==== */
+/* ==== SMALLEST SCREENS ==== */
 /* ========================*/
 @media (max-width: 300px) {
   .dow-text h1 {
-    font-size: clamp(2rem, 10vh, 3rem);
+    font-size: clamp(2rem, 20vw, 3rem);
+  }
+  main button {
+    font-size: clamp(0.85rem, 7.5vw, 0.9rem);
+  }
+}
+/* ========================*/
+/* ==== SMALLER SCREENS ==== */
+/* ========================*/
+@media (max-width: 380px) and (min-width: 300px) {
+  .dow-text h1 {
+    font-size: clamp(2rem, 20vw, 3.5rem);
+  }
+  main button {
+    font-size: clamp(0.75rem, 10vw, 1rem);
   }
 }
 /* ========================*/
@@ -93,7 +105,6 @@ main button {
 /* ========================*/
 @media (min-width: 600px) {
   .dow-text h1 {
-    padding-bottom: 0.5rem;
-    font-size: clamp(3.5rem, 25vh, 5rem);
+    font-size: clamp(3.5rem, 25vw, 5rem);
   }
 }

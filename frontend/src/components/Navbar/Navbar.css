@@ -46,7 +46,7 @@ nav img {
   .btn-connect-wallet {
     background: var(--sky-blue-black-gradient);
     color: var(--antique-white);
-    font-size: 1rem;
+    font-size: clamp(1rem, 10vw, 1.2rem);
     padding: 0.75rem 1rem;
     border-radius: 0.5rem;
   }

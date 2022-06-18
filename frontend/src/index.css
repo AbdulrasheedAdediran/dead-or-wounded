@@ -90,10 +90,10 @@ body {
   background: var(--deep-green-red-gradient),
     url("./components/assets/dow-desktop-bg-1440x900.jpeg") no-repeat center
       center fixed;
+  background-attachment: fixed;
   background-size: cover;
   min-height: 100vh;
   min-width: 100vw;
-  overflow: hidden;
   font-size: 1.2rem;
   letter-spacing: 0.1rem;
   font-family: var(--font-rubik-wet-paint);
@@ -121,9 +121,8 @@ button {
   background: transparent;
   border: none;
   transition: 0.3s ease-out;
-  font-size: clamp(0.75rem, 5vw, 1rem);
+  font-size: clamp(0.75rem, 7.5vw, 1rem);
   letter-spacing: 0.2rem;
-  word-spacing: 0.1rem;
   cursor: pointer;
 }
 button:hover {
@@ -139,13 +138,19 @@ input {
 /*
 ======= MEDIA QUERIES ======= 
 */
-
-@media (max-width: 600px) {
+/* ========================*/
+/* ==== SMALLEST SCREENS ==== */
+/* ========================*/
+@media (max-width: 300px) {
+  button {
+    font-size: clamp(0.85rem, 7.5vw, 0.9rem);
+  }
+}
+@media (min-width: 600px) {
   body {
-    background: var(--deep-green-red-gradient),
-      url("./components/assets/dow-tab-bg-768x1024.jpeg");
+    font-size: clamp(1rem, 10vw, 1.2rem);
   }
   button {
-    font-size: 1.2rem;
+    font-size: clamp(1rem, 10vw, 1.2rem);
   }
 }

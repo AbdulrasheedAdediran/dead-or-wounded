@@ -16,6 +16,16 @@
   display: none;
 }
 /* ========================*/
+/* ==== SMALLER SCREENS ==== */
+/* ========================*/
+@media (max-width: 300px) {
+  .connected {
+    font-size: clamp(0.5rem, 5vw, 0.75rem);
+
+    /* border: 2px solid red; */
+  }
+}
+/* ========================*/
 /* ==== LARGE SCREENS ==== */
 /* ========================*/
 @media (min-width: 600px) {

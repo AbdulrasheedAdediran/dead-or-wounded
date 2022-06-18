@@ -13,15 +13,18 @@ const Options = () => {
       <h1>Options</h1>
       <div className="music-sound">
         <div className="div_flex">
-          <p>Music</p>
-          <Switch
-            isOn={isPlaying}
-            onColor="hsla(111, 97%, 49%, 0.75)"
-            handleToggle={() => setIsPlaying(!isPlaying)}
-          />
-          {!isPlaying ? "Off" : "On"}
+          <div>
+            <p>Music</p>
+          </div>
+          <div className="div_flex">
+            <Switch
+              isOn={isPlaying}
+              onColor="hsla(111, 97%, 49%, 0.75)"
+              handleToggle={() => setIsPlaying(!isPlaying)}
+            />
+            {!isPlaying ? "Off" : "On"}
+          </div>
         </div>
-        <Sound isPlaying={isPlaying} />
         <div className="div_flex">
           <p>Sound Effects</p>
           <Switch
@@ -32,6 +35,7 @@ const Options = () => {
           />
         </div>
       </div>
+      <Sound isPlaying={isPlaying} />
       <Link to="/">
         <button className="button">Back</button>
       </Link>

@@ -8,25 +8,21 @@ const HowToPlay = () => {
       <h1>How To Play</h1>
       <ul>
         <li>
-          There are four unique random numbers for each game. The goal is to
-          guess the correct number and correct position of all four numbers.
+          There are four unique random numbers for each game. Enter four unique
+          numbers and click Play or hit Enter on your keyboard to submit
         </li>
         <li>
-          Enter four unique numbers and click Play or hit Enter on your keyboard
-          to submit. Each attempt you make will be recorded to inform your next
-          trial.
-        </li>
-        <li></li>
-        <li>
-          A number is considered to be wounded if it is part of the sequence but
-          in the wrong position.
+          The goal is to guess all four numbers and their positions correctly.
+          Each attempt you make will be recorded to inform your next trial.
         </li>
         <li>
-          A number is considered to be dead if it is part of the sequence and
-          you got the position right.
+          A number is dead if it is part of the sequence and in the right
+          position and wounded if it is part of the sequence but in the wrong
+          position.
         </li>
         <li>
-          You have to get all numbers correctly in 7 trials or less to win.
+          You have to get all numbers and their positions correctly in 7 trials
+          or less to win and get rewarded with $DOW tokens.
         </li>
       </ul>
 

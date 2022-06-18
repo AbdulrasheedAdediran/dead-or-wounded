@@ -95,11 +95,11 @@ const App = () => {
       disableInjectedProvider: false,
       displayNoInjectedProvider: false,
       theme: {
-        background: "rgb(20,30,30, 0.5)",
+        background: "rgb(20,30,30, 0.75)",
         main: "rgb(199, 199, 199)",
         secondary: "rgb(136, 136, 136)",
         border: "rgba(40, 240, 5, 0.05)",
-        hover: "rgb(16, 32, 25, 0.9)",
+        hover: "rgb(16, 32, 25, 1)",
       },
       providerOptions,
     });
@@ -143,7 +143,6 @@ const App = () => {
       const provider = new ethers.providers.Web3Provider(connectedProvider);
       const accounts = await provider.listAccounts();
       const networkID = await provider.getNetwork();
-      // eagerConnect();
       //================
       //================
       setNetwork(networkID);
@@ -404,7 +403,7 @@ const App = () => {
           <Route path="/about" exact element={<About />} />
         </Routes>
       </BrowserRouter>
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 };

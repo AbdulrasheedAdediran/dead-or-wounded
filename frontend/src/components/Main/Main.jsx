@@ -1,5 +1,6 @@
 import { React, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import Footer from "../Footer/Footer";
 // import Sound from "../container/Sound/Sound";
 // import charshoeX from "../assets/Charshoe-X.mp3";
 import "./Main.css";
@@ -56,6 +57,7 @@ const Main = ({
           <button className="menu-button">About</button>
         </Link>
       </div>
+      <Footer />
     </main>
   );
 };
