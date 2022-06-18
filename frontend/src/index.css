@@ -138,14 +138,25 @@ input {
 /*
 ======= MEDIA QUERIES ======= 
 */
-/* ========================*/
+/* ===========================*/
 /* ==== SMALLEST SCREENS ==== */
-/* ========================*/
+/* ===========================*/
 @media (max-width: 300px) {
   button {
     font-size: clamp(0.85rem, 7.5vw, 0.9rem);
   }
 }
+/* ==========================*/
+/* ==== SMALLER SCREENS ==== */
+/* ==========================*/
+@media (max-width: 380px) and (min-width: 300px) {
+  button {
+    font-size: clamp(0.85rem, 7.5vw, 0.9rem);
+  }
+}
+/* ========================*/
+/* ==== LARGE SCREENS ==== */
+/* ========================*/
 @media (min-width: 600px) {
   body {
     font-size: clamp(1rem, 10vw, 1.2rem);
