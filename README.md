@@ -28,13 +28,13 @@ Lastly, The user experience is also a major appeal for the game, which is why we
 * Backend: Solidity, Hardhat, Chainlink, TypeScript
 
 #
-### **`Seeting up project`**
+### **`Setting up project`**
 1. Clone this repository
       `git clone https://github.com/AbdulrasheedAdediran/dead-or-wounded.git`
 2. Install dependencies
   ` Yarn add or npm install`
 3. Setup frontend environment variables
-  `cd packages/react-app && cp .env.example .env &&  .env`
+  `cd packages/react-app &&  .env`
 4. Start react-app (frontend)
   `yarn react-app:start`
 5. That's it
