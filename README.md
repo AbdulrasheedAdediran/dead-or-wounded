@@ -1,6 +1,5 @@
 # **DEAD OR WOUNDED**
-#### Polygon Hackerton Submission
-##
+Polygon Hackerton Submission
 
 <img src="https://github.com/AbdulrasheedAdediran/dow-dApp-frontend/blob/main/src/components/assets/DOW_LandingPage.png" width="768" height="480">
 
