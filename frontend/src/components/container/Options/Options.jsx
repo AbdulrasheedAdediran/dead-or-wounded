@@ -5,7 +5,6 @@ import Switch from "../../Switch/Switch";
 import Sound from "../Sound/Sound";
 
 const Options = () => {
-  const [secondValue, setSecondValue] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [soundEffect, setSoundEffect] = useState(false);
   useEffect(() => {}, [isPlaying]);
@@ -21,21 +20,25 @@ const Options = () => {
             <div className="div_flex">
               <Switch
                 isOn={isPlaying}
-                onColor="hsla(111, 97%, 49%, 0.75)"
+                onColor="var(--sky-blue-black-gradient)"
                 handleToggle={() => setIsPlaying(!isPlaying)}
               />
               {!isPlaying ? "Off" : "On"}
             </div>
           </div>
           <div className="div_flex">
-            <p>Sound Effects</p>
-            <Switch
-              className="switch"
-              isOn={soundEffect}
-              onColor="hsla(111, 97%, 49%, 0.75)"
-              handleToggle={() => setSoundEffect(!soundEffect)}
-            />
-            {!soundEffect ? "Off" : "On"}
+            <div>
+              <p>Sound FX</p>
+            </div>
+            <div className="div_flex">
+              <Switch
+                className="switch"
+                isOn={soundEffect}
+                onColor="var(--sky-blue-black-gradient)"
+                handleToggle={() => setSoundEffect(!soundEffect)}
+              />
+              {!soundEffect ? "Off" : "On"}
+            </div>
           </div>
         </div>
       </div>

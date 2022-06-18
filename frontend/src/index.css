@@ -94,7 +94,7 @@ body {
   background-size: cover;
   min-height: 100vh;
   min-width: 100vw;
-  font-size: 1.2rem;
+  font-size: clamp(0.75rem, 7.5vw, 1rem);
   letter-spacing: 0.1rem;
   font-family: var(--font-rubik-wet-paint);
   color: var(--antique-white);
@@ -145,6 +145,9 @@ input {
 /* ==== SMALLEST SCREENS ==== */
 /* ===========================*/
 @media (max-width: 300px) {
+  body {
+    font-size: clamp(0.75rem, 7.5vw, 0.85rem);
+  }
   button {
     font-size: clamp(0.85rem, 7.5vw, 0.9rem);
   }
@@ -153,6 +156,9 @@ input {
 /* ==== SMALLER SCREENS ==== */
 /* ==========================*/
 @media (max-width: 380px) and (min-width: 300px) {
+  body {
+    font-size: clamp(0.85rem, 7.5vw, 0.9rem);
+  }
   button {
     font-size: clamp(0.85rem, 7.5vw, 0.9rem);
   }

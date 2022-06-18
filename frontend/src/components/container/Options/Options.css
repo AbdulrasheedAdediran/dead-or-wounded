@@ -11,11 +11,9 @@
   text-align: center;
   width: 100%;
 }
-/* p {
-  text-align: justify;
-  margin-bottom: 2rem;
-} */
+
 .options .button {
+  width: 100%;
   margin-inline: auto;
   background: var(--sky-blue-black-gradient);
   color: var(--antique-white);
@@ -31,19 +29,21 @@
   display: grid;
   justify-content: space-between;
   justify-items: stretch;
-  grid-template-columns: repeat(1fr, 6);
+  grid-template-columns: repeat(6, 1fr);
   padding-inline: auto;
   margin-block: 2rem;
-  border: 2px solid red;
+  /* border: 2px solid red; */
 }
 .grid-column {
+  width: 100%;
   margin: auto;
   place-items: center;
-  border: 2px solid yellow;
-  grid-column: 1/6;
+  padding-inline: clamp(1rem, 7.5vw, 2.5rem);
+  /* border: 2px solid yellow; */
+  grid-column: 1/7;
 }
 .div_flex {
-  border: 2px solid blue;
+  /* border: 2px solid blue; */
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -51,23 +51,50 @@
   margin-block: 1.5rem;
 }
 /* ========================*/
-/* ==== SMALLER SCREENS ==== */
+/* ==== SMALLEST SCREENS ==== */
 /* ========================*/
 @media (max-width: 300px) {
+  .options p {
+    font-size: clamp(0.75rem, 7.5vw, 0.85rem);
+  }
   .options h1 {
     font-size: clamp(1.5rem, 10vw, 2.5rem);
+  }
+  .options .button {
+    font-size: clamp(0.75rem, 7.5vw, 0.85rem);
+  }
+}
+/* ========================*/
+/* ==== SMALLER SCREENS ==== */
+/* ========================*/
+@media (max-width: 380px) and (min-width: 300px) {
+  .options h1 {
+    font-size: clamp(1.5rem, 10vw, 2.5rem);
+  }
+  .options p {
+    font-size: clamp(0.85rem, 7.5vw, 0.9rem);
+  }
+  .options .button {
+    font-size: clamp(0.85rem, 7.5vw, 0.9rem);
   }
 }
 /* ========================*/
 /* ==== LARGE SCREENS ==== */
 /* ========================*/
 @media (min-width: 600px) {
-  .options h1 {
+  .options {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: clamp(500px, 90%, 750px);
-
+    flex-direction: column;
+    margin-block: 2.5rem;
+    width: clamp(350px, 90%, 500px);
+  }
+  .options h1 {
     font-size: clamp(2rem, 25vw, 3rem);
+  }
+  .options .button {
+    margin-inline: auto;
+    width: 100%;
   }
 }

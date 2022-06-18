@@ -9,9 +9,6 @@
 .howToPlay h1 {
   font-size: clamp(1.5rem, 10vw, 3rem);
   margin-bottom: 0.75rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   text-align: center;
   width: 100%;
 }

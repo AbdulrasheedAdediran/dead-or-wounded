@@ -95,11 +95,11 @@ const App = () => {
       disableInjectedProvider: false,
       displayNoInjectedProvider: false,
       theme: {
-        background: "rgb(20,30,30, 0.75)",
+        background: "rgb(20,30,30, 0.65)",
         main: "rgb(199, 199, 199)",
         secondary: "rgb(136, 136, 136)",
         border: "rgba(40, 240, 5, 0.05)",
-        hover: "rgb(16, 32, 25, 1)",
+        hover: "rgb(16, 45, 35, 0.9)",
       },
       providerOptions,
     });
