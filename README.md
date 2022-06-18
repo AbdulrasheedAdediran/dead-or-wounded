@@ -23,20 +23,28 @@ Also, as simple as the game seems, it's quite technical to figure out, and requi
 Lastly, The user experience is also a major appeal for the game, which is why we plan to keep improving the user's experience as we progress, as the goal is to keep it as user intuitive and friendly as possible.
 ### **`Tech Stack`**
 
-* Frontend: React.js, Ethers.js, Unstoppable Domains
-* Backend: Solidity, Hardhat, Chainlink, TypeScript
+* **Frontend**: React.js, Ethers.js, Unstoppable Domains
+* **Backend**: Solidity, Hardhat, Chainlink, TypeScript
 
 #
 ### **`Setting up project`**
-1. Clone this repository
-      `git clone https://github.com/AbdulrasheedAdediran/dead-or-wounded.git`
-2. Install dependencies
-  ` Yarn add or npm install`
-3. Setup frontend environment variables
-  `cd packages/react-app &&  .env`
-4. Start react-app (frontend)
-  `yarn react-app:start`
-5. That's it!
+1. **Clone this repository**
+      ```
+      git clone https://github.com/AbdulrasheedAdediran/dead-or-wounded.git
+      ```
+2. **Install dependencies**
+  ```
+  Yarn add or npm install
+  ```
+3. **Setup frontend environment variables**
+  ```
+  cd packages/react-app &&  .env
+  ```
+4. **Start react-app (frontend)**
+  ```
+  yarn react-app:start
+  ```
+5. **That's it!**
 
 # 
-Built with intentionality by [@abdulrasheedadediran](https://github.com/AbdulrasheedAdediran) and [@jutivia](https://github.com/jutivia)
+Built with intentionality by [@abdulrasheedadediran](https://github.com/AbdulrasheedAdediran) and [@jutivia](https://github.com/jutivia) :sparkles:
