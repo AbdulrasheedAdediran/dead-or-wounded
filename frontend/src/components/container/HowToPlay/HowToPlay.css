@@ -21,12 +21,22 @@
   word-wrap: break-word;
   margin-bottom: 1rem;
 }
+
 .howToPlay .button {
-  margin: 2rem auto;
+  margin-block: 2rem;
+  margin-inline: auto;
   display: flex;
   align-items: center;
   justify-content: center;
   text-decoration: none;
+  color: var(--antique-white);
+  background: var(--sky-blue-black-gradient);
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+}
+.howToPlay .button:hover {
+  background: var(--blue-black-gradient);
+  color: var(--antique-white);
 }
 /* ========================*/
 /* ==== SMALLEST SCREENS ==== */

@@ -17,15 +17,30 @@
 } */
 .options .button {
   margin-inline: auto;
+  background: var(--sky-blue-black-gradient);
+  color: var(--antique-white);
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+}
+.options .button:hover {
+  background: var(--blue-black-gradient);
+  color: var(--antique-white);
 }
 .music-sound {
   width: 100%;
   display: grid;
   justify-content: space-between;
   justify-items: stretch;
+  grid-template-columns: repeat(1fr, 6);
   padding-inline: auto;
   margin-block: 2rem;
   border: 2px solid red;
+}
+.grid-column {
+  margin: auto;
+  place-items: center;
+  border: 2px solid yellow;
+  grid-column: 1/6;
 }
 .div_flex {
   border: 2px solid blue;
@@ -48,6 +63,9 @@
 /* ========================*/
 @media (min-width: 600px) {
   .options h1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: clamp(500px, 90%, 750px);
 
     font-size: clamp(2rem, 25vw, 3rem);

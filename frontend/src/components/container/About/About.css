@@ -1,28 +1,87 @@
 .about {
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  flex-direction: column;
-  margin-block: 2.5rem;
+  display: block;
+  padding-inline: 1rem;
   margin-inline: auto;
-  width: clamp(500px, 90%, 750px);
+  width: 100%;
   line-height: 1.5;
+  height: 100%;
 }
-.about h1,
-p {
+
+.about h1 {
+  font-size: clamp(1.5rem, 10vw, 3rem);
+  margin-bottom: 0.75rem;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
   width: 100%;
 }
+.about p {
+  font-size: clamp(0.75rem, 7.5vw, 1rem);
+  text-align: justify;
+  word-wrap: break-word;
+  margin-bottom: 1rem;
+}
+
 .about .button {
   margin: 2rem auto;
   display: flex;
   align-items: center;
   justify-content: center;
   text-decoration: none;
+  background: var(--sky-blue-black-gradient);
+  color: var(--antique-white);
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
 }
-.about p {
-  margin-bottom: 1rem;
+.about .button:hover {
+  background: var(--blue-black-gradient);
+  color: var(--antique-white);
+}
+/* ========================*/
+/* ==== SMALLEST SCREENS ==== */
+/* ========================*/
+@media (max-width: 300px) {
+  .about p {
+    font-size: clamp(0.75rem, 7.5vw, 0.85rem);
+  }
+  .about h1 {
+    font-size: clamp(1.5rem, 10vw, 2.5rem);
+  }
+  .about .button {
+    font-size: clamp(0.75rem, 7.5vw, 0.85rem);
+  }
+}
+/* ========================*/
+/* ==== SMALLER SCREENS ==== */
+/* ========================*/
+@media (max-width: 380px) and (min-width: 300px) {
+  .about h1 {
+    font-size: clamp(1.5rem, 10vw, 2.5rem);
+  }
+  .about p {
+    font-size: clamp(0.85rem, 7.5vw, 0.9rem);
+  }
+  .about .button {
+    font-size: clamp(0.85rem, 7.5vw, 0.9rem);
+  }
+}
+/* ========================*/
+/* ==== LARGE SCREENS ==== */
+/* ========================*/
+@media (min-width: 600px) {
+  .about {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+    margin-block: 2.5rem;
+    width: clamp(500px, 100%, 750px);
+  }
+  .about h1 {
+    font-size: clamp(2rem, 25vw, 3rem);
+  }
+  .about p {
+    font-size: clamp(1rem, 10vw, 1.2rem);
+  }
 }

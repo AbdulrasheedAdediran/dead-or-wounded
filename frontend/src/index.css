@@ -108,6 +108,7 @@ h2 {
   );
   background-clip: text;
   -webkit-text-fill-color: transparent;
+  text-transform: uppercase;
 }
 h1 {
   font-size: 4.5rem;
@@ -115,10 +116,11 @@ h1 {
 h2 {
   font-size: 2.5rem;
 }
+
 button {
   font-family: var(--font-rubik-wet-paint);
-  color: var(--antique-white);
   background: transparent;
+  color: var(--antique-white);
   border: none;
   transition: 0.3s ease-out;
   font-size: clamp(0.75rem, 7.5vw, 1rem);
@@ -126,7 +128,8 @@ button {
   cursor: pointer;
 }
 button:hover {
-  color: var(--light-green);
+  /* background: var(--blue-black-gradient); */
+  color: var(--antique-white);
 }
 input {
   caret-color: transparent;

@@ -32,7 +32,9 @@ main {
   width: 100%;
   margin: 1rem auto;
 }
-
+.dow-text-or {
+  text-transform: uppercase;
+}
 .dow-text .dow-text-or::before,
 .dow-text-or::after {
   background: var(--sky-blue-green-gradient);
@@ -52,7 +54,11 @@ main {
   margin-left: -50%;
 }
 main button {
+  background: transparent;
   font-size: clamp(0.75rem, 5.5vw, 1.2rem);
+}
+main button:hover {
+  color: var(--light-green);
 }
 .main-menu-links {
   display: grid;

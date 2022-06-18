@@ -7,32 +7,36 @@ import Sound from "../Sound/Sound";
 const Options = () => {
   const [secondValue, setSecondValue] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [soundEffect, setSoundEffect] = useState(false);
   useEffect(() => {}, [isPlaying]);
   return (
     <div className="options">
       <h1>Options</h1>
       <div className="music-sound">
-        <div className="div_flex">
-          <div>
-            <p>Music</p>
+        <div className="grid-column">
+          <div className="div_flex">
+            <div>
+              <p>Music</p>
+            </div>
+            <div className="div_flex">
+              <Switch
+                isOn={isPlaying}
+                onColor="hsla(111, 97%, 49%, 0.75)"
+                handleToggle={() => setIsPlaying(!isPlaying)}
+              />
+              {!isPlaying ? "Off" : "On"}
+            </div>
           </div>
           <div className="div_flex">
+            <p>Sound Effects</p>
             <Switch
-              isOn={isPlaying}
+              className="switch"
+              isOn={soundEffect}
               onColor="hsla(111, 97%, 49%, 0.75)"
-              handleToggle={() => setIsPlaying(!isPlaying)}
+              handleToggle={() => setSoundEffect(!soundEffect)}
             />
-            {!isPlaying ? "Off" : "On"}
+            {!soundEffect ? "Off" : "On"}
           </div>
-        </div>
-        <div className="div_flex">
-          <p>Sound Effects</p>
-          <Switch
-            className="switch"
-            isOn={secondValue}
-            onColor="hsla(111, 97%, 49%, 0.75)"
-            handleToggle={() => setSecondValue(!secondValue)}
-          />
         </div>
       </div>
       <Sound isPlaying={isPlaying} />

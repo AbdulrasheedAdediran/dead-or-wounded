@@ -48,7 +48,7 @@ const Main = ({
           </button>
         </Link>
         <Link to="/howToPlay">
-          <button className="menu-button">How to Play</button>
+          <button className="menu-button">How To Play</button>
         </Link>
         <Link to="/options">
           <button className="menu-button">Options</button>
