@@ -37,7 +37,7 @@ Lastly, The user experience is also a major appeal for the game, which is why we
   `cd packages/react-app &&  .env`
 4. Start react-app (frontend)
   `yarn react-app:start`
-5. That's it
+5. That's it!
 
 # 
 Built with intentionality by [@abdulrasheedadediran](https://github.com/AbdulrasheedAdediran) and [@jutivia](https://github.com/jutivia)
