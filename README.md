@@ -1,5 +1,6 @@
 # **DEAD OR WOUNDED**
-Polygon Hackerton Submission
+
+Polygon Hackerthon Submission
 
 <img src="./asset/dow.png" width="768" height="480">
 
@@ -14,37 +15,48 @@ A number is considered to be dead if it is part of the sequence and you got the 
 Dead or Wounded is beginner friendly and does not require players to have any technical knowledge as it seeks to improve adoption of Web3 and give users the opportunity to earn while having fun.
 
 #
+
 **Visit Live DApp to [Play Dead or Wounded](https://deadorwounded.io)**.
 
-
 ### **`Roadmap & future development`**
+
 The project is to be developed into a multiplayer/ stake to play platform, where players stake their DOW tokens against their scores on each game.
 Also, as simple as the game seems, it's quite technical to figure out, and requires some form of logical reasoning to win. This is why we are in the process of implementing algorithms that could help reduce and decrease difficulty level per user’s request.
 Lastly, The user experience is also a major appeal for the game, which is why we plan to keep improving the user's experience as we progress, as the goal is to keep it as user intuitive and friendly as possible.
+
 ### **`Tech Stack`**
 
-* **Frontend**: React.js, Ethers.js, Unstoppable Domains
-* **Backend**: Solidity, Hardhat, Chainlink, TypeScript
+- **Frontend**: React.js, Ethers.js, Typescript
+- **Backend**: Solidity, Hardhat, Chainlink, TypeScript
 
 #
+
 ### **`Setting up project`**
+
 1. **Clone this repository**
-      ```
-      git clone https://github.com/AbdulrasheedAdediran/dead-or-wounded.git
-      ```
+   ```
+   git clone https://github.com/AbdulrasheedAdediran/dead-or-wounded.git
+   ```
 2. **Install dependencies**
-  ```
-  Yarn add or npm install
-  ```
+
+```
+Yarn add or npm install
+```
+
 3. **Setup frontend environment variables**
-  ```
-  cd packages/react-app &&  .env
-  ```
+
+```
+cd packages/react-app &&  .env
+```
+
 4. **Start react-app (frontend)**
-  ```
-  yarn react-app:start
-  ```
+
+```
+yarn react-app:start
+```
+
 5. **That's it!**
 
-# 
+#
+
 Built with intentionality by [@abdulrasheedadediran](https://github.com/AbdulrasheedAdediran) and [@jutivia](https://github.com/jutivia) :sparkles:
