@@ -6,12 +6,12 @@ const Attempts = (props) => {
 
   return (
     <section className="attempts">
-      <h2>Attempts</h2>
+      <h2>Scoreboard</h2>
       <table>
         <thead>
           <tr>
             <th className="table__trial">Trial</th>
-            <th className="table__attempt">Attempt</th>
+            <th className="table__attempt">Submission</th>
             <th className="table__score">Score</th>
           </tr>
         </thead>

@@ -1,35 +1,39 @@
 input:invalid {
   border: 3px solid red;
 }
-section {
+.start-game {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   text-align: center;
-  padding-inline: 2rem;
+  padding-inline: 1rem;
 }
 
 .input {
   display: flex;
   align-items: center;
   justify-content: space-around;
-  padding-inline: 7.5rem;
+  gap: clamp(0.75rem, 5vw, 1rem);
+  padding-inline: 1rem;
+  position: relative;
+  z-index: 0;
 }
 .input input {
   background: var(--deep-green);
   aspect-ratio: 1;
-  width: 4rem;
-  margin: 2rem 0.5rem;
+  width: clamp(1rem, 20vw, 3.5rem);
+  margin: 1rem auto;
   color: var(--light-green);
   text-align: center;
   font-family: var(--font-rubik-wet-paint);
-  font-size: 2.5rem;
-  /* outline: 1px solid var(--dark-navy-blue); */
+  font-size: clamp(1.5rem, 10vw, 2.5rem);
   border-style: solid;
   border-width: 2px;
   border-image-source: var(--input-gradient);
   border-image-slice: 9;
+  position: relative;
+  z-index: 10;
 }
 
 input:focus {
@@ -40,12 +44,20 @@ input:focus {
 }
 .number-btns {
   margin-bottom: 1.5rem;
+  display: grid;
+  gap: clamp(0.75rem, 5vw, 1rem);
+  /* margin-top: 20%;
+  height: 100%;
+  border: 2px solid red; */
 }
+
 .number-btn {
   background: var(--sky-blue-black-gradient);
   color: var(--antique-white);
   aspect-ratio: 1;
-  width: 3rem;
+  /* width: 2.5rem; */
+  font-size: clamp(0.85rem, 25vw, 1rem);
+  width: clamp(2rem, 20vw, 2.85rem);
   border-radius: 0.5rem;
   margin-inline: 0.5rem;
 }
@@ -59,13 +71,16 @@ input:focus {
   justify-content: space-evenly;
 }
 .game-btn {
+  border-radius: 0.5rem;
+  width: 6rem;
+  padding: 0.75rem 0.75rem;
+  text-align: center;
+}
+.play {
   background: var(--sky-blue-black-gradient);
   color: var(--antique-white);
-  border-radius: 0.5rem;
-  width: 7rem;
-  padding: 0.75rem 1.5rem;
 }
-.game-btn:hover {
+.play:hover {
   background: var(--blue-black-gradient);
   color: var(--antique-white);
 }
@@ -83,11 +98,126 @@ input:focus {
 .play:disabled {
   background: var(--btn-deep-green-red-gradient);
 } */
-.attempts-and-dashboard {
+/* .attempts-and-dashboard {
   display: flex;
   align-items: center;
   justify-content: space-around;
   gap: 2rem;
   width: 100%;
   margin-block: 1.5rem;
+} */
+.scoreboard-btn {
+  border-radius: 0.5rem;
+  width: 90%;
+  padding: 0.75rem 0.75rem;
+  text-align: center;
+  background: var(--sky-blue-black-gradient);
+  color: var(--antique-white);
+  position: fixed;
+  z-index: 50;
+  bottom: 1.5rem;
+  margin-inline: 1rem;
+}
+
+/* ========================*/
+/* ==== SMALLEST SCREENS ==== */
+/* ========================*/
+@media (max-width: 300px) {
+  .input input {
+    width: clamp(1rem, 20vw, 3rem);
+  }
+}
+/* ========================*/
+/* ==== SMALLER SCREENS ==== */
+/* ========================*/
+@media (max-width: 599px) {
+  form {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+    gap: clamp(2rem, 5vh, 7.5vh);
+    margin-block: 0.5rem;
+  }
+  .clear-play-btns {
+    gap: clamp(0.75rem, 5vw, 1rem);
+  }
+  .scoreboard {
+    position: fixed;
+    opacity: 0;
+    top: 0;
+    bottom: 0;
+    height: 100vh;
+    width: 100%;
+    right: 0;
+    padding: 1rem;
+    transition: right 0.5s ease-in-out;
+    z-index: -20;
+  }
+  .scoreboard.view {
+    right: 0;
+    opacity: 1;
+    z-index: 20;
+  }
+  .overlay {
+    background-color: rgba(0, 0, 0, 0.65);
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    position: fixed;
+    display: none;
+    z-index: 15;
+  }
+
+  .overlay.view {
+    display: block;
+  }
+}
+@media (max-width: 380px) and (min-width: 300px) {
+  /* .input input {
+    width: clamp(1rem, 20vw, 3.5rem);
+  } */
+}
+/* ========================*/
+/* ==== LARGE SCREENS ==== */
+/* ========================*/
+@media (min-width: 600px) {
+  .input {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding-inline: 7.5rem;
+  }
+  .input input {
+    width: clamp(1rem, 5vw, 2.5rem);
+    width: 4rem;
+    margin: 2rem 0.5rem;
+    font-size: 2.5rem;
+  }
+  .number-btns {
+    margin-bottom: 2rem;
+    display: flex;
+    gap: 0;
+  }
+  .number-btn {
+    font-size: 1.2rem;
+    width: 3rem;
+    margin-inline: 0.5rem;
+  }
+  .game-btn {
+    width: 7rem;
+    padding: 0.75rem 1.5rem;
+  }
+
+  .scoreboard {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-block: 2rem;
+    width: clamp(500px, 100%, 750px);
+  }
+  .scoreboard-btn {
+    display: none;
+  }
 }

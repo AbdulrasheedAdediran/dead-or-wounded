@@ -24,6 +24,7 @@ const StartGame = ({
   const [playerInput, setPlayerInput] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [message, setMessage] = useState(false);
+  const [viewScoreboard, setViewScoreboard] = useState(false);
   const randomNumbers = generatedValues[0];
   const [roundScores, setRoundScores] = useState([]);
   let [dead, setDead] = useState(0);
@@ -38,41 +39,43 @@ const StartGame = ({
   //--Handles Start Game Call--//
   //===========================//
   useEffect(() => {
-    setTimeout(() => {
-      if (document.readyState === "complete") {
-        callStart();
-      }
-    }, 1000);
+    // setTimeout(() => {
+    //   if (document.readyState === "complete") {
+    //     callStart();
+    //   }
+    // }, 1000);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const callStart = () => {
-    startGame();
+    // startGame();
   };
-  useEffect(() => {
-    //=================================//
-    //-Handles Backspace & Enter Keys--//
-    //=================================//
-    // document.addEventListener(
-    //   "keyup",
-    //   (e) => {
-    //     let pressedKey = String(e.key);
-    //     console.log("You pressed", pressedKey, "on the keyboard");
-    //     if (pressedKey === "Backspace") {
-    //       // console.log("You clicked Backspace");
-    //       handleClear(e);
-    //       // return;
-    //     }
-    //     if (pressedKey === "Enter") {
-    //       // console.log("You clicked Enter");
-    //       handlePlay(e);
-    //       // return;
-    //     }
-    //   },
-    //   []
-    // );
-    // console.log("Player Input: ", playerInput);
-  });
+  // useEffect(() => {
+  //=================================//
+  //-Handles Backspace & Enter Keys--//
+  //=================================//
+  //   document.addEventListener(
+  //     "keyup",
+  //     (e) => {
+  //       let pressedKey = String(e.key);
+  //       console.log("You pressed", pressedKey, "on the keyboard");
+  //       if (pressedKey === "Backspace") {
+  //         e.preventDefault();
+  //         console.log("You clicked Backspace");
+  //         handleClear(e);
+  //         // return;
+  //       }
+  //       if (pressedKey === "Enter") {
+  //         e.preventDefault();
+  //         console.log("You clicked Enter");
+  //         handlePlay(e);
+  //         // return;
+  //       }
+  //     },
+  //     []
+  //   );
+  //   console.log("Player Input: ", playerInput);
+  // }, [document]);
   //==========================//
   //--Handles Number Buttons--//
   //==========================//
@@ -206,6 +209,13 @@ const StartGame = ({
   //=======================//
   //--Checks for Duplicate-//
   //=======================//
+  const toggleScoreboard = () => {
+    setViewScoreboard(!viewScoreboard);
+  };
+
+  //=======================//
+  //--Checks for Duplicate-//
+  //=======================//
   const containsDuplicate = (arr) => {
     for (let i = 0; i < arr.length; i++) {
       for (let j = 0; j < i; j++) {
@@ -291,14 +301,13 @@ const StartGame = ({
   };
 
   return (
-    <section>
+    <section className="start-game">
       {loader && <Loader />}
       {isLoading && <Loader />}
       {loadingSuccess === false && navigate("/")}
+
       <form className="entries" action="#" onSubmit={handlePlay}>
-        <label htmlFor="player-inputs">
-          Enter four unique numbers from 0 - 9
-        </label>
+        <label htmlFor="player-inputs">Enter four unique numbers</label>
         <div className="input">
           <input
             type="text"
@@ -347,86 +356,94 @@ const StartGame = ({
           ></input>
         </div>
         <div className="number-btns">
-          <button
-            className="number-btn"
-            // disabled={!isDisabled}
-            value="0"
-            onClick={handleNumberButton}
-          >
-            0
-          </button>
-          <button
-            className="number-btn"
-            // disabled={!isDisabled}
-            value="1"
-            onClick={handleNumberButton}
-          >
-            1
-          </button>
-          <button
-            className="number-btn"
-            // disabled={!isDisabled}
-            value="2"
-            onClick={handleNumberButton}
-          >
-            2
-          </button>
-          <button
-            className="number-btn"
-            // disabled={!isDisabled}
-            value="3"
-            onClick={handleNumberButton}
-          >
-            3
-          </button>
-          <button
-            className="number-btn"
-            // disabled={!isDisabled}
-            value="4"
-            onClick={handleNumberButton}
-          >
-            4
-          </button>
-          <button
-            className="number-btn"
-            // disabled={!isDisabled}
-            value="5"
-            onClick={handleNumberButton}
-          >
-            5
-          </button>
-          <button
-            className="number-btn"
-            // disabled={!isDisabled}
-            value="6"
-            onClick={handleNumberButton}
-          >
-            6
-          </button>
-          <button
-            className="number-btn"
-            // disabled={!isDisabled}
-            value="7"
-            onClick={handleNumberButton}
-          >
-            7
-          </button>
-          <button
-            className="number-btn"
-            // disabled={!isDisabled}
-            value="8"
-            onClick={handleNumberButton}
-          >
-            8
-          </button>
-          <button
-            className="number-btn"
-            // disabled={!isDisabled}
-            value="9"
-            onClick={handleNumberButton}
-          >
-            9
-          </button>
+          <div className="number-btn-row">
+            <button
+              className="number-btn"
+              // disabled={!isDisabled}
+              value="1"
+              onClick={handleNumberButton}
+            >
+              1
+            </button>
+            <button
+              className="number-btn"
+              // disabled={!isDisabled}
+              value="2"
+              onClick={handleNumberButton}
+            >
+              2
+            </button>
+            <button
+              className="number-btn"
+              // disabled={!isDisabled}
+              value="3"
+              onClick={handleNumberButton}
+            >
+              3
+            </button>
+          </div>
+          <div className="number-btn-row">
+            <button
+              className="number-btn"
+              // disabled={!isDisabled}
+              value="4"
+              onClick={handleNumberButton}
+            >
+              4
+            </button>
+            <button
+              className="number-btn"
+              // disabled={!isDisabled}
+              value="5"
+              onClick={handleNumberButton}
+            >
+              5
+            </button>
+            <button
+              className="number-btn"
+              // disabled={!isDisabled}
+              value="6"
+              onClick={handleNumberButton}
+            >
+              6
+            </button>
+          </div>
+          <div className="number-btn-row">
+            <button
+              className="number-btn"
+              // disabled={!isDisabled}
+              value="7"
+              onClick={handleNumberButton}
+            >
+              7
+            </button>
+            <button
+              className="number-btn"
+              // disabled={!isDisabled}
+              value="8"
+              onClick={handleNumberButton}
+            >
+              8
+            </button>
+            <button
+              className="number-btn"
+              // disabled={!isDisabled}
+              value="9"
+              onClick={handleNumberButton}
+            >
+              9
+            </button>
+          </div>
+          <div className="number-btn-row">
+            <button
+              className="number-btn"
+              // disabled={!isDisabled}
+              value="0"
+              onClick={handleNumberButton}
+            >
+              0
+            </button>
+          </div>
         </div>
         <div className="clear-play-btns">
           <button className="game-btn clear" onClick={handleClear}>
@@ -437,7 +454,8 @@ const StartGame = ({
           </button>
         </div>
       </form>
-      <div className="attempts-and-dashboard">
+      <div className={`overlay ${viewScoreboard ? "view" : ""}`}></div>
+      <div className={`scoreboard ${viewScoreboard ? "view" : ""}`}>
         <Attempts
           trial={trials}
           confirmedAttempt={playerInput}
@@ -445,15 +463,18 @@ const StartGame = ({
           wounded={wounded}
           roundScores={roundScores}
         />
-
-        <Dashboard
+      </div>
+      {/* <Dashboard
           played={playerStatistics.gamesPlayed}
           won={playerStatistics.gamesWon}
           lost={playerStatistics.gamesLost}
           currentStreak={playerStatistics.currentWinStreak}
           highestStreak={playerStatistics.highestWinStreak}
-        />
-      </div>
+        /> */}
+      <button className="scoreboard-btn" onClick={toggleScoreboard}>
+        {viewScoreboard ? "Continue" : "View Scoreboard"}
+      </button>
+
       {isOpen && (
         <Modal
           DOWContract={DOWContract}
