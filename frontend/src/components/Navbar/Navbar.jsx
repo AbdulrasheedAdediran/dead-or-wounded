@@ -3,7 +3,7 @@ import "./Navbar.css";
 import Connected from "./Connected";
 import dowWhite from "../assets/dowWhite.png";
 import walletIcon from "../assets/wallet-icon.png";
-import Dashboard from "../container/StartGame/Dashboard";
+import Dashboard from "./Dashboard";
 
 const Navbar = ({
   connectWallet,

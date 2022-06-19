@@ -19,6 +19,21 @@ const Dashboard = (
   let percentage = (won / played) * 100;
   let winRate = Math.round(percentage) || 0;
 
+  console.log("DOWTokenBalance Next");
+  console.log(DOWTokenBalance);
+  console.log("networkCoinBalance Next");
+  console.log(networkCoinBalance);
+  console.log("disconnectWallet Next");
+  console.log(disconnectWallet);
+  console.log("claimFreeTokens Next");
+  console.log(claimFreeTokens);
+  console.log("highestStreak Next");
+  console.log(highestStreak);
+  console.log("played Next");
+  console.log(played);
+  console.log("currentStreak Next");
+  console.log(currentStreak);
+
   return (
     <section className="dashboard">
       <h2>Dashboard</h2>
