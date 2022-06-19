@@ -39,6 +39,7 @@
 .dashboard h2 {
   width: 100%;
   margin-inline: auto;
+  margin-block:2rem;
   margin-bottom: 0.5rem;
   text-align: center;
 }
@@ -122,6 +123,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap:2rem;
+  margin-bottom:2rem;
 }
 .dashboard-btn .btn {
   font-size: clamp(1rem, 10vw, 1.2rem);
@@ -230,7 +233,7 @@
 /* ========================*/
 @media (min-width: 600px) {
   .dashboard {
-    height: clamp(40rem, 75vh, 50rem);
+    height: clamp(32rem, 75vh, 50rem);
     width: clamp(40rem, 75vw, 50rem);
     margin-block: auto;
     background: var(--deeper-green);
@@ -258,12 +261,13 @@
     margin-bottom: 0.5rem;
   }
   .statistics {
-    width: 100%;
+    width: 90%;
     display: flex;
     align-items: stretch;
     justify-content: space-between;
     flex-direction: row;
     background: var(--dark-blue-black-gradient);
+    padding:2rem;
     /* border: 2px solid blue; */
   }
   .played-won-lost-streak {

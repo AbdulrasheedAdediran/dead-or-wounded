@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./Navbar.css";
 import Connected from "./Connected";
 import dowWhite from "../assets/dowWhite.png";
@@ -12,7 +12,7 @@ const Navbar = ({
   userBalance,
   disconnectWallet,
   playerStatistics,
-  claimFreeTokens,
+  freeTokens,
 }) => {
   const [viewDashboard, setViewScoreboard] = useState(false);
 
@@ -20,6 +20,8 @@ const Navbar = ({
     setViewScoreboard(!viewDashboard);
     console.log("Toggled dashboard");
   };
+
+    // freeTokens()
 
   return (
     <nav>
@@ -38,6 +40,8 @@ const Navbar = ({
       <div className={`dashboard-overlay ${viewDashboard ? "view" : ""}`}></div>
       <div className={`dashboard-container ${viewDashboard ? "view" : ""}`}>
         <Dashboard
+          stats={playerStatistics}
+          freeTokens={freeTokens}
           played={playerStatistics.gamesPlayed}
           won={playerStatistics.gamesWon}
           lost={playerStatistics.gamesLost}
@@ -45,7 +49,6 @@ const Navbar = ({
           highestStreak={playerStatistics.highestWinStreak}
           DOWTokenBalance={userBalance.DOWTokenBalance}
           networkCoinBalance={userBalance.networkCoinBalance}
-          claimFreeTokens={claimFreeTokens}
           disconnectWallet={disconnectWallet}
         />
       </div>
@@ -74,7 +77,12 @@ const Navbar = ({
         </div>
         <div className="menu-icon">
           {connected && (
-            <button className="menu-container" onClick={toggleDashboard}>
+            <button
+              className="menu-container"
+              onClick={() => {
+                toggleDashboard();
+              }}
+            >
               <div className="menu-circle">
                 <div className="circle-bar">
                   <span className="small-circle"></span>

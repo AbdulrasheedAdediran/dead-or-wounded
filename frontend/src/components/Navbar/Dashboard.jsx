@@ -1,38 +1,19 @@
-import React from "react";
+import React, { useEffect }  from "react";
 import "./Dashboard.css";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 
 const Dashboard = (
+  stats,
   connected,
   walletAddress,
   DOWTokenBalance,
   networkCoinBalance,
   disconnectWallet,
-  claimFreeTokens,
-  played,
-  won,
-  lost,
-  currentStreak,
-  highestStreak
+  freeTokens
 ) => {
-  let percentage = (won / played) * 100;
+  let percentage = (stats.won / stats.played) * 100;
   let winRate = Math.round(percentage) || 0;
-
-  console.log("DOWTokenBalance Next");
-  console.log(DOWTokenBalance);
-  console.log("networkCoinBalance Next");
-  console.log(networkCoinBalance);
-  console.log("disconnectWallet Next");
-  console.log(disconnectWallet);
-  console.log("claimFreeTokens Next");
-  console.log(claimFreeTokens);
-  console.log("highestStreak Next");
-  console.log(highestStreak);
-  console.log("played Next");
-  console.log(played);
-  console.log("currentStreak Next");
-  console.log(currentStreak);
 
   return (
     <section className="dashboard">
@@ -44,24 +25,24 @@ const Dashboard = (
             <div className="played-won-lost-streak">
               <div className="game-stats played">
                 <div>Played</div>
-                <div>{played || 0}</div>
+                <div>{stats.played || 0}</div>
               </div>
               <div className="game-stats won">
                 <div>Won</div>
-                <div>{won || 0}</div>
+                <div>{stats.won || 0}</div>
               </div>
               <div className="game-stats lost">
                 <div>Lost</div>
-                <div>{lost || 0}</div>
+                <div>{stats.lost || 0}</div>
               </div>
               {/* <div className="streak-stats"> */}
               <div className="game-stats current-streak">
                 <div>Current Win Streak</div>
-                <div>{currentStreak || 0}</div>
+                <div>{stats.currentStreak || 0}</div>
               </div>
               <div className="game-stats max-streak">
                 <div>Max Win Streak</div>
-                <div>{highestStreak || 0}</div>
+                <div>{stats.highestStreak || 0}</div>
               </div>
               {/* </div> */}
             </div>
@@ -104,7 +85,7 @@ const Dashboard = (
             />
           </div>
         </div>
-        <h3>Assets</h3>
+        {/* <h3>Assets</h3>
         <div>
           <div className="assets">
             {parseFloat(networkCoinBalance).toFixed(2) || 0} MATIC
@@ -112,9 +93,9 @@ const Dashboard = (
           <div className="assets">
             {parseFloat(DOWTokenBalance).toFixed(2) || 0} DOW
           </div>
-        </div>
+        </div> */}
         <div className="dashboard-btn">
-          <button onClick={claimFreeTokens} className="claim-dow btn">
+          <button onClick={() => freeTokens()} className="claim-dow btn">
             Claim DOW
           </button>
           <button onClick={disconnectWallet} className="disconnect btn">
