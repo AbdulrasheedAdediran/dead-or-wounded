@@ -166,7 +166,7 @@ const App = () => {
     setConnected(false);
   };
 
-  const handleDisconnect = async () => {
+  const disconnectWallet = async () => {
     await web3Modal.clearCachedProvider();
     refreshState();
   };
@@ -332,7 +332,7 @@ const App = () => {
         }
       };
 
-      provider.on("disconnect", handleDisconnect);
+      provider.on("disconnect", disconnectWallet);
       provider.on("connect", getPlayerStatistics);
       provider.on("connect", getUserBalance);
       provider.on("accountsChanged", handleAccountChanged);
@@ -341,7 +341,7 @@ const App = () => {
         if (provider.removeListener) {
           provider.removeListener("accountsChanged", handleAccountChanged);
           provider.removeListener("chainChanged", handleChainChanged);
-          provider.removeListener("disconnect", handleDisconnect);
+          provider.removeListener("disconnect", disconnectWallet);
         }
       };
     }
@@ -358,7 +358,9 @@ const App = () => {
         connected={connected}
         walletAddress={walletAddress}
         userBalance={userBalance}
-        disconnectWallet={handleDisconnect}
+        disconnectWallet={disconnectWallet}
+        playerStatistics={playerStatistics}
+        claimFreeTokens={claimFreeTokens}
       />
       <BrowserRouter>
         <Routes>
@@ -367,7 +369,6 @@ const App = () => {
             exact
             element={
               <Main
-                claimFreeTokens={claimFreeTokens}
                 connectWallet={connectWallet}
                 connected={connected}
                 startGame={startGame}

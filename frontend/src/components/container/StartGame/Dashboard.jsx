@@ -3,18 +3,58 @@ import "./Dashboard.css";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 
-const Dashboard = (props) => {
-  let percentage = (props.won / props.played) * 100;
+const Dashboard = (
+  connected,
+  walletAddress,
+  DOWTokenBalance,
+  networkCoinBalance,
+  disconnectWallet,
+  claimFreeTokens,
+  played,
+  won,
+  lost,
+  currentStreak,
+  highestStreak
+) => {
+  let percentage = (won / played) * 100;
   let winRate = Math.round(percentage) || 0;
 
   return (
     <section className="dashboard">
       <h2>Dashboard</h2>
-      <div className="statistics">
-        <div className="win-rate-and-game-stats">
+      <div className="dashboard-wrapper">
+        <h3>Game Stats</h3>
+        <div className="statistics">
+          <div className="win-rate-and-game-stats">
+            <div className="played-won-lost-streak">
+              <div className="game-stats played">
+                <div>Played</div>
+                <div>{played || 0}</div>
+              </div>
+              <div className="game-stats won">
+                <div>Won</div>
+                <div>{won || 0}</div>
+              </div>
+              <div className="game-stats lost">
+                <div>Lost</div>
+                <div>{lost || 0}</div>
+              </div>
+              {/* <div className="streak-stats"> */}
+              <div className="game-stats current-streak">
+                <div>Current Win Streak</div>
+                <div>{currentStreak || 0}</div>
+              </div>
+              <div className="game-stats max-streak">
+                <div>Max Win Streak</div>
+                <div>{highestStreak || 0}</div>
+              </div>
+              {/* </div> */}
+            </div>
+          </div>
           <div className="win-rate">
             {/* <p>Win Rate</p>
             <p>{winRate}%</p> */}
+            <p>Win Rate</p>
             <CircularProgressbar
               className="progressBar"
               // valueStart={0}
@@ -48,30 +88,23 @@ const Dashboard = (props) => {
               })}
             />
           </div>
-          <div className="played-won-lost">
-            <div className="game-stats played">
-              <div>Played</div>
-              <div>{props.played}</div>
-            </div>
-            <div className="game-stats won">
-              <div>Won</div>
-              <div>{props.won}</div>
-            </div>
-            <div className="game-stats lost">
-              <div>Lost</div>
-              <div>{props.lost}</div>
-            </div>
+        </div>
+        <h3>Assets</h3>
+        <div>
+          <div className="assets">
+            {parseFloat(networkCoinBalance).toFixed(2) || 0} MATIC
+          </div>
+          <div className="assets">
+            {parseFloat(DOWTokenBalance).toFixed(2) || 0} DOW
           </div>
         </div>
-        <div className="streak-stats">
-          <div className="current-streak">
-            <p>Current Streak</p>
-            <p>{props.currentStreak}</p>
-          </div>
-          <div className="max-streak">
-            <p>Highest Streak</p>
-            <p>{props.highestStreak}</p>
-          </div>
+        <div className="dashboard-btn">
+          <button onClick={claimFreeTokens} className="claim-dow btn">
+            Claim DOW
+          </button>
+          <button onClick={disconnectWallet} className="disconnect btn">
+            Disconnect
+          </button>
         </div>
       </div>
     </section>

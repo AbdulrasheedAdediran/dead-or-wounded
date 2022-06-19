@@ -85,7 +85,9 @@
   box-sizing: border-box;
   list-style: none;
 }
-
+a {
+  text-decoration: none;
+}
 body {
   background: var(--deep-green-red-gradient),
     url("./components/assets/dow-desktop-bg-1440x900.jpeg") no-repeat center
@@ -126,6 +128,7 @@ button {
   font-size: clamp(0.75rem, 7.5vw, 1rem);
   letter-spacing: 0.2rem;
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
 button:hover {
   /* background: var(--blue-black-gradient); */

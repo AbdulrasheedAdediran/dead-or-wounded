@@ -67,16 +67,7 @@ main button:hover {
 .menu-button {
   margin-bottom: 1rem;
 }
-.claim-dow-button {
-  background: var(--sky-blue-black-gradient);
-  color: var(--antique-white);
-  padding: 0.75rem 1rem;
-  border-radius: 0.5rem;
-}
-.claim-dow-button:hover {
-  background: var(--blue-black-gradient);
-  color: var(--antique-white);
-}
+
 .start-game:disabled {
   color: var(--antique-white);
   -webkit-tap-highlight-color: transparent;

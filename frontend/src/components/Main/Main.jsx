@@ -31,12 +31,7 @@ const Main = ({
         <h1>Wounded</h1>
         <div className="dow-text-border" />
       </div>
-      <button
-        className="claim-dow-button"
-        onClick={connected ? claimFreeTokens : connectWallet}
-      >
-        Claim DOW Tokens
-      </button>
+
       <div className="main-menu-links">
         <Link to="/startGame">
           <button

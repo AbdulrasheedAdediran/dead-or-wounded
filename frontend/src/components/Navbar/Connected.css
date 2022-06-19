@@ -10,7 +10,7 @@
   font-size: 0.85rem;
   outline: 2px groove var(--light-green);
   border-radius: 0.5rem;
-  padding: 0.5rem 0.75rem;
+  padding: 0.6rem 0.75rem;
 }
 .connected .account-balance {
   display: none;

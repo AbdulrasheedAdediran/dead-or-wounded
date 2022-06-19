@@ -1,7 +1,6 @@
 import { React, useState, useEffect } from "react";
 import "./StartGame.css";
 import Attempts from "./Attempts";
-import Dashboard from "./Dashboard";
 import { useNavigate } from "react-router-dom";
 import Modal from "../../modal/Modal";
 import DOW_ABI from "../../../util/DOW_ABI.json";
@@ -39,43 +38,36 @@ const StartGame = ({
   //--Handles Start Game Call--//
   //===========================//
   useEffect(() => {
-    // setTimeout(() => {
-    //   if (document.readyState === "complete") {
-    //     callStart();
-    //   }
-    // }, 1000);
+    setTimeout(() => {
+      if (document.readyState === "complete") {
+        callStart();
+      }
+    }, 1000);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const callStart = () => {
-    // startGame();
+    startGame();
   };
-  // useEffect(() => {
   //=================================//
   //-Handles Backspace & Enter Keys--//
   //=================================//
-  //   document.addEventListener(
-  //     "keyup",
-  //     (e) => {
-  //       let pressedKey = String(e.key);
-  //       console.log("You pressed", pressedKey, "on the keyboard");
-  //       if (pressedKey === "Backspace") {
-  //         e.preventDefault();
-  //         console.log("You clicked Backspace");
-  //         handleClear(e);
-  //         // return;
-  //       }
-  //       if (pressedKey === "Enter") {
-  //         e.preventDefault();
-  //         console.log("You clicked Enter");
-  //         handlePlay(e);
-  //         // return;
-  //       }
-  //     },
-  //     []
-  //   );
-  //   console.log("Player Input: ", playerInput);
-  // }, [document]);
+  useEffect(() => {
+    const listener = (e) => {
+      if (e.code === "Enter" || e.code === "NumpadEnter") {
+        e.preventDefault();
+        handlePlay(e);
+      }
+      if (e.code === "Backspace") {
+        e.preventDefault();
+        handleClear(e);
+      }
+    };
+    document.addEventListener("keyup", listener);
+    return () => {
+      document.removeEventListener("keyup", listener);
+    };
+  }, [document, playerInput]);
   //==========================//
   //--Handles Number Buttons--//
   //==========================//
@@ -117,7 +109,7 @@ const StartGame = ({
     // Max length of each input field
     const maxLength = parseInt(target.attributes["maxlength"].value);
     // Previous input field
-    // const previous = target.previousElementSibling;
+    const previous = target.previousElementSibling;
     // Next input field
     const next = target.nextElementSibling;
     // Wrapper for all input fields
@@ -151,27 +143,6 @@ const StartGame = ({
       else if (target === lastInput && next === null) {
         target.focus();
       }
-
-      // Move to previous field if empty (user pressed backspace)
-      // if (focusedInputLength < maxLength) {
-      //   let firstInput = inputs[0];
-      //   if (target === inputs[1]) {
-      //     firstInput.focus();
-      //     playerInput.pop();
-      //   }
-      //   if (previous === null && target === firstInput) {
-      //     target.focus();
-      //     playerInput.pop();
-      //     setPlayerInput([]);
-      //   } else if (previous !== firstInput) {
-      //     playerInput.pop();
-      //     previous.focus();
-      //   } else if (target === lastInput) {
-      //     target.value = "";
-      //     playerInput.pop();
-      //     target.focus();
-      //   }
-      // }
     };
   };
 
@@ -273,6 +244,7 @@ const StartGame = ({
             wounded: wounded,
           },
         ]);
+        toggleScoreboard();
         entries.reset();
         setIndex(0);
         setPlayerInput([]);
@@ -464,13 +436,6 @@ const StartGame = ({
           roundScores={roundScores}
         />
       </div>
-      {/* <Dashboard
-          played={playerStatistics.gamesPlayed}
-          won={playerStatistics.gamesWon}
-          lost={playerStatistics.gamesLost}
-          currentStreak={playerStatistics.currentWinStreak}
-          highestStreak={playerStatistics.highestWinStreak}
-        /> */}
       <button className="scoreboard-btn" onClick={toggleScoreboard}>
         {viewScoreboard ? "Continue" : "View Scoreboard"}
       </button>

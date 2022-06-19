@@ -11,8 +11,8 @@ const Attempts = (props) => {
         <thead>
           <tr>
             <th className="table__trial">Trial</th>
-            <th className="table__attempt">Submission</th>
-            <th className="table__score">Score</th>
+            <th className="table__attempt">Attempt</th>
+            <th className="table__score score">Score</th>
           </tr>
         </thead>
         <tbody>
@@ -23,7 +23,9 @@ const Attempts = (props) => {
               </td>
               <td className="table__attempt">{roundScore.attempt.join(" ")}</td>
               <td className="table__score">
-                {roundScore.dead} Dead - {roundScore.wounded} Wounded
+                <span>{roundScore.dead} Dead</span>{" "}
+                <span className="hyphen">-</span>
+                <span> {roundScore.wounded} Wounded</span>
               </td>
             </tr>
           ))}

@@ -4,6 +4,7 @@ nav {
   align-items: center;
   padding: 1rem;
   color: var(--antique-white);
+  height: 8.5vh;
 }
 nav a {
   text-decoration: none;
@@ -17,7 +18,62 @@ nav img {
   width: 100%;
   display: block;
 }
-
+.user-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+.menu-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1/1;
+  width: 2.5rem;
+  cursor: pointer;
+  background: transparent;
+  position: relative;
+  z-index: 50;
+}
+.menu-circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 0.25rem;
+  background: var(--sky-blue-black-gradient);
+  border-radius: 50%;
+  aspect-ratio: 1/1;
+  width: 2.5rem;
+  /* height: rem; */
+}
+.menu-circle:hover {
+  background: var(--blue-black-gradient);
+}
+.circle-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.25rem;
+}
+.small-circle {
+  background: var(--antique-white);
+  aspect-ratio: 1/1;
+  width: 0.25rem;
+  border-radius: 50%;
+  /* border: 1px solid red; */
+  /* position: relative;
+  z-index: 5; */
+}
+.bar {
+  background: var(--antique-white);
+  width: 1.2rem;
+  height: 0.25rem;
+  border-radius: 0.25rem;
+  /* border: 1px solid red; */
+  /* position: relative;
+  z-index: 5; */
+}
 .desktop-connect-wallet,
 .desktop-disconnect-wallet {
   display: none;
@@ -35,6 +91,13 @@ nav img {
 @media (min-width: 600px) {
   nav {
     padding: 1rem 2rem;
+  }
+  .menu-container,
+  .menu-circle {
+    width: 3rem;
+  }
+  .bar {
+    width: 1.5rem;
   }
   .logo {
     width: 5rem;

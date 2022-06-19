@@ -1,23 +1,24 @@
 .attempts {
-  height: 65vh;
+  height: 75vh;
   width: 100%;
   background: var(--deeper-green);
   color: var(--antique-white);
   border-radius: 0.5rem;
-  border: 2px solid rgba(3, 48, 39, 0.43);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   display: block;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 153, 126, 0.15);
 }
-@supports (backdrop-filter: blur(10px)) {
+@supports (backdrop-filter: blur(6.5px)) {
   .attempts {
-    background: var(--deeper-green);
-    backdrop-filter: blur(10px);
+    background: rgba(0, 103, 84, 0.25);
+    backdrop-filter: blur(6.5px);
   }
 }
+
 .attempts h2 {
   width: 100%;
   margin-inline: auto;
-  margin-bottom: 0.5rem;
+  margin-block: 0.5rem;
 }
 .attempts table {
   width: 100%;
@@ -28,17 +29,18 @@
 }
 th,
 td {
-  text-align: left;
-  padding: 0.25rem 0.5rem;
+  padding: 0.25rem 0.25rem;
   text-align: center;
 }
 
 th {
   background: rgba(0, 0, 0, 0.2);
+  color: var(--light-green);
 }
 
 td {
   background: rgba(0, 0, 0, 0.1);
+  border-block: 1px solid rgb(191, 255, 201, 0.1);
 }
 /* ========================*/
 /* ==== SMALLEST SCREENS ==== */
@@ -49,6 +51,29 @@ td {
   }
   .attempts h2 {
     font-size: clamp(1.5rem, 10vw, 2.5rem);
+  }
+}
+/* ========================*/
+/* ==== SMALLER SCREENS ==== */
+/* ========================*/
+@media (max-width: 599px) {
+  .attempts {
+    background: rgba(0, 103, 84, 0.25);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(6.5px);
+    border: 1px solid rgba(0, 153, 126, 0.15);
+  }
+  .table__score {
+    text-align: left;
+    margin: auto;
+  }
+
+  .table__score span:not(.hyphen) {
+    display: block;
+  }
+  .hyphen {
+    display: none;
   }
 }
 /* ========================*/
@@ -70,8 +95,11 @@ td {
 /* ========================*/
 @media (min-width: 600px) {
   .attempts {
-    height: 23rem;
+    height: 25rem;
     width: 100%;
+    background: var(--deeper-green);
+    border: 2px solid rgba(3, 48, 39, 0.43);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   }
 
   .attempts h2 {

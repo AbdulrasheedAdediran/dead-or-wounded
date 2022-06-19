@@ -1,53 +1,84 @@
 .dashboard {
-  height: 23rem;
+  height: 100%;
   width: 100%;
   background: var(--deeper-green);
   color: var(--antique-white);
+  padding-inline: 1rem;
   border-radius: 1rem;
   display: block;
-  /* color: var(--light-green); */
-  border: 2px solid rgba(3, 48, 39, 0.43);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 153, 126, 0.15);
 }
-@supports (backdrop-filter: blur(10px)) {
+@supports (backdrop-filter: blur(6.5px)) {
   .dashboard {
-    background: var(--deeper-green);
-    backdrop-filter: blur(10px);
+    background: rgba(0, 103, 84, 0.25);
+    backdrop-filter: blur(6.5px);
   }
+}
+.dashboard-overlay {
+  background-color: rgba(0, 0, 0, 0.65);
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  position: fixed;
+  display: none;
+  z-index: 15;
+}
+
+.dashboard-overlay.view {
+  display: block;
+}
+.dashboard-wrapper {
+  display: grid;
+  place-items: center;
+  align-content: space-around;
+  height: 90%;
+  /* border: 2px solid tomato; */
 }
 .dashboard h2 {
   width: 100%;
   margin-inline: auto;
   margin-bottom: 0.5rem;
+  text-align: center;
+}
+.dashboard h3 {
+  color: var(--light-green);
 }
 .statistics {
   width: 100%;
-  height: 19rem;
   display: grid;
-  align-content: space-evenly;
-  text-align: left;
-  line-height: 1.6;
-  gap: 2rem;
-  /* border: 2px solid red; */
+  align-items: stretch;
+  justify-content: center;
+  flex-direction: row;
+  /* border: 2px solid blue; */
 }
 .win-rate-and-game-stats {
-  display: grid;
+  /* display: grid;
   grid-template-columns: repeat(2, 1fr);
   align-content: stretch;
   justify-content: space-between;
-  gap: 2rem;
+  gap: 2rem; */
 
   /* border: 2px solid white; */
 }
 .win-rate {
-  width: 50%;
+  width: 35%;
   display: grid;
   align-content: center;
   justify-content: center;
-  /* border: 2px solid yellow; */
+  /* border: 2px solid orange; */
   text-align: center;
   color: var(--antique-white);
+  padding: 0.5rem;
+  /* grid-template-columns: repeat(6, 1fr); */
+  /* grid-template-rows: repeat(2, 1fr); */
+  /* grid-auto-flow: dense; */
   /* background-color: #222; */
+}
+.win-rate p {
+  color: var(--light-green);
+  margin-bottom: 0.25rem;
 }
 .progressBar {
   height: 100%;
@@ -56,32 +87,62 @@
   text-align: center;
   white-space: pre-line;
 }
-
-.played-won-lost {
-  width: 100%;
+.win-rate-and-game-stats {
   display: grid;
-  align-content: space-evenly;
-  justify-content: center;
-  background: var(--dark-blue-black-gradient);
+}
+.played-won-lost-streak {
+  width: 100%;
+  display: flex;
+  align-content: space-between;
+  justify-content: flex-start;
+  flex-direction: column;
+  /* border: 2px solid yellow; */
 }
 .game-stats {
   width: 100%;
   display: flex;
-  align-items: stretch;
+  align-items: center;
   justify-content: space-between;
-  gap: 1.5rem;
-  margin-block: 0.25rem;
-  opacity: 0.85;
-  /* border: 2px solid blue; */
+  gap: 1rem;
+  margin-block: 0.5rem;
+  padding-inline: clamp(0.75rem, 10vw, 1.5rem);
+  /* opacity: 0.85; */
+  /* border: 2px solid red; */
 }
 .played,
 .won,
-.lost {
+.lost,
+.current-streak,
+.max-streak {
   width: 100%;
   /* padding: 100%; */
   /* background: rgba(255, 255, 255, 0.25); */
 }
-.streak-stats {
+.dashboard-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.dashboard-btn .btn {
+  font-size: clamp(1rem, 10vw, 1.2rem);
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+}
+.claim-dow {
+  background: var(--sky-blue-black-gradient);
+}
+.dashboard-btn .claim-dow:hover {
+  background: var(--blue-black-gradient);
+}
+.disconnect {
+  background: var(--btn-deep-green-red-gradient);
+  opacity: 0.8;
+}
+.disconnect:hover {
+  background: var(--btn-deep-green-red-gradient);
+  opacity: 1;
+}
+/* .streak-stats {
   width: 100%;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -89,19 +150,154 @@
   justify-content: center;
   text-align: center;
   gap: 2rem;
-  opacity: 0.85;
-  /* background: rgba(255, 255, 255, 0.25); */
-  /* border: 2px solid blue; */
-}
-.max-streak,
+  opacity: 0.85; */
+/* background: rgba(255, 255, 255, 0.25); */
+/* border: 2px solid blue; */
+/* } */
+/* .max-streak,
 .current-streak {
-  /* color: var(--antique-white); */
-
   background: var(--dark-blue-black-gradient);
-
-  /* background: var(--deeper-green); */
-  /* background: rgba(0, 0, 0, 0.2); */
-}
-/* .white-text {
-  color: var(--antique-white);
 } */
+/* ========================*/
+/* ==== SMALLEST SCREENS ==== */
+/* ========================*/
+@media (max-width: 300px) {
+  .dashboard {
+    font-size: clamp(0.75rem, 7.5vw, 0.85rem);
+  }
+  .dashboard h2 {
+    font-size: clamp(1.5rem, 10vw, 2.5rem);
+  }
+  .dashboard .btn {
+    padding: 0.5rem 0.75rem;
+    font-size: clamp(0.75rem, 7.5vw, 0.85rem);
+  }
+  .dashboard-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+    margin-inline: 5vw;
+  }
+}
+/* ========================*/
+/* ==== SMALLER SCREENS ==== */
+/* ========================*/
+@media (max-width: 599px) {
+  .dashboard {
+    background: rgba(0, 103, 84, 0.25);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(6.5px);
+    border: 1px solid rgba(0, 153, 126, 0.15);
+  }
+  .dashboard-container {
+    position: fixed;
+    opacity: 0;
+    top: 8.5vh;
+    bottom: 0;
+    /* height: 100vh; */
+    width: 100%;
+    right: -200vw;
+    transition: all 0.3s ease-out;
+    z-index: 20;
+    /* border: 2px solid red; */
+  }
+  .dashboard-container.view {
+    opacity: 1;
+    right: 0;
+  }
+}
+/* ========================*/
+/* ==== SMALLER SCREENS ==== */
+/* ========================*/
+@media (max-width: 380px) and (min-width: 300px) {
+  /* .input input {
+    width: clamp(1rem, 20vw, 3.5rem);
+  } */
+  .dashboard {
+    font-size: clamp(0.85rem, 7.5vw, 0.9rem);
+  }
+  .dashboard h2 {
+    font-size: clamp(1.5rem, 10vw, 2.5rem);
+  }
+  .dashboard .btn {
+    font-size: clamp(0.85rem, 7.5vw, 0.9rem);
+  }
+}
+/* ========================*/
+/* ==== LARGE SCREENS ==== */
+/* ========================*/
+@media (min-width: 600px) {
+  .dashboard {
+    height: clamp(40rem, 75vh, 50rem);
+    width: clamp(40rem, 75vw, 50rem);
+    margin-block: auto;
+    background: var(--deeper-green);
+    border: 2px solid rgba(3, 48, 39, 0.43);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  }
+  .dashboard-container {
+    position: fixed;
+    opacity: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    z-index: -20;
+    inset: 0;
+    /* border: 2px solid red; */
+  }
+  .dashboard-container.view {
+    opacity: 1;
+    z-index: 20;
+  }
+  .dashboard h2 {
+    width: 100%;
+    margin-inline: auto;
+    margin-bottom: 0.5rem;
+  }
+  .statistics {
+    width: 100%;
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    flex-direction: row;
+    background: var(--dark-blue-black-gradient);
+    /* border: 2px solid blue; */
+  }
+  .played-won-lost-streak {
+    width: 100%;
+    display: flex;
+    align-content: space-between;
+    justify-content: flex-start;
+    flex-direction: column;
+    /* border: 2px solid yellow; */
+  }
+  .win-rate {
+    width: 20%;
+    display: flex;
+    padding-inline: 0.5rem;
+    align-content: start;
+    justify-content: center;
+    flex-direction: column;
+    /* border: 2px solid orange; */
+    text-align: center;
+    color: var(--antique-white);
+    /* background-color: #222; */
+  }
+  .dashboard-overlay {
+    background-color: rgba(0, 0, 0, 0.75);
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    position: fixed;
+    display: none;
+    z-index: 15;
+  }
+
+  .dashboard-overlay.view {
+    display: block;
+  }
+}
