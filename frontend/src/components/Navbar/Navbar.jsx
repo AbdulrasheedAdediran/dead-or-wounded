@@ -18,7 +18,6 @@ const Navbar = ({
 
   const toggleDashboard = () => {
     setViewScoreboard(!viewDashboard);
-    console.log("Toggled dashboard");
   };
 
   return (
