@@ -1,4 +1,4 @@
-import React, { useEffect }  from "react";
+import React  from "react";
 import "./Dashboard.css";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
@@ -6,9 +6,9 @@ import "react-circular-progressbar/dist/styles.css";
 const Dashboard = (
   stats,
   connected,
-  walletAddress,
-  DOWTokenBalance,
-  networkCoinBalance,
+  // walletAddress,
+  // DOWTokenBalance,
+  // networkCoinBalance,
   disconnectWallet,
   freeTokens
 ) => {
