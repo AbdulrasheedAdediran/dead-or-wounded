@@ -142,7 +142,6 @@ const App = () => {
       const connectedProvider = await web3Modal.connect();
       const provider = new ethers.providers.Web3Provider(connectedProvider);
       const accounts = await provider.listAccounts();
-      console.log(provider)
       const networkID = await provider.getNetwork();
       //================
       //================
@@ -244,15 +243,15 @@ const App = () => {
     try {
       const playGame = await DOWContractInstance.startGame();
       const gameData = await playGame.wait();
-      console.log(gameData.events);
       randomNumbers = gameData.events[2].args.compNum;
       const convertedValues = randomNumbers.map((randomNumber) =>
         Number(randomNumber)
       );
+        console.log(convertedValues)
       setGeneratedValues([...generatedValues, convertedValues]);
+      await getUserBalance(account);
       setLoader(false);
       setLoadingSuccess(true);
-      getUserBalance(account);
     } catch {
       setLoader(false);
       setLoadingSuccess(false);
@@ -357,7 +356,7 @@ const App = () => {
   return (
     <>
       <Navbar
-        freeTokens={claimFreeTokens}
+        claimFreeTokens={claimFreeTokens}
         connectWallet={connectWallet}
         connected={connected}
         walletAddress={walletAddress}
@@ -399,6 +398,8 @@ const App = () => {
                 DOWContract={DOWContract}
                 loader={loader}
                 loadingSuccess={loadingSuccess}
+                getUserBalance={getUserBalance}
+                account={account}
               />
             }
           />

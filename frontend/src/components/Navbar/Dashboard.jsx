@@ -4,13 +4,10 @@ import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 
 const Dashboard = (
+  claimfree,
   stats,
   connected,
-  // walletAddress,
-  // DOWTokenBalance,
-  // networkCoinBalance,
-  disconnectWallet,
-  freeTokens
+  disconnectWallet
 ) => {
   let percentage = (stats.won / stats.played) * 100;
   let winRate = Math.round(percentage) || 0;
@@ -95,7 +92,7 @@ const Dashboard = (
           </div>
         </div> */}
         <div className="dashboard-btn">
-          <button onClick={() => freeTokens()} className="claim-dow btn">
+          <button onClick={()=>{claimfree()}} className="claim-dow btn">
             Claim Free DOW
           </button>
           <button onClick={disconnectWallet} className="disconnect btn">

@@ -98,6 +98,8 @@ export default function DoubleBubble(props) {
 
           <p>{props.customText}</p>
         </div>
+        <br/>
+        <h6>Processing Transaction ...</h6>
       </div>
     </div>
   );

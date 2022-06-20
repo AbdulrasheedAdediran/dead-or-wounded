@@ -12,15 +12,17 @@ const Navbar = ({
   userBalance,
   disconnectWallet,
   playerStatistics,
-  freeTokens,
+  claimFreeTokens,
 }) => {
   const [viewDashboard, setViewScoreboard] = useState(false);
+
+   const claimfree = async () => {
+    await claimFreeTokens()
+  }
 
   const toggleDashboard = () => {
     setViewScoreboard(!viewDashboard);
   };
-
-    // freeTokens()
 
   return (
     <nav>
@@ -36,16 +38,11 @@ const Navbar = ({
           </button>
         )}
       </div> */}
-      <div className={`dashboard-overlay ${viewDashboard ? "view" : ""}`}></div>
+      <div onClick={toggleDashboard}  className={`dashboard-overlay ${viewDashboard ? "view" : ""}`}></div>
       <div className={`dashboard-container ${viewDashboard ? "view" : ""}`}>
         <Dashboard
+          claimfree={claimfree}
           stats={playerStatistics}
-          freeTokens={freeTokens}
-          played={playerStatistics.gamesPlayed}
-          won={playerStatistics.gamesWon}
-          lost={playerStatistics.gamesLost}
-          currentStreak={playerStatistics.currentWinStreak}
-          highestStreak={playerStatistics.highestWinStreak}
           DOWTokenBalance={userBalance.DOWTokenBalance}
           networkCoinBalance={userBalance.networkCoinBalance}
           disconnectWallet={disconnectWallet}

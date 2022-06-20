@@ -20,17 +20,18 @@ const Modal = ({
       <div className="centered">
         <div className="modal">
           <div className="modalHeader">
-            <h5 className="heading">{numbers}</h5>
+            <h1 className="reward_text">{numbers}</h1>
           </div>
-          <button className="closeBtn" onClick={() => setIsOpen(false)}>
+          {/* <button className="closeBtn" onClick={() => setIsOpen(false)}>
             <RiCloseLine style={{ marginBottom: "-3px" }} />
-          </button>
+          </button> */}
           <div className="modalContent">
-            {message}
-            You won {tokenWon} tokens!
+          <h2 className="reward_text">You have won</h2>
+          <h1 className="reward_text">{tokenWon} DOW</h1>
+           <br></br>
+           <p> {message}</p>
             <br></br>
-            <br></br>
-            Play Again?
+            <p>Play Again?</p>
           </div>
 
           <div className="modalActions">

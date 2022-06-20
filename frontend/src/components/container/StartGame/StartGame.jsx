@@ -4,9 +4,11 @@ import Attempts from "./Attempts";
 import { useNavigate } from "react-router-dom";
 import Modal from "../../modal/Modal";
 import DOW_ABI from "../../../util/DOW_ABI.json";
-import Loader from "../../loader/Loader";
+import Loader from "../loader/Loader";
 import { Contract } from "ethers";
 const StartGame = ({
+  getUserBalance,
+  account,
   generatedValues,
   playerStatistics,
   connected,
@@ -25,7 +27,7 @@ const StartGame = ({
   const [message, setMessage] = useState(false);
   const [tokenWon, setTokenwon] = useState(0)
   const [viewScoreboard, setViewScoreboard] = useState(false);
-  const randomNumbers = generatedValues[0];
+  const randomNumbers = generatedValues[generatedValues.length-1];
   const [roundScores, setRoundScores] = useState([]);
   let [dead, setDead] = useState(0);
   let [wounded, setWounded] = useState(0);
@@ -204,7 +206,7 @@ const StartGame = ({
   const handlePlay = async (e) => {
     e.preventDefault();
     const inputs = document.querySelectorAll(".input");
-    const winMessage = "WAY TO GO GENIUS, YOU WON!!!";
+    const winMessage = "WAY TO GO GENIUS!";
     const loseMessage = "GAME OVER! BETTER LUCK NEXT TIME";
     let firstInput = inputs[0];
     if (playerInput.length < 4) {
@@ -260,7 +262,8 @@ const StartGame = ({
       res.wait();
       setIsLoading(false);
       setIsOpen(true);
-      trials <=3 ? setTokenwon(20) : trials >4 || trials ==5 ? setTokenwon(15) : trials == 6 || trials == 7 ? setTokenwon(10) : setTokenwon(0)
+      await getUserBalance(account);
+      trials <=3 ? setTokenwon(20) : trials ==4 || trials ==5 ? setTokenwon(15) : trials == 6 || trials == 7 ? setTokenwon(10) : setTokenwon(0)
     } else if (trials >= 7 && dead !== 4) {
       setMessage(loseMessage);
       setIsLoading(true);
@@ -275,8 +278,8 @@ const StartGame = ({
 
   return (
     <section className="start-game">
-      {loader && <Loader />}
-      {isLoading && <Loader />}
+      {loader && <Loader loaderText={"Claiming Reward..."}/>}
+      {isLoading && <Loader loaderText={"Generating Numbers..."}/>}
       {loadingSuccess === false && navigate("/")}
 
       <form className="entries" action="#" onSubmit={handlePlay}>
@@ -456,7 +459,7 @@ const StartGame = ({
           setIsOpen={setIsOpen}
           message={message}
           tokenWon={tokenWon}
-          numbers={generatedValues[0]}
+          numbers={randomNumbers}
           setRoundScores={setRoundScores}
           entries={entries}
           setPlayerInput={setPlayerInput}

@@ -1,7 +1,7 @@
 /* @src/components/Modal.module.css */
 
 .darkBG {
-  background-color: rgba(0, 0, 0, 0.517);
+  background-color: rgba(0, 0, 0, 0.75);
   width: 100vw;
   height: 100vh;
   z-index: 1;
@@ -10,7 +10,16 @@
   transform: translate(-50%, -50%);
   position: absolute;
 }
-
+.reward_text{
+  background: -webkit-linear-gradient(
+    hsla(111, 97%, 49%, 0.75) 20%,
+    hsla(25, 97%, 49%, 0.75),
+    hsla(0, 98%, 49%, 0.933) 90%
+  );
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  /* font-size:clamp(0.75rem, 10vw, 1.2rem) */
+}
 .centered {
   position: fixed;
   top: 50%;
@@ -20,21 +29,33 @@
 }
 
 .modal {
-  width: 350px;
-  height: 250px;
-  background: white;
+  aspect-ratio:2/1.65;
+  width: clamp(15rem, 50vw, 30rem);
   color: white;
   border-radius: 16px;
-  box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.04);
   padding:1rem;
+background:var(--deeper-green);
+   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 153, 126, 0.15);
 }
+  @supports (backdrop-filter: blur(6.5px)) {
+  .modal {
+    background: rgba(0, 103, 84, 0.25);
+    backdrop-filter: blur(6.5px);
+    /* border:2px solid red; */
+  }
+  }
+
 
 .modalHeader {
-  height: 50px;
-  background: white;
+  height: auto;
+  /* background: white; */
   overflow: hidden;
   border-top-left-radius: 16px;
   border-top-right-radius: 16px;
+}
+.modalHeader h2{
+  margin:2rem 0 1rem 0;
 }
 
 .heading {
@@ -52,7 +73,13 @@
   color: #2c3e50;
   text-align: center;
 }
-
+.modalContent h2{
+  font-size: clamp(.5rem, 8vw, 1.2rem);
+  color:white;
+}
+.modalContent h2 span{
+  font-size: clamp(1rem, 15vw, 2rem);
+}
 .modalActions {
   bottom: 2px;
   margin-bottom: 1rem;
@@ -76,8 +103,8 @@
   border-radius: 8px;
   border: none;
   font-size: 18px;
-  color: #2c3e50;
-  background: white;
+  color:var(--antique-white);;
+  /* background: white; */
   transition: all 0.25s ease;
   /* box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.06); */
   position: absolute;
@@ -138,4 +165,8 @@
   box-shadow: 0 10px 20px -10px rgba(255, 62, 78, 0.6);
   transform: translateY(-5px);
   background: #ff3e4e;
+  color:hsla(111, 97%, 49%, 0.75);
+}
+.modalContent p {
+  color:var(--antique-white);
 }
