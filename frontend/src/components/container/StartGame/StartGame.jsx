@@ -23,6 +23,7 @@ const StartGame = ({
   const [playerInput, setPlayerInput] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [message, setMessage] = useState(false);
+  const [tokenWon, setTokenwon] = useState(0)
   const [viewScoreboard, setViewScoreboard] = useState(false);
   const randomNumbers = generatedValues[0];
   const [roundScores, setRoundScores] = useState([]);
@@ -252,7 +253,6 @@ const StartGame = ({
         entries[0].focus();
       }
     }
-
     if (trials <= 7 && dead === 4) {
       setMessage(winMessage);
       setIsLoading(true);
@@ -260,6 +260,7 @@ const StartGame = ({
       res.wait();
       setIsLoading(false);
       setIsOpen(true);
+      trials <=3 ? setTokenwon(20) : trials >4 || trials ==5 ? setTokenwon(15) : trials == 6 || trials == 7 ? setTokenwon(10) : setTokenwon(0)
     } else if (trials >= 7 && dead !== 4) {
       setMessage(loseMessage);
       setIsLoading(true);
@@ -454,6 +455,7 @@ const StartGame = ({
           startGame={startGame}
           setIsOpen={setIsOpen}
           message={message}
+          tokenWon={tokenWon}
           numbers={generatedValues[0]}
           setRoundScores={setRoundScores}
           entries={entries}

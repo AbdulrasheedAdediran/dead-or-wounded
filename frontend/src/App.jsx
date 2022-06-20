@@ -16,7 +16,7 @@ import Main from "./components/Main/Main";
 import Footer from "./components/Footer/Footer";
 import MetaMaskLogo from "./components/assets/metamask.svg";
 import DOW_ABI from "./util/DOW_ABI.json";
-const DOWContract = "0x3e7369b41371cAa0A3b2995d544B0d5a6f4E5e22";
+const DOWContract = "0x9738600cae44184C96d7F81991D7dA859b521847";
 
 const App = () => {
   const [connected, setConnected] = useState(false);
@@ -142,6 +142,7 @@ const App = () => {
       const connectedProvider = await web3Modal.connect();
       const provider = new ethers.providers.Web3Provider(connectedProvider);
       const accounts = await provider.listAccounts();
+      console.log(provider)
       const networkID = await provider.getNetwork();
       //================
       //================

@@ -11,6 +11,7 @@ const Modal = ({
   setRoundScores,
   entries,
   setPlayerInput,
+  tokenWon,
 }) => {
   const navigate = useNavigate();
   return (
@@ -26,6 +27,7 @@ const Modal = ({
           </button>
           <div className="modalContent">
             {message}
+            You won {tokenWon} tokens!
             <br></br>
             <br></br>
             Play Again?

@@ -159,7 +159,6 @@ contract DOW is ERC20 {
     }else if (trial == 8) {
       o.currentWinStreak = 0;
       o.gamesLost++;
-      _transfer(address(this), msg.sender, 10000000000000000000);
     }
     if(o.currentWinStreak >= o.maxWinStreak){
       o.maxWinStreak = o.currentWinStreak;

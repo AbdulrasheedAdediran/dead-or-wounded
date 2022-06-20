@@ -96,7 +96,7 @@ const Dashboard = (
         </div> */}
         <div className="dashboard-btn">
           <button onClick={() => freeTokens()} className="claim-dow btn">
-            Claim DOW
+            Claim Free DOW
           </button>
           <button onClick={disconnectWallet} className="disconnect btn">
             Disconnect
