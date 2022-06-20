@@ -174,12 +174,12 @@ const App = () => {
   // Airdrop free DOW tokens to new players
   const claimFreeTokens = async () => {
     // e.preventDefault();
-      console.log("Trying to claim");
-      const accounts = await provider.listAccounts();
-      const signer = provider.getSigner(accounts[0]);
-      const DOWContractInstance = new Contract(DOWContract, DOW_ABI, signer);
-      await DOWContractInstance.claimFreeTokens();
-      console.log('Claimed')
+    console.log("Trying to claim");
+    const accounts = await provider.listAccounts();
+    const signer = provider.getSigner(accounts[0]);
+    const DOWContractInstance = new Contract(DOWContract, DOW_ABI, signer);
+    await DOWContractInstance.claimFreeTokens();
+    console.log("Claimed");
   };
 
   // Gets user chain balance and DOW token balance
