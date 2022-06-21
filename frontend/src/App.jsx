@@ -389,8 +389,7 @@ const App = () => {
                 connected={connected}
                 userBalance={userBalance}
                 setUserBalance={setUserBalance}
-                playerStatistics={playerStatistics}
-                setPlayerStatistics={setPlayerStatistics}
+                getPlayerStatistics={getPlayerStatistics}
                 connectWallet={connectWallet}
                 // eagerConnect={eagerConnect}
                 startGame={startGame}

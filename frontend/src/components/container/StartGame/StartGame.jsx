@@ -10,7 +10,7 @@ const StartGame = ({
   getUserBalance,
   account,
   generatedValues,
-  playerStatistics,
+  getPlayerStatistics,
   connected,
   startGame,
   userBalance,
@@ -263,6 +263,7 @@ const StartGame = ({
       setIsLoading(false);
       setIsOpen(true);
       await getUserBalance(account);
+      await getPlayerStatistics();
       trials <=3 ? setTokenwon(20) : trials ==4 || trials ==5 ? setTokenwon(15) : trials == 6 || trials == 7 ? setTokenwon(10) : setTokenwon(0)
     } else if (trials >= 7 && dead !== 4) {
       setMessage(loseMessage);
@@ -449,7 +450,6 @@ const StartGame = ({
           DOWContract={DOWContract}
           signer={signer}
           generatedValues={generatedValues}
-          playerStatistics={playerStatistics}
           connected={connected}
           userBalance={userBalance}
           checkTrials={checkTrials}
