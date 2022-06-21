@@ -23,7 +23,6 @@ const Navbar = ({
   const toggleDashboard = () => {
     setViewScoreboard(!viewDashboard);
   };
-
   return (
     <nav>
       <div className="logo">
@@ -41,11 +40,12 @@ const Navbar = ({
       <div onClick={toggleDashboard}  className={`dashboard-overlay ${viewDashboard ? "view" : ""}`}></div>
       <div className={`dashboard-container ${viewDashboard ? "view" : ""}`}>
         <Dashboard
-          claimfree={claimfree}
           stats={playerStatistics}
+          claimfree={claimfree}
           DOWTokenBalance={userBalance.DOWTokenBalance}
           networkCoinBalance={userBalance.networkCoinBalance}
           disconnectWallet={disconnectWallet}
+          toggleDashboard={toggleDashboard}
         />
       </div>
       <div className="user-info">

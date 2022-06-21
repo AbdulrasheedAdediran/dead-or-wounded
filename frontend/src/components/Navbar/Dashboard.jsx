@@ -4,14 +4,15 @@ import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 
 const Dashboard = (
-  claimfree,
   stats,
+  claimfree,
   connected,
   disconnectWallet
 ) => {
-  let percentage = (stats.won / stats.played) * 100;
+  let playerStats = stats.stats
+  let percentage = (playerStats.gamesWon / playerStats.gamesPlayed) * 100;
   let winRate = Math.round(percentage) || 0;
-
+  // console.log(stats)
   return (
     <section className="dashboard">
       <h2>Dashboard</h2>
@@ -22,24 +23,24 @@ const Dashboard = (
             <div className="played-won-lost-streak">
               <div className="game-stats played">
                 <div>Played</div>
-                <div>{stats.played || 0}</div>
+                <div>{playerStats.gamesPlayed || 0}</div>
               </div>
               <div className="game-stats won">
                 <div>Won</div>
-                <div>{stats.won || 0}</div>
+                <div>{playerStats.gamesWon || 0}</div>
               </div>
               <div className="game-stats lost">
                 <div>Lost</div>
-                <div>{stats.lost || 0}</div>
+                <div>{playerStats.gamesLost || 0}</div>
               </div>
               {/* <div className="streak-stats"> */}
               <div className="game-stats current-streak">
                 <div>Current Win Streak</div>
-                <div>{stats.currentStreak || 0}</div>
+                <div>{playerStats.currentWinStreak || 0}</div>
               </div>
               <div className="game-stats max-streak">
                 <div>Max Win Streak</div>
-                <div>{stats.highestStreak || 0}</div>
+                <div>{playerStats.highestWinStreak || 0}</div>
               </div>
               {/* </div> */}
             </div>
@@ -92,10 +93,10 @@ const Dashboard = (
           </div>
         </div> */}
         <div className="dashboard-btn">
-          <button onClick={()=>{claimfree()}} className="claim-dow btn">
+          <button onClick={stats.claimfree} className="claim-dow btn">
             Claim Free DOW
           </button>
-          <button onClick={disconnectWallet} className="disconnect btn">
+          <button onClick={()=> {stats.disconnectWallet(); stats.toggleDashboard()}} className="disconnect btn">
             Disconnect
           </button>
         </div>
