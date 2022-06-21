@@ -247,7 +247,7 @@ const App = () => {
       const convertedValues = randomNumbers.map((randomNumber) =>
         Number(randomNumber)
       );
-        console.log(convertedValues)
+        // console.log(convertedValues)
       setGeneratedValues([...generatedValues, convertedValues]);
       await getUserBalance(account);
       setLoader(false);
