@@ -179,6 +179,7 @@ const App = () => {
     const signer = provider.getSigner(accounts[0]);
     const DOWContractInstance = new Contract(DOWContract, DOW_ABI, signer);
     await DOWContractInstance.claimFreeTokens();
+    await getUserBalance(account);
     console.log("Claimed");
   };
 
@@ -229,6 +230,11 @@ const App = () => {
 
   // Start game
   const startGame = async () => {
+    if (userBalance.DOWTokenBalance < 5) {
+      alert("Insufficient DOW Tokens, you need at least 5 DOW Tokens to play");
+      setLoader(false);
+      setLoadingSuccess(false);
+    }
     setLoadingSuccess(null);
     setLoader(true);
     getPlayerStatistics();
@@ -236,10 +242,6 @@ const App = () => {
     const signer = provider.getSigner();
     const DOWContractInstance = new Contract(DOWContract, DOW_ABI, signer);
 
-    if (userBalance.DOWTokenBalance < 5) {
-      alert("Insufficient DOW Tokens, you need at least 5 DOW Tokens to play");
-      return;
-    }
     try {
       const playGame = await DOWContractInstance.startGame();
       const gameData = await playGame.wait();
