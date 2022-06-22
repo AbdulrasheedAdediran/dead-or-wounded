@@ -158,18 +158,16 @@ const App = () => {
   };
 
   const refreshState = () => {
-    // setAccount(null);
-    // setChainId(null);
-    // setNetwork(null);
+    // setAccount();
+    // setChainId();
+    // setNetwork();
     // setWalletAddress();
-    // setUserBalance(undefined);
-
+    // setUserBalance();
     setConnected(false);
   };
 
   const disconnectWallet = async () => {
     await web3Modal.clearCachedProvider();
-    localStorage.removeItem("cachedProvider");
     refreshState();
   };
 

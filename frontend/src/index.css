@@ -130,6 +130,9 @@ button {
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
 }
+button:disabled {
+  -webkit-tap-highlight-color: transparent;
+}
 button:hover {
   /* background: var(--blue-black-gradient); */
   color: var(--antique-white);
@@ -164,6 +167,18 @@ input {
   }
   button {
     font-size: clamp(0.85rem, 7.5vw, 0.9rem);
+  }
+}
+/* ========================*/
+/* ==== SMALLER SCREENS ==== */
+/* ========================*/
+@media (max-width: 599px) {
+  .page {
+    display: grid;
+    place-items: center;
+    align-content: space-between;
+    gap: 0.75rem;
+    min-height: 91.5vh;
   }
 }
 /* ========================*/

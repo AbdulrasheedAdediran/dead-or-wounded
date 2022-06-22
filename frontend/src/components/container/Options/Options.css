@@ -1,5 +1,4 @@
 .options {
-  display: block;
   width: 100%;
   padding-inline: 1rem;
   margin-inline: auto;
@@ -14,6 +13,7 @@
 
 .options .button {
   width: 100%;
+  margin-block: 2rem;
   margin-inline: auto;
   background: var(--sky-blue-black-gradient);
   color: var(--antique-white);

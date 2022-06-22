@@ -9,35 +9,37 @@ const Options = () => {
   const [soundEffect, setSoundEffect] = useState(false);
   useEffect(() => {}, [isPlaying]);
   return (
-    <div className="options">
-      <h1>Options</h1>
-      <div className="music-sound">
-        <div className="grid-column">
-          <div className="div_flex">
-            <div>
-              <p>Music</p>
+    <section className="page options">
+      <div>
+        <h1>Options</h1>
+        <div className="music-sound">
+          <div className="grid-column">
+            <div className="div_flex">
+              <div>
+                <p>Music</p>
+              </div>
+              <div className="div_flex">
+                <Switch
+                  isOn={isPlaying}
+                  onColor="var(--sky-blue-black-gradient)"
+                  handleToggle={() => setIsPlaying(!isPlaying)}
+                />
+                {!isPlaying ? "Off" : "On"}
+              </div>
             </div>
             <div className="div_flex">
-              <Switch
-                isOn={isPlaying}
-                onColor="var(--sky-blue-black-gradient)"
-                handleToggle={() => setIsPlaying(!isPlaying)}
-              />
-              {!isPlaying ? "Off" : "On"}
-            </div>
-          </div>
-          <div className="div_flex">
-            <div>
-              <p>Sound FX</p>
-            </div>
-            <div className="div_flex">
-              <Switch
-                className="switch"
-                isOn={soundEffect}
-                onColor="var(--sky-blue-black-gradient)"
-                handleToggle={() => setSoundEffect(!soundEffect)}
-              />
-              {!soundEffect ? "Off" : "On"}
+              <div>
+                <p>Sound FX</p>
+              </div>
+              <div className="div_flex">
+                <Switch
+                  className="switch"
+                  isOn={soundEffect}
+                  onColor="var(--sky-blue-black-gradient)"
+                  handleToggle={() => setSoundEffect(!soundEffect)}
+                />
+                {!soundEffect ? "Off" : "On"}
+              </div>
             </div>
           </div>
         </div>
@@ -46,7 +48,7 @@ const Options = () => {
       <Link to="/">
         <button className="button">Back</button>
       </Link>
-    </div>
+    </section>
   );
 };
 
