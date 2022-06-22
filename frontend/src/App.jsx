@@ -29,6 +29,7 @@ const App = () => {
   const [account, setAccount] = useState();
   const [network, setNetwork] = useState();
   const [chainId, setChainId] = useState();
+  const [claimed, setClaimed] = useState(false)
   const [userBalance, setUserBalance] = useState({
     DOWTokenBalance: 0,
     networkCoinBalance: 0,
@@ -137,6 +138,8 @@ const App = () => {
   //   }
   // };
   // Requests wallet connection
+
+
   const connectWallet = async () => {
     try {
       const connectedProvider = await web3Modal.connect();
@@ -181,7 +184,14 @@ const App = () => {
     await DOWContractInstance.claimFreeTokens();
     await getUserBalance(account);
     console.log("Claimed");
+    // await checkClaimed();
   };
+   const checkClaimed = async () => {
+    const signer = provider.getSigner();
+    const DOWContractInstance = new Contract(DOWContract, DOW_ABI, signer);
+    const claimStatus = await DOWContractInstance.checkClaimed();
+    setClaimed(claimStatus);
+  }
 
   // Gets user chain balance and DOW token balance
   const getUserBalance = async (userAccount) => {
@@ -201,6 +211,7 @@ const App = () => {
         DOWTokenBalance: formartedDOWTokenBalance,
         networkCoinBalance: formartedNetworkCoinBalance,
       });
+      // await checkClaimed();
       return { formartedNetworkCoinBalance, formartedDOWTokenBalance };
     } catch (error) {
       console.error(error);
@@ -226,10 +237,11 @@ const App = () => {
       currentWinStreak: Number(currentStreak),
       highestWinStreak: Number(highestStreak),
     });
-  };
+  }; 
 
   // Start game
   const startGame = async () => {
+    setGeneratedValues([]);
     if (userBalance.DOWTokenBalance < 5) {
       alert("Insufficient DOW Tokens, you need at least 5 DOW Tokens to play");
       setLoader(false);
@@ -250,7 +262,7 @@ const App = () => {
         Number(randomNumber)
       );
         // console.log(convertedValues)
-      setGeneratedValues([...generatedValues, convertedValues]);
+      setGeneratedValues(convertedValues);
       await getUserBalance(account);
       setLoader(false);
       setLoadingSuccess(true);
@@ -365,6 +377,7 @@ const App = () => {
         userBalance={userBalance}
         disconnectWallet={disconnectWallet}
         playerStatistics={playerStatistics}
+        claimed={claimed}
       />
       <BrowserRouter>
         <Routes>

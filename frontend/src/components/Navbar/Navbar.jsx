@@ -13,6 +13,7 @@ const Navbar = ({
   disconnectWallet,
   playerStatistics,
   claimFreeTokens,
+  claimed
 }) => {
   const [viewDashboard, setViewScoreboard] = useState(false);
 
@@ -46,6 +47,7 @@ const Navbar = ({
           networkCoinBalance={userBalance.networkCoinBalance}
           disconnectWallet={disconnectWallet}
           toggleDashboard={toggleDashboard}
+          claimed={claimed}
         />
       </div>
       <div className="user-info">

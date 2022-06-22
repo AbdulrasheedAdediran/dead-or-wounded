@@ -21,13 +21,14 @@ const StartGame = ({
   loadingSuccess,
   loader,
 }) => {
+  console.log(generatedValues)
   let navigate = useNavigate();
   const [playerInput, setPlayerInput] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [message, setMessage] = useState(false);
   const [tokenWon, setTokenwon] = useState(0)
   const [viewScoreboard, setViewScoreboard] = useState(false);
-  const randomNumbers = generatedValues[generatedValues.length-1];
+  const randomNumbers = generatedValues;
   const [roundScores, setRoundScores] = useState([]);
   let [dead, setDead] = useState(0);
   let [wounded, setWounded] = useState(0);
@@ -264,6 +265,7 @@ const StartGame = ({
       setIsOpen(true);
       await getUserBalance(account);
       await getPlayerStatistics();
+      setTrials(1);
       trials <=3 ? setTokenwon(20) : trials ==4 || trials ==5 ? setTokenwon(15) : trials == 6 || trials == 7 ? setTokenwon(10) : setTokenwon(0)
     } else if (trials >= 7 && dead !== 4) {
       setMessage(loseMessage);
@@ -273,7 +275,7 @@ const StartGame = ({
       setIsLoading(false);
       setIsOpen(true);
       entries.reset();
-      setTrials(0);
+      setTrials(1);
     }
   };
 

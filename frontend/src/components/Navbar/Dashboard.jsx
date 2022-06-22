@@ -93,9 +93,9 @@ const Dashboard = (
           </div>
         </div> */}
         <div className="dashboard-btn">
-          <button onClick={stats.claimfree} className="claim-dow btn">
+          {!stats.claimed ? <button onClick={stats.claimfree} className="claim-dow btn" >
             Claim Free DOW
-          </button>
+          </button> : ''}
           <button onClick={()=> {stats.disconnectWallet(); stats.toggleDashboard()}} className="disconnect btn">
             Disconnect
           </button>

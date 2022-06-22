@@ -65,7 +65,7 @@ contract DOW is ERC20 {
      * should be used in the contract instead of msg.data, where this difference matters.
      */
     // --------------------------------VRF Method--------------------------------
-    function generateRandomNumber() public {
+    function generateRandomNumber() internal {
         vrf.requestRandomWords();
         randNum = vrf.s_requestId();
     }
@@ -131,11 +131,11 @@ contract DOW is ERC20 {
     if (trial == 1) {
       o.currentWinStreak++;
       o.gamesWon++;
-      _transfer(address(this), msg.sender, 20000000000000000000);
+      _transfer(address(this), msg.sender, 25000000000000000000);
     } else if (trial == 2) {
       o.currentWinStreak++;
       o.gamesWon++;
-      _transfer(address(this), msg.sender, 20000000000000000000);
+      _transfer(address(this), msg.sender, 25000000000000000000);
     } else if (trial == 3) {
       o.currentWinStreak++;
       o.gamesWon++;
@@ -143,19 +143,19 @@ contract DOW is ERC20 {
     } else if (trial == 4) {
       o.currentWinStreak++;
       o.gamesWon++;
-      _transfer(address(this), msg.sender, 15000000000000000000);
+      _transfer(address(this), msg.sender, 20000000000000000000);
     } else if (trial == 5) {
       o.currentWinStreak++;
       o.gamesWon++;
-      _transfer(address(this), msg.sender, 15000000000000000000);
+      _transfer(address(this), msg.sender, 20000000000000000000);
     } else if (trial == 6) {
       o.currentWinStreak++;
       o.gamesWon++;
-      _transfer(address(this), msg.sender, 10000000000000000000);
+      _transfer(address(this), msg.sender, 20000000000000000000);
     } else if (trial == 7) {
       o.currentWinStreak++;
       o.gamesWon++;
-      _transfer(address(this), msg.sender, 10000000000000000000);
+      _transfer(address(this), msg.sender, 20000000000000000000);
     }else if (trial == 8) {
       o.currentWinStreak = 0;
       o.gamesLost++;
@@ -165,11 +165,12 @@ contract DOW is ERC20 {
     }
   }
 
-  function claimWonTokens (uint256 _amount) external {
-    if( _amount < 0) revert InsufficientTokens();
-    require (playerAdded[msg.sender], "Player not Found");
-    _transfer(address(this),msg.sender, _amount);
-  }
+  // function claimWonTokens (uint256 _amount) external {
+  //   if( _amount < 0) revert InsufficientTokens();
+  //   require (playerAdded[msg.sender], "Player not Found");
+  //   _transfer(address(this),msg.sender, _amount);
+  // }
+
 
   function checkStreak () external view returns (Player memory) {
     Player storage o = PlayerStruct[msg.sender];
@@ -188,7 +189,11 @@ contract DOW is ERC20 {
   function claimFreeTokens() external {
     if(claimTokens[msg.sender]) revert AlreadyClaimedFreeTokens();
      claimTokens[msg.sender] = true;
-    _transfer(address(this), msg.sender, 100000000000000000000);
+    _transfer(address(this), msg.sender, 50000000000000000000);
+  }
+
+  function checkClaimed () external view returns (bool claimed){
+    claimed = claimTokens[msg.sender];
   }
 
   function transferToCreator(uint _amount, address _addr) external{
