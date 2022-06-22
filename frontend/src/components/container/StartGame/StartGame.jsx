@@ -4,7 +4,7 @@ import Attempts from "./Attempts";
 import { useNavigate } from "react-router-dom";
 import Modal from "../../modal/Modal";
 import DOW_ABI from "../../../util/DOW_ABI.json";
-import Loader from "../../loader/Loader";
+import Loader from "../loader/Loader";
 import { Contract } from "ethers";
 const StartGame = ({
   generatedValues,
