@@ -33,7 +33,7 @@ nav img {
   cursor: pointer;
   background: transparent;
   position: relative;
-  z-index: 50;
+  z-index: 10;
 }
 .menu-container.hide {
   display: none;

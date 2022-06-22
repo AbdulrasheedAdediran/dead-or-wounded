@@ -13,7 +13,7 @@ async function main() {
     "300000000000000000000",
     "0x30f9A9C1aA282508901b606DEA2D887D4dD072e8"
   );
-  // console.log(await Greeter.balanceOf('0x30f9A9C1aA282508901b606DEA2D887D4dD072e8'))
+  console.log(await greeter.balanceOf('0x30f9A9C1aA282508901b606DEA2D887D4dD072e8'))
   // await greeter.startGame();
 
   console.log("DOW deployed to:", greeter.address);

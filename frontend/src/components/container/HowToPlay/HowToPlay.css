@@ -1,5 +1,4 @@
 .howToPlay {
-  display: block;
   padding-inline: 1rem;
   margin-inline: auto;
   width: 100%;
@@ -12,7 +11,7 @@
   text-align: center;
   width: 100%;
 }
-.howToPlay ul li {
+.howToPlay p {
   font-size: clamp(0.75rem, 7.5vw, 1rem);
   text-align: justify;
   word-wrap: break-word;
@@ -39,7 +38,7 @@
 /* ==== SMALLEST SCREENS ==== */
 /* ========================*/
 @media (max-width: 300px) {
-  .howToPlay ul li {
+  .howToPlay p {
     font-size: clamp(0.75rem, 7.5vw, 0.85rem);
   }
   .howToPlay h1 {
@@ -56,7 +55,7 @@
   .howToPlay h1 {
     font-size: clamp(1.5rem, 10vw, 2.5rem);
   }
-  .howToPlay ul li {
+  .howToPlay {
     font-size: clamp(0.85rem, 7.5vw, 0.9rem);
   }
   .howToPlay .button {
@@ -78,7 +77,7 @@
   .howToPlay h1 {
     font-size: clamp(2rem, 25vw, 3rem);
   }
-  .howToPlay ul li {
+  .howToPlay p {
     font-size: clamp(1rem, 10vw, 1.2rem);
   }
 }

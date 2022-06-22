@@ -7,10 +7,8 @@ import DOW_ABI from "../../../util/DOW_ABI.json";
 import Loader from "../loader/Loader";
 import { Contract } from "ethers";
 const StartGame = ({
-  getUserBalance,
-  account,
   generatedValues,
-  getPlayerStatistics,
+  playerStatistics,
   connected,
   startGame,
   userBalance,
@@ -20,13 +18,15 @@ const StartGame = ({
   provider,
   loadingSuccess,
   loader,
+  getPlayerStatistics,
+  getUserBalance,
+  account
 }) => {
-  console.log(generatedValues)
+  // console.log(generatedValues)
   let navigate = useNavigate();
   const [playerInput, setPlayerInput] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [message, setMessage] = useState(false);
-  const [tokenWon, setTokenwon] = useState(0)
   const [viewScoreboard, setViewScoreboard] = useState(false);
   const randomNumbers = generatedValues;
   const [roundScores, setRoundScores] = useState([]);
@@ -34,10 +34,12 @@ const StartGame = ({
   let [wounded, setWounded] = useState(0);
   const [trials, setTrials] = useState(1);
   const [index, setIndex] = useState(0);
+  const [tokenWon, setTokenwon] = useState(0);
   const [isLoading, setIsLoading] = useState(null);
   const entries = document.querySelector(".entries");
   const signer = provider.getSigner();
   const DOWContractInstance = new Contract(DOWContract, DOW_ABI, signer);
+
   //===========================//
   //--Handles Start Game Call--//
   //===========================//
@@ -71,6 +73,7 @@ const StartGame = ({
     return () => {
       document.removeEventListener("keyup", listener);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [document, playerInput]);
   //==========================//
   //--Handles Number Buttons--//
@@ -113,7 +116,7 @@ const StartGame = ({
     // Max length of each input field
     const maxLength = parseInt(target.attributes["maxlength"].value);
     // Previous input field
-    const previous = target.previousElementSibling;
+    // const previous = target.previousElementSibling;
     // Next input field
     const next = target.nextElementSibling;
     // Wrapper for all input fields
@@ -207,7 +210,7 @@ const StartGame = ({
   const handlePlay = async (e) => {
     e.preventDefault();
     const inputs = document.querySelectorAll(".input");
-    const winMessage = "WAY TO GO GENIUS!";
+    const winMessage = "WAY TO GO GENIUS, YOU WON!!!";
     const loseMessage = "GAME OVER! BETTER LUCK NEXT TIME";
     let firstInput = inputs[0];
     if (playerInput.length < 4) {
@@ -256,6 +259,7 @@ const StartGame = ({
         entries[0].focus();
       }
     }
+
     if (trials <= 7 && dead === 4) {
       setMessage(winMessage);
       setIsLoading(true);
@@ -267,6 +271,7 @@ const StartGame = ({
       await getPlayerStatistics();
       setTrials(1);
       trials <=3 ? setTokenwon(20) : trials ==4 || trials ==5 ? setTokenwon(15) : trials == 6 || trials == 7 ? setTokenwon(10) : setTokenwon(0)
+
     } else if (trials >= 7 && dead !== 4) {
       setMessage(loseMessage);
       setIsLoading(true);
@@ -281,8 +286,8 @@ const StartGame = ({
 
   return (
     <section className="start-game">
-      {loader && <Loader loaderText={"Claiming Reward..."}/>}
-      {isLoading && <Loader loaderText={"Generating Numbers..."}/>}
+      {loader && <Loader />}
+      {isLoading && <Loader />}
       {loadingSuccess === false && navigate("/")}
 
       <form className="entries" action="#" onSubmit={handlePlay}>
@@ -452,6 +457,7 @@ const StartGame = ({
           DOWContract={DOWContract}
           signer={signer}
           generatedValues={generatedValues}
+          playerStatistics={playerStatistics}
           connected={connected}
           userBalance={userBalance}
           checkTrials={checkTrials}
@@ -460,11 +466,11 @@ const StartGame = ({
           startGame={startGame}
           setIsOpen={setIsOpen}
           message={message}
-          tokenWon={tokenWon}
-          numbers={randomNumbers}
+          numbers={generatedValues}
           setRoundScores={setRoundScores}
           entries={entries}
           setPlayerInput={setPlayerInput}
+          tokenWon={tokenWon}
         />
       )}
       {/* <Link to="/">

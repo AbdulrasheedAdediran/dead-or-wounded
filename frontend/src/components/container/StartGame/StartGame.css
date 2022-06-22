@@ -86,7 +86,7 @@ input:focus {
 }
 .clear {
   background: var(--btn-deep-green-red-gradient);
-  opacity: 0.8;
+  opacity: 0.75;
 }
 .clear:hover {
   opacity: 1;

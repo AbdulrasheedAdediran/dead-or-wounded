@@ -1,15 +1,17 @@
-import React  from "react";
+import React from "react";
 import "./Dashboard.css";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 
 const Dashboard = (
   stats,
+  tokenBalance,
+  coinBalance,
   claimfree,
   connected,
   disconnectWallet
 ) => {
-  let playerStats = stats.stats
+  let playerStats = stats.stats;
   let percentage = (playerStats.gamesWon / playerStats.gamesPlayed) * 100;
   let winRate = Math.round(percentage) || 0;
   // console.log(stats)
@@ -19,29 +21,30 @@ const Dashboard = (
       <div className="dashboard-wrapper">
         <h3>Game Stats</h3>
         <div className="statistics">
-          <div className="win-rate-and-game-stats">
+          <div className="game-statistics">
             <div className="played-won-lost-streak">
               <div className="game-stats played">
-                <div>Played</div>
+                <div>Games Played</div>
                 <div>{playerStats.gamesPlayed || 0}</div>
               </div>
               <div className="game-stats won">
-                <div>Won</div>
+                <div>Games Won</div>
                 <div>{playerStats.gamesWon || 0}</div>
               </div>
               <div className="game-stats lost">
-                <div>Lost</div>
+                <div>Games Lost</div>
                 <div>{playerStats.gamesLost || 0}</div>
               </div>
               {/* <div className="streak-stats"> */}
-              <div className="game-stats current-streak">
-                <div>Current Win Streak</div>
-                <div>{playerStats.currentWinStreak || 0}</div>
-              </div>
               <div className="game-stats max-streak">
-                <div>Max Win Streak</div>
+                <div>Max Streak</div>
                 <div>{playerStats.highestWinStreak || 0}</div>
               </div>
+              <div className="game-stats current-streak">
+                <div>Current Streak</div>
+                <div>{playerStats.currentWinStreak || 0}</div>
+              </div>
+
               {/* </div> */}
             </div>
           </div>
@@ -83,15 +86,16 @@ const Dashboard = (
             />
           </div>
         </div>
-        {/* <h3>Assets</h3>
-        <div>
+        <h3>Assets</h3>
+        <div className="userAssets">
           <div className="assets">
-            {parseFloat(networkCoinBalance).toFixed(2) || 0} MATIC
+            {parseFloat(stats.coinBalance).toFixed(2) || 0} MATIC
           </div>
           <div className="assets">
-            {parseFloat(DOWTokenBalance).toFixed(2) || 0} DOW
+            {parseFloat(stats.tokenBalance).toFixed(2) || 0} DOW
           </div>
-        </div> */}
+        </div> 
+        <br/>
         <div className="dashboard-btn">
           {!stats.claimed ? <button onClick={stats.claimfree} className="claim-dow btn" >
             Claim Free DOW
@@ -101,6 +105,20 @@ const Dashboard = (
           </button>
         </div>
       </div>
+      {/* <div className="dashboard-btn">
+        <button
+          onClick={() => {
+            stats.disconnectWallet();
+            stats.toggleDashboard();
+          }}
+          className="disconnect btn"
+        >
+          Disconnect
+        </button>
+        <button onClick={stats.claimfree} className="claim-dow btn">
+          Claim Free DOW
+        </button>
+      </div> */}
     </section>
   );
 };
