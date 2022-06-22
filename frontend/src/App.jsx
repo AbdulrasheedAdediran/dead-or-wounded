@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { ethers, utils, Contract } from "ethers";
 import { useState, useEffect } from "react";
 import Web3Modal from "web3modal";
@@ -13,7 +13,6 @@ import Options from "./components/container/Options/Options";
 import About from "./components/container/About/About";
 import Navbar from "./components/Navbar/Navbar";
 import Main from "./components/Main/Main";
-import Footer from "./components/Footer/Footer";
 import MetaMaskLogo from "./components/assets/metamask.svg";
 import DOW_ABI from "./util/DOW_ABI.json";
 const DOWContract = "0x9738600cae44184C96d7F81991D7dA859b521847";
@@ -41,6 +40,7 @@ const App = () => {
     highestWinStreak: 0,
     gamesWon: 0,
   });
+  const location = useLocation();
 
   //==========================//
   // WEB3MODAL INTEGRATION
@@ -70,6 +70,17 @@ const App = () => {
           alchemyId: process.env.REACT_APP_ALCHEMY_KEY,
           rpc: process.env.REACT_APP_MUMBAI_RPC_URL,
         },
+        qrcode: true,
+        qrcodeModalOptions: {
+          mobileLinks: [
+            "metamask",
+            "trust",
+            "rainbow",
+            "argent",
+            "imtoken",
+            "pillar",
+          ],
+        },
       },
 
       coinbasewallet: {
@@ -91,10 +102,10 @@ const App = () => {
       },
     };
     const newWeb3Modal = new Web3Modal({
-      cacheProvider: false, // very important
+      cacheProvider: true, // very important
       network: "maticmum",
       disableInjectedProvider: false,
-      displayNoInjectedProvider: false,
+      // displayNoInjectedProvider: false,
       theme: {
         background: "rgb(20,30,30, 0.65)",
         main: "rgb(199, 199, 199)",
@@ -261,6 +272,7 @@ const App = () => {
       const convertedValues = randomNumbers.map((randomNumber) =>
         Number(randomNumber)
       );
+
         // console.log(convertedValues)
       setGeneratedValues(convertedValues);
       await getUserBalance(account);
@@ -378,50 +390,51 @@ const App = () => {
         disconnectWallet={disconnectWallet}
         playerStatistics={playerStatistics}
         claimed={claimed}
+        location={location}
       />
-      <BrowserRouter>
-        <Routes>
-          <Route
-            path="/"
-            exact
-            element={
-              <Main
-                connectWallet={connectWallet}
-                connected={connected}
-                startGame={startGame}
-                userBalance={userBalance}
-              />
-            }
-          />
-          <Route
-            path="/startGame"
-            exact
-            element={
-              <StartGame
-                generatedValues={generatedValues}
-                connected={connected}
-                userBalance={userBalance}
-                setUserBalance={setUserBalance}
-                getPlayerStatistics={getPlayerStatistics}
-                connectWallet={connectWallet}
-                // eagerConnect={eagerConnect}
-                startGame={startGame}
-                checkTrials={checkTrials}
-                claimFreeTokens={claimFreeTokens}
-                provider={provider}
-                DOWContract={DOWContract}
-                loader={loader}
-                loadingSuccess={loadingSuccess}
-                getUserBalance={getUserBalance}
-                account={account}
-              />
-            }
-          />
-          <Route path="/howToPlay" exact element={<HowToPlay />} />
-          <Route path="/options" exact element={<Options />} />
-          <Route path="/about" exact element={<About />} />
-        </Routes>
-      </BrowserRouter>
+      {/* <BrowserRouter> */}
+      <Routes>
+        <Route
+          path="/"
+          exact
+          element={
+            <Main
+              connectWallet={connectWallet}
+              connected={connected}
+              startGame={startGame}
+              userBalance={userBalance}
+            />
+          }
+        />
+        <Route
+          path="/startGame"
+          exact
+          element={
+            <StartGame
+              generatedValues={generatedValues}
+              connected={connected}
+              userBalance={userBalance}
+              setUserBalance={setUserBalance}
+              getPlayerStatistics={getPlayerStatistics}
+              connectWallet={connectWallet}
+              // eagerConnect={eagerConnect}
+              startGame={startGame}
+              checkTrials={checkTrials}
+              claimFreeTokens={claimFreeTokens}
+              provider={provider}
+              DOWContract={DOWContract}
+              loader={loader}
+              loadingSuccess={loadingSuccess}
+              getUserBalance={getUserBalance}
+              account={account}
+            />
+          }
+        />
+        <Route path="/howToPlay" exact element={<HowToPlay />} />
+        <Route path="/options" exact element={<Options />} />
+        <Route path="/about" exact element={<About />} />
+      </Routes>
+      {/* </BrowserRouter> */}
       {/* <Footer /> */}
     </>
   );

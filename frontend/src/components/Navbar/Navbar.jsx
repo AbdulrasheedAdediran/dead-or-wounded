@@ -13,17 +13,19 @@ const Navbar = ({
   disconnectWallet,
   playerStatistics,
   claimFreeTokens,
-  claimed
+  claimed,
+  location
 }) => {
   const [viewDashboard, setViewScoreboard] = useState(false);
-
-   const claimfree = async () => {
-    await claimFreeTokens()
-  }
+  const startGamePath = "/startGame";
+  const claimfree = async () => {
+    await claimFreeTokens();
+  };
 
   const toggleDashboard = () => {
     setViewScoreboard(!viewDashboard);
   };
+
   return (
     <nav>
       <div className="logo">
@@ -38,7 +40,10 @@ const Navbar = ({
           </button>
         )}
       </div> */}
-      <div onClick={toggleDashboard}  className={`dashboard-overlay ${viewDashboard ? "view" : ""}`}></div>
+      <div
+        onClick={toggleDashboard}
+        className={`dashboard-overlay ${viewDashboard ? "view" : ""}`}
+      ></div>
       <div className={`dashboard-container ${viewDashboard ? "view" : ""}`}>
         <Dashboard
           stats={playerStatistics}
@@ -76,7 +81,9 @@ const Navbar = ({
         <div className="menu-icon">
           {connected && (
             <button
-              className="menu-container"
+              className={`menu-container ${
+                location.pathname === startGamePath ? "hide" : ""
+              }`}
               onClick={() => {
                 toggleDashboard();
               }}

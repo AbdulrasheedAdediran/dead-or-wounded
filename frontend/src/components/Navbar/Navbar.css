@@ -35,6 +35,9 @@ nav img {
   position: relative;
   z-index: 50;
 }
+.menu-container.hide {
+  display: none;
+}
 .menu-circle {
   display: flex;
   align-items: center;
