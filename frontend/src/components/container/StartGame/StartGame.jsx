@@ -25,9 +25,9 @@ const StartGame = ({
   const [playerInput, setPlayerInput] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [message, setMessage] = useState(false);
-  const [tokenWon, setTokenwon] = useState(0)
+  const [tokenWon, setTokenwon] = useState(0);
   const [viewScoreboard, setViewScoreboard] = useState(false);
-  const randomNumbers = generatedValues[generatedValues.length-1];
+  const randomNumbers = generatedValues[generatedValues.length - 1];
   const [roundScores, setRoundScores] = useState([]);
   let [dead, setDead] = useState(0);
   let [wounded, setWounded] = useState(0);
@@ -50,7 +50,7 @@ const StartGame = ({
   }, []);
 
   const callStart = () => {
-    startGame();
+    // startGame();
   };
   //=================================//
   //-Handles Backspace & Enter Keys--//
@@ -264,7 +264,13 @@ const StartGame = ({
       setIsOpen(true);
       await getUserBalance(account);
       await getPlayerStatistics();
-      trials <=3 ? setTokenwon(20) : trials ==4 || trials ==5 ? setTokenwon(15) : trials == 6 || trials == 7 ? setTokenwon(10) : setTokenwon(0)
+      trials <= 3
+        ? setTokenwon(20)
+        : trials == 4 || trials == 5
+        ? setTokenwon(15)
+        : trials == 6 || trials == 7
+        ? setTokenwon(10)
+        : setTokenwon(0);
     } else if (trials >= 7 && dead !== 4) {
       setMessage(loseMessage);
       setIsLoading(true);
@@ -279,8 +285,8 @@ const StartGame = ({
 
   return (
     <section className="start-game">
-      {loader && <Loader loaderText={"Claiming Reward..."}/>}
-      {isLoading && <Loader loaderText={"Generating Numbers..."}/>}
+      {loader && <Loader loaderText={"Claiming Reward..."} />}
+      {isLoading && <Loader loaderText={"Generating Numbers..."} />}
       {loadingSuccess === false && navigate("/")}
 
       <form className="entries" action="#" onSubmit={handlePlay}>

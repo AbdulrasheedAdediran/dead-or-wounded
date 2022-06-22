@@ -104,7 +104,7 @@ const App = () => {
       cacheProvider: true, // very important
       network: "maticmum",
       disableInjectedProvider: false,
-      // displayNoInjectedProvider: false,
+      displayNoInjectedProvider: false,
       theme: {
         background: "rgb(20,30,30, 0.65)",
         main: "rgb(199, 199, 199)",
@@ -119,50 +119,39 @@ const App = () => {
 
     setWeb3Modal(newWeb3Modal);
   }, []);
+
   //==========================//
   //==========================//
-  // Eagerly connects user and fetches their account data
-  // const eagerConnect = async () => {
-  //   const networkID = await provider.getNetwork();
-  //   setNetwork(networkID);
-  //   setChainId(await networkID.chainId);
-  //   console.log("Chain ID next");
-  //   console.log(await networkID.chainId);
-  //   if (networkID.chainId !== 80001) {
-  //     setConnected(false);
-  //   } else;
-  //   const accounts = await provider.listAccounts();
 
-  //   if (!accounts.length) {
-  //     return;
-  //   } else {
-  //     const userAccount = await getUserBalance(accounts[0]);
-  //     setUserBalance({
-  //       DOWTokenBalance: userAccount.formartedDOWTokenBalance,
-  //       networkCoinBalance: userAccount.formartedNetworkCoinBalance,
-  //     });
-
-  //     setConnected(true);
-  //     setWalletAddress(accounts[0]);
-  //     getPlayerStatistics();
-  //   }
-  // };
   // Requests wallet connection
   const connectWallet = async () => {
     try {
       const connectedProvider = await web3Modal.connect();
       const provider = new ethers.providers.Web3Provider(connectedProvider);
       const accounts = await provider.listAccounts();
-      const networkID = await provider.getNetwork();
-      //================
-      //================
-      setNetwork(networkID);
-      setChainId(networkID.chainId);
+      const chainData = await provider.getNetwork();
+      // const accounts = await window.ethereum.request({
+      //   method: "eth_requestAccounts",
+      // });
+
       setProvider(provider);
-      setWalletAddress(accounts[0]);
-      setAccount(accounts[0]);
-      getUserBalance(accounts[0]);
-      setConnected(true);
+      if (chainData.chainId !== 80001) {
+        alert(
+          "You are connected to an unsupported network, please switch to Polygon Mumbai Testnet"
+        );
+        setConnected(false);
+        return;
+      } else {
+        // web3Modal.setCachedProvider(connectedProvider);
+        setWalletAddress(accounts[0]);
+        setAccount(accounts[0]);
+        getUserBalance(accounts[0]);
+        setNetwork(chainData);
+        setChainId(chainData.chainId);
+        setConnected(true);
+      }
+      //================
+      //================
     } catch (err) {
       console.log(err);
     }
@@ -174,34 +163,34 @@ const App = () => {
     // setNetwork(null);
     // setWalletAddress();
     // setUserBalance(undefined);
+
     setConnected(false);
   };
 
   const disconnectWallet = async () => {
     await web3Modal.clearCachedProvider();
+    localStorage.removeItem("cachedProvider");
     refreshState();
   };
 
   // Airdrop free DOW tokens to new players
   const claimFreeTokens = async () => {
     // e.preventDefault();
-    console.log("Trying to claim");
     const accounts = await provider.listAccounts();
     const signer = provider.getSigner(accounts[0]);
     const DOWContractInstance = new Contract(DOWContract, DOW_ABI, signer);
     await DOWContractInstance.claimFreeTokens();
     await getUserBalance(account);
-    console.log("Claimed");
   };
 
   // Gets user chain balance and DOW token balance
-  const getUserBalance = async (userAccount) => {
-    // const accounts = await provider.listAccounts();
-    if (provider == null) return;
+  const getUserBalance = async () => {
+    if (!provider?.on) return;
+    const accounts = await provider.listAccounts();
     try {
-      const networkCoinBalance = await provider.getBalance(userAccount);
+      const networkCoinBalance = await provider.getBalance(accounts[0]);
       const DOWContractInstance = new Contract(DOWContract, DOW_ABI, provider);
-      const DOWTokenBalance = await DOWContractInstance.balanceOf(userAccount);
+      const DOWTokenBalance = await DOWContractInstance.balanceOf(accounts[0]);
       const formartedNetworkCoinBalance = utils.formatUnits(
         networkCoinBalance,
         18
@@ -219,7 +208,8 @@ const App = () => {
   };
   // Get player's statistics
   const getPlayerStatistics = async () => {
-    const signer = provider.getSigner();
+    const accounts = await provider.listAccounts();
+    const signer = await provider.getSigner(accounts[0]);
     const DOWContractInstance = new Contract(DOWContract, DOW_ABI, signer);
 
     const playerStats = await DOWContractInstance.checkStreak();
@@ -260,7 +250,6 @@ const App = () => {
       const convertedValues = randomNumbers.map((randomNumber) =>
         Number(randomNumber)
       );
-      // console.log(convertedValues)
       setGeneratedValues([...generatedValues, convertedValues]);
       await getUserBalance(account);
       setLoader(false);
@@ -280,17 +269,19 @@ const App = () => {
   };
 
   const init = async () => {
-    if (provider == null) return;
-    const accounts = await provider.listAccounts();
-    if (!accounts.length) return;
-    const userAccount = await getUserBalance(accounts[0]);
-    setUserBalance({
-      DOWTokenBalance: userAccount.formartedDOWTokenBalance,
-      networkCoinBalance: userAccount.formartedNetworkCoinBalance,
-    });
-    setConnected(true);
-    setWalletAddress(accounts[0]);
-    getPlayerStatistics();
+    if (provider?.on) {
+      try {
+        const accounts = await provider.listAccounts();
+        setWalletAddress(accounts[0]);
+        if (!accounts.length) return;
+
+        await getUserBalance(accounts[0]);
+        setConnected(true);
+        getPlayerStatistics();
+      } catch (error) {
+        console.log(error);
+      }
+    }
   };
   useEffect(() => {
     init();
@@ -305,7 +296,7 @@ const App = () => {
           const userAccount = await getUserBalance(accounts[0]);
           setWalletAddress(accounts[0]);
           getPlayerStatistics();
-          setUserBalance({
+          getUserBalance({
             DOWTokenBalance: userAccount.formartedDOWTokenBalance,
             networkCoinBalance: userAccount.formartedNetworkCoinBalance,
           });
@@ -336,7 +327,7 @@ const App = () => {
           setConnected(false);
 
           alert(
-            "You're currently connected to an unsupported network, please switch to Polygon Mumbai Testnet"
+            "You are connected to an unsupported network, please switch to Polygon Mumbai Testnet"
           );
           window.location.reload();
           return;

@@ -8,12 +8,6 @@
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   border: 1px solid rgba(0, 153, 126, 0.15);
 }
-@supports (backdrop-filter: blur(6.5px)) {
-  .attempts {
-    background: rgba(0, 103, 84, 0.25);
-    backdrop-filter: blur(6.5px);
-  }
-}
 
 .attempts h2 {
   width: 100%;
@@ -57,6 +51,12 @@ td {
 /* ==== SMALLER SCREENS ==== */
 /* ========================*/
 @media (max-width: 599px) {
+  @supports (backdrop-filter: blur(6.5px)) {
+    .attempts {
+      background: rgba(0, 103, 84, 0.25);
+      backdrop-filter: blur(6.5px);
+    }
+  }
   .attempts {
     background: rgba(0, 103, 84, 0.25);
     border-radius: 16px;
@@ -97,7 +97,7 @@ td {
   .attempts {
     height: 25rem;
     width: 100%;
-    background: var(--deeper-green);
+    background: var(--deep-green);
     border: 2px solid rgba(3, 48, 39, 0.43);
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   }

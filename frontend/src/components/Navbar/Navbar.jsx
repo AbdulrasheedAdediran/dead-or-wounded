@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useRef } from "react";
 import "./Navbar.css";
 import Connected from "./Connected";
 import dowWhite from "../assets/dowWhite.png";
@@ -17,10 +17,10 @@ const Navbar = ({
 }) => {
   const [viewDashboard, setViewScoreboard] = useState(false);
   const startGamePath = "/startGame";
+  const dashboardOverlayRef = useRef();
   const claimfree = async () => {
     await claimFreeTokens();
   };
-
   const toggleDashboard = () => {
     setViewScoreboard(!viewDashboard);
   };
@@ -32,23 +32,18 @@ const Navbar = ({
           <img className="dow-logo" src={dowWhite} alt={"DOW Logo"} />
         </a>
       </div>
-      {/* <div className="desktop-disconnect-wallet">
-        {connected && (
-          <button className="btn-connect-wallet" onClick={disconnectWallet}>
-            Disconnect Wallet
-          </button>
-        )}
-      </div> */}
+
+      <div className={`dashboard-overlay ${viewDashboard ? "view" : ""}`}></div>
       <div
+        ref={dashboardOverlayRef}
         onClick={toggleDashboard}
-        className={`dashboard-overlay ${viewDashboard ? "view" : ""}`}
-      ></div>
-      <div className={`dashboard-container ${viewDashboard ? "view" : ""}`}>
+        className={`dashboard-container ${viewDashboard ? "view" : ""}`}
+      >
         <Dashboard
           stats={playerStatistics}
           claimfree={claimfree}
-          DOWTokenBalance={userBalance.DOWTokenBalance}
-          networkCoinBalance={userBalance.networkCoinBalance}
+          tokenBalance={userBalance.DOWTokenBalance}
+          coinBalance={userBalance.networkCoinBalance}
           disconnectWallet={disconnectWallet}
           toggleDashboard={toggleDashboard}
         />

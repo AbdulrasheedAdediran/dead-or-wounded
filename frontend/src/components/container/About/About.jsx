@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const About = () => {
   return (
-    <div class="about">
+    <div className="about">
       <h1>About</h1>
       <p>
         Dead or Wounded (DOW) is a play-to-earn decentralised game where players
