@@ -8,7 +8,7 @@ const HowToPlay = () => {
       <div>
         <h1>How To Play</h1>
         <p>
-          A set of four unique random numbers are generated for each game. The
+          A set of four unique random numbers is generated for each game. The
           goal is to guess the numbers and positions of the generated set
           correctly.
         </p>
@@ -19,7 +19,7 @@ const HowToPlay = () => {
         </p>
         <p>
           A number is dead if it is part of the generated set and in the right
-          position and wounded if it is part of the generated set but in the
+          position or wounded if it is part of the generated set but in the
           wrong position.
         </p>
         <p>
