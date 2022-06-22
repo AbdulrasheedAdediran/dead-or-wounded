@@ -1,11 +1,14 @@
 .dashboard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
   height: 100%;
   width: 100%;
   background: var(--deeper-green);
   color: var(--antique-white);
   padding-inline: 1rem;
-  border-radius: 1rem;
-  display: block;
+  border-radius: 0.5rem;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   border: 1px solid rgba(0, 153, 126, 0.15);
 }
@@ -30,11 +33,16 @@
   display: block;
 }
 .dashboard-wrapper {
-  display: grid;
-  place-items: center;
-  align-content: space-around;
-  height: 90%;
-  /* border: 2px solid tomato; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  height: 100%;
+  width: 100%;
+  /* border: 2px solid blue; */
+  gap: 0;
+  margin: 0;
+  padding: 0;
 }
 .dashboard h2 {
   width: 100%;
@@ -45,37 +53,22 @@
 }
 .dashboard h3 {
   color: var(--light-green);
+  margin-bottom: 0.25rem;
 }
 .statistics {
   width: 100%;
   display: grid;
-  align-items: stretch;
-  justify-content: center;
-  flex-direction: row;
-  /* border: 2px solid blue; */
+  /* align-items: stretch; */
 }
-.win-rate-and-game-stats {
-  /* display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  align-content: stretch;
-  justify-content: space-between;
-  gap: 2rem; */
 
-  /* border: 2px solid white; */
-}
 .win-rate {
-  width: 35%;
+  width: clamp(5rem, 35vw, 8rem);
   display: grid;
-  align-content: center;
-  justify-content: center;
+  justify-self: center;
   /* border: 2px solid orange; */
   text-align: center;
   color: var(--antique-white);
-  padding: 0.5rem;
-  /* grid-template-columns: repeat(6, 1fr); */
-  /* grid-template-rows: repeat(2, 1fr); */
-  /* grid-auto-flow: dense; */
-  /* background-color: #222; */
+  margin-block-end: clamp(0.75rem, 2.5vh, 2rem);
 }
 .win-rate p {
   color: var(--light-green);
@@ -88,16 +81,13 @@
   text-align: center;
   white-space: pre-line;
 }
-.win-rate-and-game-stats {
-  display: grid;
-}
+
 .played-won-lost-streak {
   width: 100%;
   display: flex;
-  align-content: space-between;
-  justify-content: flex-start;
   flex-direction: column;
   /* border: 2px solid yellow; */
+  margin-block-end: clamp(0.75rem, 2.5vh, 2rem);
 }
 .game-stats {
   width: 100%;
@@ -105,10 +95,13 @@
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  margin-block: 0.5rem;
+  /* margin-block: 0.5rem; */
   padding-inline: clamp(0.75rem, 10vw, 1.5rem);
   /* opacity: 0.85; */
   /* border: 2px solid red; */
+}
+.game-stats:not(.current-streak) {
+  margin-block-end: clamp(0.5rem, 2vh, 0.75rem);
 }
 .played,
 .won,
@@ -116,15 +109,27 @@
 .current-streak,
 .max-streak {
   width: 100%;
+  /* border: 2px solid red; */
   /* padding: 100%; */
   /* background: rgba(255, 255, 255, 0.25); */
+}
+.userAssets {
+  width: 100%;
+  display: grid;
+  place-items: center;
+  gap: 0.75rem;
+  margin-block-end: clamp(0.75rem, 2.5vh, 2rem);
 }
 .dashboard-btn {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-direction: column-reverse;
   gap: 2rem;
   margin-bottom: 2rem;
+  /* border: 2px solid yellow; */
+  /* position: absolute;
+  bottom: 0; */
 }
 .dashboard-btn .btn {
   font-size: clamp(1rem, 10vw, 1.2rem);
@@ -139,7 +144,7 @@
 }
 .disconnect {
   background: var(--btn-deep-green-red-gradient);
-  opacity: 0.8;
+  opacity: 0.75;
 }
 .disconnect:hover {
   background: var(--btn-deep-green-red-gradient);
@@ -175,13 +180,6 @@
     padding: 0.5rem 0.75rem;
     font-size: clamp(0.75rem, 7.5vw, 0.85rem);
   }
-  .dashboard-btn {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-direction: column;
-    margin-inline: 5vw;
-  }
 }
 /* ========================*/
 /* ==== SMALLER SCREENS ==== */
@@ -189,7 +187,7 @@
 @media (max-width: 599px) {
   .dashboard {
     background: rgba(0, 103, 84, 0.25);
-    border-radius: 16px;
+    border-radius: 0.5rem;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(6.5px);
     border: 1px solid rgba(0, 153, 126, 0.15);
@@ -197,7 +195,7 @@
   .dashboard-container {
     position: fixed;
     opacity: 0;
-    top: 8.5vh;
+    top: 0;
     bottom: 0;
     /* height: 100vh; */
     width: 100%;
@@ -244,6 +242,7 @@
     align-content: space-between;
     /* border: 2px solid blue; */
   }
+
   .dashboard-container {
     position: fixed;
     opacity: 0;
@@ -259,10 +258,11 @@
     display: grid;
     place-items: center;
     align-content: start;
+    justify-items: center;
     gap: 0.75rem;
     height: unset;
     /* border: 2px solid tomato; */
-    margin: 0;
+    margin-block: clamp(0.75rem, 2.5vh, 2rem);
     padding: 0;
   }
   .dashboard-container.view {
@@ -272,44 +272,47 @@
   .dashboard h2 {
     width: 100%;
     margin-inline: auto;
-    margin-bottom: 0.5rem;
+    margin-bottom: -2rem;
   }
   .statistics,
   .userAssets {
-    width: 90%;
+    width: 100%;
     display: flex;
     justify-content: space-between;
     border-radius: 0.5rem;
     background: var(--dark-blue-black-gradient);
-    padding: 0.75rem 3rem;
+    padding: 1rem 2.5rem;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     /* border: 2px solid blue; */
   }
   .played-won-lost-streak {
-    width: 105%;
+    width: 100%;
     display: flex;
     align-content: stretch;
     justify-content: flex-start;
     flex-direction: column;
+    margin-block-end: 0;
     /* border: 2px solid yellow; */
+  }
+  .game-statistics {
+    width: 50%;
   }
   .game-stats {
     padding-inline: 0;
   }
   .win-rate {
     width: 25%;
-    display: flex;
-    align-content: start;
-    justify-content: space-evenly;
-    flex-direction: column-reverse;
     /* border: 2px solid orange; */
     padding: 0;
+    margin-block-end: 0;
     /* margin-block: 0.25rem; */
   }
-
+  .win-rate p {
+    color: var(--antique-white);
+    margin-bottom: 0.25rem;
+  }
   .userAssets {
-    /* padding: 1rem 3rem; */
-    /* border-radius: 0.75rem; */
+    margin-block-end: 0;
   }
   .dashboard-overlay {
     background-color: rgba(0, 0, 0, 0.75);
@@ -324,5 +327,16 @@
 
   .dashboard-overlay.view {
     display: block;
+  }
+  .dashboard-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    /* border: 2px solid yellow; */
+    /* position: absolute;
+  bottom: 0; */
   }
 }

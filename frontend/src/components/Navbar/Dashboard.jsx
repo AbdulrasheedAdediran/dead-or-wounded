@@ -21,7 +21,7 @@ const Dashboard = (
       <div className="dashboard-wrapper">
         <h3>Game Stats</h3>
         <div className="statistics">
-          <div className="win-rate-and-game-stats">
+          <div className="game-statistics">
             <div className="played-won-lost-streak">
               <div className="game-stats played">
                 <div>Games Played</div>
@@ -37,11 +37,11 @@ const Dashboard = (
               </div>
               {/* <div className="streak-stats"> */}
               <div className="game-stats max-streak">
-                <div>Max Win Streak</div>
+                <div>Max Streak</div>
                 <div>{playerStats.highestWinStreak || 0}</div>
               </div>
               <div className="game-stats current-streak">
-                <div>Current Win Streak</div>
+                <div>Current Streak</div>
                 <div>{playerStats.currentWinStreak || 0}</div>
               </div>
 
