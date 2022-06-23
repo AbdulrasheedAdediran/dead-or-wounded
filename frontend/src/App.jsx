@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import { ethers, utils, Contract } from "ethers";
 import { useState, useEffect } from "react";
 import Web3Modal from "web3modal";
@@ -20,6 +20,7 @@ const DOWContract = "0xe0D3C042D557dfc16670e43B2bBc6752216a539e";
 const App = () => {
   const [connected, setConnected] = useState(false);
   const [provider, setProvider] = useState();
+  const [proxy, setProxy] = useState();
   const [walletAddress, setWalletAddress] = useState();
   const [generatedValues, setGeneratedValues] = useState([]);
   const [loader, setLoader] = useState(false);
@@ -28,7 +29,7 @@ const App = () => {
   const [account, setAccount] = useState();
   const [network, setNetwork] = useState();
   const [chainId, setChainId] = useState();
-  const [claimed, setClaimed] = useState(false)
+  const [claimed, setClaimed] = useState(false);
   const [userBalance, setUserBalance] = useState({
     DOWTokenBalance: 0,
     networkCoinBalance: 0,
@@ -68,7 +69,9 @@ const App = () => {
         package: WalletConnectProvider,
         options: {
           alchemyId: process.env.REACT_APP_ALCHEMY_KEY,
-          rpc: process.env.REACT_APP_MUMBAI_RPC_URL,
+          rpc: {
+            80001: process.env.REACT_APP_MUMBAI_RPC_URL,
+          },
         },
         qrcode: true,
         qrcodeModalOptions: {
@@ -102,7 +105,7 @@ const App = () => {
       },
     };
     const newWeb3Modal = new Web3Modal({
-      cacheProvider: true, // very important
+      cacheProvider: true,
       network: "maticmum",
       disableInjectedProvider: false,
       displayNoInjectedProvider: false,
@@ -126,17 +129,14 @@ const App = () => {
 
   // Requests wallet connection
 
-
   const connectWallet = async () => {
     try {
-      const connectedProvider = await web3Modal.connect();
-      const provider = new ethers.providers.Web3Provider(connectedProvider);
+      const web3Proxy = await web3Modal.connect();
+      const provider = new ethers.providers.Web3Provider(web3Proxy);
       const accounts = await provider.listAccounts();
       const chainData = await provider.getNetwork();
-      // const accounts = await window.ethereum.request({
-      //   method: "eth_requestAccounts",
-      // });
 
+      setProxy(web3Proxy);
       setProvider(provider);
       if (chainData.chainId !== 80001) {
         alert(
@@ -148,7 +148,7 @@ const App = () => {
         // web3Modal.setCachedProvider(connectedProvider);
         setWalletAddress(accounts[0]);
         setAccount(accounts[0]);
-        getUserBalance(accounts[0]);
+        await getUserBalance(accounts[0]);
         setNetwork(chainData);
         setChainId(chainData.chainId);
         setConnected(true);
@@ -161,11 +161,11 @@ const App = () => {
   };
 
   const refreshState = () => {
-    // setAccount();
-    // setChainId();
-    // setNetwork();
-    // setWalletAddress();
-    // setUserBalance();
+    setAccount();
+    setChainId();
+    setNetwork();
+    setWalletAddress();
+    setUserBalance();
     setConnected(false);
   };
 
@@ -176,22 +176,28 @@ const App = () => {
 
   // Airdrop free DOW tokens to new players
   const claimFreeTokens = async () => {
-    // e.preventDefault();
-    const accounts = await provider.listAccounts();
-    const signer = provider.getSigner(accounts[0]);
-    const DOWContractInstance = new Contract(DOWContract, DOW_ABI, signer);
-    await DOWContractInstance.claimFreeTokens();
-    await getUserBalance(account);
-    console.log("Claimed");
-    await checkClaimed();
-    await getUserBalance()
+    try {
+      const signer = provider.getSigner();
+      const DOWContractInstance = new Contract(DOWContract, DOW_ABI, signer);
+      await DOWContractInstance.claimFreeTokens();
+      await getUserBalance(account);
+      await checkClaimed();
+      await getUserBalance(account);
+    } catch (error) {
+      console.log(error);
+    }
   };
-   const checkClaimed = async () => {
-    const signer = provider.getSigner();
-    const DOWContractInstance = new Contract(DOWContract, DOW_ABI, signer);
-    const claimStatus = await DOWContractInstance.checkClaimed();
-    setClaimed(claimStatus);
-  }
+
+  const checkClaimed = async () => {
+    try {
+      const signer = provider.getSigner();
+      const DOWContractInstance = new Contract(DOWContract, DOW_ABI, signer);
+      const claimStatus = await DOWContractInstance.checkClaimed();
+      setClaimed(claimStatus);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   // Gets user chain balance and DOW token balance
   const getUserBalance = async () => {
@@ -219,8 +225,7 @@ const App = () => {
   };
   // Get player's statistics
   const getPlayerStatistics = async () => {
-    const accounts = await provider.listAccounts();
-    const signer = await provider.getSigner(accounts[0]);
+    const signer = await provider.getSigner();
     const DOWContractInstance = new Contract(DOWContract, DOW_ABI, signer);
 
     const playerStats = await DOWContractInstance.checkStreak();
@@ -238,7 +243,7 @@ const App = () => {
       currentWinStreak: Number(currentStreak),
       highestWinStreak: Number(highestStreak),
     });
-  }; 
+  };
 
   // Start game
   const startGame = async () => {
@@ -262,7 +267,7 @@ const App = () => {
       const convertedValues = randomNumbers.map((randomNumber) =>
         Number(randomNumber)
       );
-        // console.log(convertedValues)
+      // console.log(convertedValues)
       setGeneratedValues(convertedValues);
       await getUserBalance(account);
       setLoader(false);
@@ -296,75 +301,77 @@ const App = () => {
       }
     }
   };
+  // useEffect(() => {
+  //   if (web3Modal.cachedProvider) {
+  //     connectWallet();
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
   useEffect(() => {
     init();
     if (provider?.on) {
       //Alerts user to switch to a supported network when account is switched from a supported network
       const handleAccountChanged = async (accounts) => {
         if (accounts.length) {
-          const networkID = await provider.request({
+          const networkID = await proxy.request({
             method: "eth_chainId",
           });
-          if (Number(networkID) !== 80001) return;
-          const userAccount = await getUserBalance(accounts[0]);
-          setWalletAddress(accounts[0]);
-          getPlayerStatistics();
-          getUserBalance({
-            DOWTokenBalance: userAccount.formartedDOWTokenBalance,
-            networkCoinBalance: userAccount.formartedNetworkCoinBalance,
-          });
-          setConnected(true);
-          window.location.reload();
-        } else {
-          setConnected(false);
-          setUserBalance({
-            DOWTokenBalance: 0,
-            networkCoinBalance: 0,
-          });
-          setPlayerStatistics({
-            gamesPlayed: 0,
-            gamesLost: 0,
-            currentWinStreak: 0,
-            highestWinStreak: 0,
-            gamesWon: 0,
-          });
+          if (Number(networkID) !== 80001) {
+            setConnected(false);
+            setUserBalance({
+              DOWTokenBalance: 0,
+              networkCoinBalance: 0,
+            });
+            setPlayerStatistics({
+              gamesPlayed: 0,
+              gamesLost: 0,
+              currentWinStreak: 0,
+              highestWinStreak: 0,
+              gamesWon: 0,
+            });
+          } else {
+            const userAccount = await getUserBalance(accounts[0]);
+            setWalletAddress(accounts[0]);
+            getPlayerStatistics();
+            setUserBalance({
+              DOWTokenBalance: userAccount.formartedDOWTokenBalance,
+              networkCoinBalance: userAccount.formartedNetworkCoinBalance,
+            });
+            setConnected(true);
+          }
         }
       };
-
       //Alerts user to switch to a supported network when account is switched from a supported network
       const handleChainChanged = async () => {
-        const networkID = await provider.request({
+        const networkID = await proxy.request({
           method: "eth_chainId",
         });
         if (Number(networkID) !== 80001) {
-          setConnected(false);
-
           alert(
-            "You are connected to an unsupported network, please switch to Polygon Mumbai Testnet"
+            "You are currently connected to an unsupported network, please switch to Polygon Mumbai Testnet"
           );
-          window.location.reload();
+          setConnected(false);
           return;
         } else {
           connectWallet();
-          setConnected(true);
-          window.location.reload();
         }
       };
 
-      provider.on("disconnect", disconnectWallet);
-      provider.on("connect", getPlayerStatistics);
-      provider.on("connect", getUserBalance);
-      provider.on("accountsChanged", handleAccountChanged);
-      provider.on("chainChanged", handleChainChanged);
+      proxy.on("disconnect", disconnectWallet);
+      proxy.on("connect", getPlayerStatistics);
+      proxy.on("connect", getUserBalance);
+      proxy.on("accountsChanged", handleAccountChanged);
+      proxy.on("chainChanged", handleChainChanged);
       return () => {
-        if (provider.removeListener) {
-          provider.removeListener("accountsChanged", handleAccountChanged);
-          provider.removeListener("chainChanged", handleChainChanged);
-          provider.removeListener("disconnect", disconnectWallet);
+        if (proxy.removeListener) {
+          proxy.removeListener("accountsChanged", handleAccountChanged);
+          proxy.removeListener("chainChanged", handleChainChanged);
+          proxy.removeListener("disconnect", disconnectWallet);
         }
       };
     }
-  }, [provider]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [chainId]);
 
   useEffect(() => {
     if (loadingSuccess === false) alert("Connection Failed");

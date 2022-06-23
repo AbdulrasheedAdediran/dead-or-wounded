@@ -20,9 +20,8 @@ const StartGame = ({
   loader,
   getPlayerStatistics,
   getUserBalance,
-  account
+  account,
 }) => {
-  // console.log(generatedValues)
   let navigate = useNavigate();
   const [playerInput, setPlayerInput] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
@@ -107,7 +106,7 @@ const StartGame = ({
     }
   };
   //=========================//
-  //--Handle Keyboard Input--//
+  //--Handles Keyboard Input--//
   //=========================//
   const handlePlayerInput = (e) => {
     e.preventDefault();
@@ -184,9 +183,9 @@ const StartGame = ({
     }
   };
 
-  //=======================//
-  //--Checks for Duplicate-//
-  //=======================//
+  //=============================//
+  //--Toggles Scoreboard: Mobile-//
+  //=============================//
   const toggleScoreboard = () => {
     setViewScoreboard(!viewScoreboard);
   };
@@ -270,8 +269,13 @@ const StartGame = ({
       await getUserBalance(account);
       await getPlayerStatistics();
       setTrials(1);
-      trials <=3 ? setTokenwon(20) : trials ==4 || trials ==5 ? setTokenwon(15) : trials == 6 || trials == 7 ? setTokenwon(10) : setTokenwon(0)
-
+      trials <= 3
+        ? setTokenwon(20)
+        : trials === 4 || trials === 5
+        ? setTokenwon(15)
+        : trials === 6 || trials === 7
+        ? setTokenwon(10)
+        : setTokenwon(0);
     } else if (trials >= 7 && dead !== 4) {
       setMessage(loseMessage);
       setIsLoading(true);
