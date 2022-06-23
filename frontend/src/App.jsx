@@ -106,7 +106,7 @@ const App = () => {
     };
     const newWeb3Modal = new Web3Modal({
       cacheProvider: true,
-      network: "maticmum",
+      // network: "maticmum",
       disableInjectedProvider: false,
       displayNoInjectedProvider: false,
       theme: {
@@ -135,7 +135,6 @@ const App = () => {
       const provider = new ethers.providers.Web3Provider(web3Proxy);
       const accounts = await provider.listAccounts();
       const chainData = await provider.getNetwork();
-
       setProxy(web3Proxy);
       setProvider(provider);
       if (chainData.chainId !== 80001) {
