@@ -11,7 +11,7 @@ const About = () => {
         <p>
           Dead or Wounded (DOW) is a play-to-earn decentralised game where
           players can earn DOW tokens (Dead or Wounded DApp native token). Early
-          adopters are rewarded with 100 free DOW tokens to interact with the
+          adopters are rewarded with 50 free DOW tokens to interact with the
           DApp as players are required to spend DOW tokens to access the game.
         </p>
         <p>
