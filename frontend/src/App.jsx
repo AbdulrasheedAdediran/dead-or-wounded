@@ -140,7 +140,7 @@ const App = () => {
       setProvider(provider);
       if (chainData.chainId !== 80001) {
         alert(
-          "You are connected to an unsupported network, please switch to Polygon Mumbai Testnet"
+          "You are currently connected to an unsupported network, please switch to Polygon Mumbai Testnet"
         );
         setConnected(false);
         return;
@@ -161,11 +161,11 @@ const App = () => {
   };
 
   const refreshState = () => {
-    setAccount();
-    setChainId();
-    setNetwork();
-    setWalletAddress();
-    setUserBalance();
+    // setAccount();
+    // setChainId();
+    // setNetwork();
+    // setWalletAddress();
+    // setUserBalance();
     setConnected(false);
   };
 
