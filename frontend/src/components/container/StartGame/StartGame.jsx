@@ -269,12 +269,10 @@ const StartGame = ({
       await getUserBalance(account);
       await getPlayerStatistics();
       setTrials(1);
-      trials <= 3
+      trials <= 2
+        ? setTokenwon(25)
+        : trials >=3 || trials <=7
         ? setTokenwon(20)
-        : trials === 4 || trials === 5
-        ? setTokenwon(15)
-        : trials === 6 || trials === 7
-        ? setTokenwon(10)
         : setTokenwon(0);
     } else if (trials >= 7 && dead !== 4) {
       setMessage(loseMessage);
