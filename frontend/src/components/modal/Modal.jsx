@@ -1,6 +1,6 @@
 import React from "react";
 import "./modal.css";
-import { RiCloseLine } from "react-icons/ri";
+// import { RiCloseLine } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 
 const Modal = ({
@@ -26,10 +26,10 @@ const Modal = ({
             <RiCloseLine style={{ marginBottom: "-3px" }} />
           </button> */}
           <div className="modalContent">
-          <h2 className="reward_text">You have won</h2>
-          <h1 className="reward_text">{tokenWon} DOW</h1>
-           <br></br>
-           <p> {message}</p>
+            <h2 className="reward_text">You have won</h2>
+            <h1 className="reward_text">{tokenWon} DOW</h1>
+            <br></br>
+            <p> {message}</p>
             <br></br>
             <p>Play Again?</p>
           </div>
@@ -48,7 +48,12 @@ const Modal = ({
               >
                 Yes
               </button>
-              <button className="cancelBtn" onClick={() => { navigate("/") }}>
+              <button
+                className="cancelBtn"
+                onClick={() => {
+                  navigate("/");
+                }}
+              >
                 Cancel
               </button>
             </div>

@@ -1,10 +1,10 @@
 import { Routes, Route, useLocation } from "react-router-dom";
 import { ethers, utils, Contract } from "ethers";
 import { useState, useEffect } from "react";
-import Web3Modal from "web3modal";
-import CoinbaseWalletSDK from "@coinbase/wallet-sdk";
 import WalletConnectProvider from "@walletconnect/web3-provider";
+import CoinbaseWalletSDK from "@coinbase/wallet-sdk";
 import * as UAuthWeb3Modal from "@uauth/web3modal";
+import Web3Modal from "web3modal";
 import UAuthSPA from "@uauth/js";
 import "./App.css";
 import StartGame from "./components/container/StartGame/StartGame";
@@ -18,18 +18,17 @@ import DOW_ABI from "./util/DOW_ABI.json";
 const DOWContract = "0xe0D3C042D557dfc16670e43B2bBc6752216a539e";
 
 const App = () => {
-  const [connected, setConnected] = useState(false);
-  const [provider, setProvider] = useState();
-  const [proxy, setProxy] = useState();
-  const [walletAddress, setWalletAddress] = useState();
   const [generatedValues, setGeneratedValues] = useState([]);
-  const [loader, setLoader] = useState(false);
   const [loadingSuccess, setLoadingSuccess] = useState(null);
+  const [walletAddress, setWalletAddress] = useState();
+  const [connected, setConnected] = useState(false);
   const [web3Modal, setWeb3Modal] = useState(null);
-  const [account, setAccount] = useState();
-  const [network, setNetwork] = useState();
-  const [chainId, setChainId] = useState();
   const [claimed, setClaimed] = useState(false);
+  const [loader, setLoader] = useState(false);
+  const [provider, setProvider] = useState();
+  const [account, setAccount] = useState();
+  const [chainId, setChainId] = useState();
+  const [proxy, setProxy] = useState();
   const [userBalance, setUserBalance] = useState({
     DOWTokenBalance: 0,
     networkCoinBalance: 0,
@@ -43,18 +42,18 @@ const App = () => {
   });
   const location = useLocation();
 
-  //==========================//
-  // WEB3MODAL INTEGRATION
-  //==========================//
-
+  //===========================//
+  //***WEB3MODAL INTEGRATION***//
+  //===========================//
   useEffect(() => {
-    // initiate web3modal
+    //***Initiate web3modal***//
     const uauthOptions = {
       clientID: "client_id",
       redirectUri: "http://localhost:3000",
       scope: "openid wallet",
     };
     const providerOptions = {
+      //***Injected Wallet***//
       injected: {
         display: {
           logo: MetaMaskLogo,
@@ -65,6 +64,7 @@ const App = () => {
         package: true,
       },
 
+      //***Wallet Connect***//
       walletconnect: {
         package: WalletConnectProvider,
         options: {
@@ -85,7 +85,7 @@ const App = () => {
           ],
         },
       },
-
+      //***Coinbase Wallet***//
       coinbasewallet: {
         package: CoinbaseWalletSDK,
         options: {
@@ -96,7 +96,7 @@ const App = () => {
           darkMode: true,
         },
       },
-
+      //***Unstoppable Domains***//
       "custom-uauth": {
         display: UAuthWeb3Modal.display,
         connector: UAuthWeb3Modal.connector,
@@ -127,7 +127,7 @@ const App = () => {
   //==========================//
   //==========================//
 
-  // Requests wallet connection
+  //***Requests wallet connection***//
 
   const connectWallet = async () => {
     try {
@@ -144,16 +144,12 @@ const App = () => {
         setConnected(false);
         return;
       } else {
-        // web3Modal.setCachedProvider(connectedProvider);
         setWalletAddress(accounts[0]);
         setAccount(accounts[0]);
-        await getUserBalance(accounts[0]);
-        setNetwork(chainData);
+        await getUserBalance();
         setChainId(chainData.chainId);
         setConnected(true);
       }
-      //================
-      //================
     } catch (err) {
       console.log(err);
     }
@@ -171,22 +167,27 @@ const App = () => {
   const disconnectWallet = async () => {
     await web3Modal.clearCachedProvider();
     refreshState();
+    window.location.reload();
   };
 
   // Airdrop free DOW tokens to new players
   const claimFreeTokens = async () => {
-    try {
-      const signer = provider.getSigner();
-      const DOWContractInstance = new Contract(DOWContract, DOW_ABI, signer);
-      await DOWContractInstance.claimFreeTokens();
-      await getUserBalance(account);
-      await checkClaimed();
-      await getUserBalance(account);
-    } catch (error) {
-      console.log(error);
+    if (claimed === false) {
+      try {
+        const signer = provider.getSigner();
+        const DOWContractInstance = new Contract(DOWContract, DOW_ABI, signer);
+        await DOWContractInstance.claimFreeTokens();
+        await getUserBalance();
+        await checkClaimed();
+        await getUserBalance();
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      return alert("Opps! You already claimed your free tokens");
     }
   };
-
+  // useEffect(() => {
   const checkClaimed = async () => {
     try {
       const signer = provider.getSigner();
@@ -197,6 +198,9 @@ const App = () => {
       console.log(error);
     }
   };
+  // checkClaimed();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [claimed, account]);
 
   // Gets user chain balance and DOW token balance
   const getUserBalance = async () => {
@@ -268,7 +272,7 @@ const App = () => {
       );
       // console.log(convertedValues)
       setGeneratedValues(convertedValues);
-      await getUserBalance(account);
+      await getUserBalance();
       setLoader(false);
       setLoadingSuccess(true);
     } catch {
@@ -282,24 +286,24 @@ const App = () => {
     const DOWContractInstance = new Contract(DOWContract, DOW_ABI, signer);
     const trials = await DOWContractInstance.checkTrials(trial);
     trials.wait();
-    getUserBalance(account);
+    await getUserBalance();
   };
 
-  const init = async () => {
-    if (provider?.on) {
-      try {
-        const accounts = await provider.listAccounts();
-        setWalletAddress(accounts[0]);
-        if (!accounts.length) return;
+  // const init = async () => {
+  //   if (provider?.on) {
+  //     try {
+  //       const accounts = await provider.listAccounts();
+  //       setWalletAddress(accounts[0]);
+  //       if (!accounts.length) return;
 
-        await getUserBalance(accounts[0]);
-        setConnected(true);
-        getPlayerStatistics();
-      } catch (error) {
-        console.log(error);
-      }
-    }
-  };
+  //       await getUserBalance();
+  //       setConnected(true);
+  //       await getPlayerStatistics();
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   }
+  // };
   // useEffect(() => {
   //   if (web3Modal.cachedProvider) {
   //     connectWallet();
@@ -307,7 +311,7 @@ const App = () => {
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, []);
   useEffect(() => {
-    init();
+    // init();
     if (provider?.on) {
       //Alerts user to switch to a supported network when account is switched from a supported network
       const handleAccountChanged = async (accounts) => {
@@ -329,9 +333,9 @@ const App = () => {
               gamesWon: 0,
             });
           } else {
-            const userAccount = await getUserBalance(accounts[0]);
+            const userAccount = await getUserBalance();
             setWalletAddress(accounts[0]);
-            getPlayerStatistics();
+            await getPlayerStatistics();
             setUserBalance({
               DOWTokenBalance: userAccount.formartedDOWTokenBalance,
               networkCoinBalance: userAccount.formartedNetworkCoinBalance,

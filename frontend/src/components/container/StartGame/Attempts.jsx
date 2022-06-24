@@ -15,14 +15,16 @@ const Attempts = (props) => {
             <th className="table__score score">Score</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="table-row.flicker">
           {props.roundScores.map((roundScore) => (
             <tr key={roundScore.trial}>
-              <td className="table__trial">
+              <td className="table__trial table-row.flicker">
                 {roundScore.trial}/{maxTrials}
               </td>
-              <td className="table__attempt">{roundScore.attempt.join(" ")}</td>
-              <td className="table__score">
+              <td className="table__attempt table-row.flicker">
+                {roundScore.attempt.join(" ")}
+              </td>
+              <td className="table__score table-row.flicker">
                 <span>{roundScore.dead} Dead</span>{" "}
                 <span className="hyphen">-</span>
                 <span> {roundScore.wounded} Wounded</span>

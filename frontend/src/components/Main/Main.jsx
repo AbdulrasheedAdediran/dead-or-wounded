@@ -24,7 +24,7 @@ const Main = ({
 
   return (
     <main>
-      <div className="dow-text">
+      <div className="dow-text flicker">
         <div className="dow-text-border" />
         <h1 className="dead-text">Dead</h1>
         <p className="dow-text-or">or</p>

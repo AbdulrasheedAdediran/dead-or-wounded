@@ -94,18 +94,28 @@ const Dashboard = (
           <div className="assets">
             {parseFloat(stats.tokenBalance).toFixed(2) || 0} DOW
           </div>
-        </div> 
-        <br/>
+        </div>
+        {/* <br />
         <div className="dashboard-btn">
-          {!stats.claimed ? <button onClick={stats.claimfree} className="claim-dow btn" >
-            Claim Free DOW
-          </button> : ''}
-          <button onClick={()=> {stats.disconnectWallet(); stats.toggleDashboard()}} className="disconnect btn">
+          {!stats.claimed ? (
+            <button onClick={stats.claimfree} className="claim-dow btn">
+              Claim Free DOW
+            </button>
+          ) : (
+            ""
+          )}
+          <button
+            onClick={() => {
+              stats.disconnectWallet();
+              stats.toggleDashboard();
+            }}
+            className="disconnect btn"
+          >
             Disconnect
           </button>
-        </div>
+        </div> */}
       </div>
-      {/* <div className="dashboard-btn">
+      <div className="dashboard-btn">
         <button
           onClick={() => {
             stats.disconnectWallet();
@@ -115,10 +125,14 @@ const Dashboard = (
         >
           Disconnect
         </button>
-        <button onClick={stats.claimfree} className="claim-dow btn">
-          Claim Free DOW
-        </button>
-      </div> */}
+        {!stats.claimed ? (
+          <button onClick={stats.claimfree} className="claim-dow btn">
+            Claim Free DOW
+          </button>
+        ) : (
+          ""
+        )}
+      </div>
     </section>
   );
 };

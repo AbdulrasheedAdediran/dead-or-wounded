@@ -36,6 +36,30 @@ td {
   background: rgba(0, 0, 0, 0.1);
   border-block: 1px solid rgb(191, 255, 201, 0.1);
 }
+/* Flicker */
+.table-row.flicker {
+  animation: flicker-animation 0.25s forwards 3;
+}
+
+@keyframes flicker-animation {
+  20% {
+    opacity: 1;
+  }
+
+  40% {
+    opacity: 0.01;
+  }
+
+  60% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 0.01;
+  }
+  100% {
+    opacity: 1;
+  }
+}
 /* ========================*/
 /* ==== SMALLEST SCREENS ==== */
 /* ========================*/
