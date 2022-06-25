@@ -19,7 +19,7 @@ const Dashboard = (
     <section className="dashboard">
       <h2>Dashboard</h2>
       <div className="dashboard-wrapper">
-        <h3>Game Stats</h3>
+        <h3>Statistics</h3>
         <div className="statistics">
           <div className="game-statistics">
             <div className="played-won-lost-streak">

@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from "react";
+import { React, useState, useEffect, useRef } from "react";
 import "./StartGame.css";
 import Attempts from "./Attempts";
 import { useNavigate } from "react-router-dom";
@@ -27,6 +27,8 @@ const StartGame = ({
   const [isOpen, setIsOpen] = useState(false);
   const [message, setMessage] = useState(false);
   const [viewScoreboard, setViewScoreboard] = useState(false);
+  // const [startSignal, setStartSignal] = useState(false);
+  const [flicker, setFlicker] = useState(false);
   const randomNumbers = generatedValues;
   const [roundScores, setRoundScores] = useState([]);
   let [dead, setDead] = useState(0);
@@ -38,6 +40,7 @@ const StartGame = ({
   const entries = document.querySelector(".entries");
   const signer = provider.getSigner();
   const DOWContractInstance = new Contract(DOWContract, DOW_ABI, signer);
+  const startSignalRef = useRef();
 
   //===========================//
   //--Handles Start Game Call--//
@@ -51,8 +54,12 @@ const StartGame = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const callStart = () => {
-    startGame();
+  const callStart = async () => {
+    await startGame();
+    if (loadingSuccess) {
+      // await handleStartSignal();
+    }
+    // startSignalRef.current.classList.remove("view");
   };
   //=================================//
   //-Handles Backspace & Enter Keys--//
@@ -157,6 +164,7 @@ const StartGame = ({
   //=======================//
   const handleClear = (e) => {
     e.preventDefault();
+    startSignalRef.current.classList.remove("view");
     const entries = document.querySelector(".entries");
     const maxLength = parseInt(entries[index].attributes["maxlength"].value);
     const previous = entries[index].previousElementSibling;
@@ -183,6 +191,12 @@ const StartGame = ({
     }
   };
 
+  //=============================//
+  //--Toggles Scoreboard: Mobile-//
+  //=============================//
+  // const handleStartSignal = async () => {
+  //   startSignalRef.current.classList.add("view");
+  // };
   //=============================//
   //--Toggles Scoreboard: Mobile-//
   //=============================//
@@ -251,6 +265,7 @@ const StartGame = ({
           },
         ]);
         toggleScoreboard();
+        setFlicker(!flicker);
         entries.reset();
         setIndex(0);
         setPlayerInput([]);
@@ -266,12 +281,12 @@ const StartGame = ({
       res.wait();
       setIsLoading(false);
       setIsOpen(true);
-      await getUserBalance(account);
+      await getUserBalance();
       await getPlayerStatistics();
       setTrials(1);
       trials <= 2
         ? setTokenwon(25)
-        : trials >=3 || trials <=7
+        : trials >= 3 || trials <= 7
         ? setTokenwon(20)
         : setTokenwon(0);
     } else if (trials >= 7 && dead !== 4) {
@@ -291,6 +306,13 @@ const StartGame = ({
       {loader && <Loader />}
       {isLoading && <Loader />}
       {loadingSuccess === false && navigate("/")}
+      {/* <p
+        ref={startSignalRef}
+        className="start-signal"
+        className={`start-signal ${startSignal ? "view" : ""}`}
+      >
+        START
+      </p> */}
 
       <form className="entries" action="#" onSubmit={handlePlay}>
         <label htmlFor="player-inputs">Enter four unique numbers</label>
@@ -431,10 +453,12 @@ const StartGame = ({
             </button>
           </div>
         </div>
+
         <div className="clear-play-btns">
           <button className="game-btn clear" onClick={handleClear}>
             Clear
           </button>
+
           <button className="game-btn play" onClick={handlePlay}>
             Play
           </button>
@@ -448,11 +472,13 @@ const StartGame = ({
           dead={dead}
           wounded={wounded}
           roundScores={roundScores}
+          flicker={flicker}
         />
       </div>
       <button className="scoreboard-btn" onClick={toggleScoreboard}>
         {viewScoreboard ? "Continue" : "View Scoreboard"}
       </button>
+      {/* <button onClick={handleStartSignal}>Signal</button> */}
 
       {isOpen && (
         <Modal

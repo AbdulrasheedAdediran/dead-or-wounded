@@ -125,7 +125,7 @@
   align-items: center;
   justify-content: space-between;
   flex-direction: column-reverse;
-  gap: 2rem;
+  gap: 1rem;
   margin-bottom: 2rem;
   /* border: 2px solid yellow; */
   /* position: absolute;
@@ -150,22 +150,7 @@
   background: var(--btn-deep-green-red-gradient);
   opacity: 1;
 }
-/* .streak-stats {
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  align-content: center;
-  justify-content: center;
-  text-align: center;
-  gap: 2rem;
-  opacity: 0.85; */
-/* background: rgba(255, 255, 255, 0.25); */
-/* border: 2px solid blue; */
-/* } */
-/* .max-streak,
-.current-streak {
-  background: var(--dark-blue-black-gradient);
-} */
+
 /* ========================*/
 /* ==== SMALLEST SCREENS ==== */
 /* ========================*/

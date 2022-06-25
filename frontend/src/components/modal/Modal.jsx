@@ -16,48 +16,41 @@ const Modal = ({
   const navigate = useNavigate();
   return (
     <>
-      <div className="darkBG" onClick={() => setIsOpen(false)} />
-      <div className="centered">
-        <div className="modal">
-          <div className="modalHeader">
-            <h1 className="reward_text">{numbers}</h1>
-          </div>
+      <div className="dark-bg" onClick={() => setIsOpen(false)} />
+      <div className="modal-container">
+        <div className="modal-text">
+          <p> {message}</p>
           {/* <button className="closeBtn" onClick={() => setIsOpen(false)}>
             <RiCloseLine style={{ marginBottom: "-3px" }} />
           </button> */}
-          <div className="modalContent">
-            <h2 className="reward_text">You have won</h2>
-            <h1 className="reward_text">{tokenWon} DOW</h1>
-            <br></br>
-            <p> {message}</p>
-            <br></br>
-            <p>Play Again?</p>
-          </div>
+          <div className="modal-content">
+            <p className="generated-numbers">{numbers}</p>
 
-          <div className="modalActions">
-            <div className="actionsContainer">
-              <button
-                className="deleteBtn"
-                onClick={() => {
-                  entries.reset();
-                  setPlayerInput([]);
-                  setRoundScores([]);
-                  startGame();
-                  setIsOpen(false);
-                }}
-              >
-                Yes
-              </button>
-              <button
-                className="cancelBtn"
-                onClick={() => {
-                  navigate("/");
-                }}
-              >
-                Cancel
-              </button>
-            </div>
+            <p className="reward-text">Reward: {tokenWon} DOW</p>
           </div>
+          <p className="play-again">Play Again?</p>
+        </div>
+        <div className="modal-actions">
+          <button
+            className="no-btn"
+            onClick={() => {
+              navigate("/");
+            }}
+          >
+            No
+          </button>
+          <button
+            className="yes-btn"
+            onClick={() => {
+              entries.reset();
+              setPlayerInput([]);
+              setRoundScores([]);
+              startGame();
+              setIsOpen(false);
+            }}
+          >
+            Yes
+          </button>
         </div>
       </div>
     </>

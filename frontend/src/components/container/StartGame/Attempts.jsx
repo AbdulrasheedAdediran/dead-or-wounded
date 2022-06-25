@@ -9,22 +9,20 @@ const Attempts = (props) => {
       <h2>Scoreboard</h2>
       <table>
         <thead>
-          <tr>
+          <tr className={`table-row ${props.flicker ? "flicker" : ""}`}>
             <th className="table__trial">Trial</th>
             <th className="table__attempt">Attempt</th>
             <th className="table__score score">Score</th>
           </tr>
         </thead>
-        <tbody className="table-row.flicker">
+        <tbody>
           {props.roundScores.map((roundScore) => (
             <tr key={roundScore.trial}>
-              <td className="table__trial table-row.flicker">
+              <td className="table__trial">
                 {roundScore.trial}/{maxTrials}
               </td>
-              <td className="table__attempt table-row.flicker">
-                {roundScore.attempt.join(" ")}
-              </td>
-              <td className="table__score table-row.flicker">
+              <td className="table__attempt">{roundScore.attempt.join(" ")}</td>
+              <td className="table__score">
                 <span>{roundScore.dead} Dead</span>{" "}
                 <span className="hyphen">-</span>
                 <span> {roundScore.wounded} Wounded</span>

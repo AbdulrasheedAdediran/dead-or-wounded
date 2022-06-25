@@ -99,10 +99,21 @@ main button:hover {
   }
 }
 /* ========================*/
+/* ==== SMALLER SCREENS ==== */
+/* ========================*/
+@media (max-width: 599px) {
+  .menu-button {
+    font-size: clamp(1rem, 15vw, 1.5rem);
+  }
+}
+/* ========================*/
 /* ==== LARGE SCREENS ==== */
 /* ========================*/
 @media (min-width: 600px) {
   .dow-text h1 {
     font-size: clamp(3.5rem, 25vw, 5rem);
+  }
+  .menu-button {
+    font-size: clamp(1.2rem, 15vw, 1.75rem);
   }
 }
