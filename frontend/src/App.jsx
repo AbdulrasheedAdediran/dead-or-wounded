@@ -137,6 +137,7 @@ const App = () => {
       const chainData = await provider.getNetwork();
       setProxy(web3Proxy);
       setProvider(provider);
+      // console.log(web3Proxy);
       if (chainData.chainId !== 80001) {
         alert(
           "You are currently connected to an unsupported network, please switch to Polygon Mumbai Testnet"
@@ -146,9 +147,12 @@ const App = () => {
       } else {
         setWalletAddress(accounts[0]);
         setAccount(accounts[0]);
+        await checkClaimed();
+        await getPlayerStatistics();
         await getUserBalance();
         setChainId(chainData.chainId);
         setConnected(true);
+        // console.log(await getUserBalance());
       }
     } catch (err) {
       console.log(err);
@@ -167,7 +171,7 @@ const App = () => {
   const disconnectWallet = async () => {
     await web3Modal.clearCachedProvider();
     refreshState();
-    window.location.reload();
+    // window.location.reload();
   };
 
   // Airdrop free DOW tokens to new players
@@ -221,6 +225,7 @@ const App = () => {
         networkCoinBalance: formartedNetworkCoinBalance,
       });
       await checkClaimed();
+      // console.log(checkClaimed());
       return { formartedNetworkCoinBalance, formartedDOWTokenBalance };
     } catch (error) {
       console.error(error);
@@ -289,21 +294,21 @@ const App = () => {
     await getUserBalance();
   };
 
-  // const init = async () => {
-  //   if (provider?.on) {
-  //     try {
-  //       const accounts = await provider.listAccounts();
-  //       setWalletAddress(accounts[0]);
-  //       if (!accounts.length) return;
+  const init = async () => {
+    if (provider?.on) {
+      try {
+        const accounts = await provider.listAccounts();
+        setWalletAddress(accounts[0]);
+        if (!accounts.length) return;
 
-  //       await getUserBalance();
-  //       setConnected(true);
-  //       await getPlayerStatistics();
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   }
-  // };
+        await getUserBalance();
+        setConnected(true);
+        await getPlayerStatistics();
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
   // useEffect(() => {
   //   if (web3Modal.cachedProvider) {
   //     connectWallet();
@@ -311,8 +316,8 @@ const App = () => {
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, []);
   useEffect(() => {
-    // init();
-    if (provider?.on) {
+    init();
+    if (proxy) {
       //Alerts user to switch to a supported network when account is switched from a supported network
       const handleAccountChanged = async (accounts) => {
         if (accounts.length) {
