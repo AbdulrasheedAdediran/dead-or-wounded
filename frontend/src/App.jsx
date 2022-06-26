@@ -147,8 +147,8 @@ const App = () => {
       } else {
         setWalletAddress(accounts[0]);
         setAccount(accounts[0]);
-        await checkClaimed();
-        await getPlayerStatistics();
+        // await checkClaimed();
+        // await getPlayerStatistics();
         await getUserBalance();
         setChainId(chainData.chainId);
         setConnected(true);
