@@ -164,7 +164,7 @@ const StartGame = ({
   //=======================//
   const handleClear = (e) => {
     e.preventDefault();
-    startSignalRef.current.classList.remove("view");
+    // startSignalRef.current.classList.remove("view");
     const entries = document.querySelector(".entries");
     const maxLength = parseInt(entries[index].attributes["maxlength"].value);
     const previous = entries[index].previousElementSibling;
