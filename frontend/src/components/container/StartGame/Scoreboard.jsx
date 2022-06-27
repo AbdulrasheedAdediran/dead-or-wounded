@@ -1,11 +1,11 @@
 import { React } from "react";
-import "./Attempts.css";
+import "./Scoreboard.css";
 
 const Attempts = (props) => {
   const maxTrials = 7;
 
   return (
-    <section className="attempts">
+    <section className="scoreboard">
       <h2>Scoreboard</h2>
       <table>
         <thead>

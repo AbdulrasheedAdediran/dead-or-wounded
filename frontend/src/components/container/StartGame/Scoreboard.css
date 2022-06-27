@@ -1,4 +1,4 @@
-.attempts {
+.scoreboard {
   height: 75vh;
   width: 100%;
   background: var(--deeper-green);
@@ -9,12 +9,12 @@
   border: 1px solid rgba(0, 153, 126, 0.15);
 }
 
-.attempts h2 {
+.scoreboard h2 {
   width: 100%;
   margin-inline: auto;
   margin-block: 0.5rem;
 }
-.attempts table {
+.scoreboard table {
   width: 100%;
   line-height: 1.5;
   border-collapse: collapse;
@@ -58,10 +58,10 @@ td {
 /* ==== SMALLEST SCREENS ==== */
 /* ========================*/
 @media (max-width: 300px) {
-  .attempts {
+  .scoreboard {
     font-size: clamp(0.75rem, 7.5vw, 0.85rem);
   }
-  .attempts h2 {
+  .scoreboard h2 {
     font-size: clamp(1.5rem, 10vw, 2.5rem);
   }
 }
@@ -70,12 +70,12 @@ td {
 /* ========================*/
 @media (max-width: 599px) {
   @supports (backdrop-filter: blur(6.5px)) {
-    .attempts {
+    .scoreboard {
       background: rgba(0, 103, 84, 0.25);
       backdrop-filter: blur(6.5px);
     }
   }
-  .attempts {
+  .scoreboard {
     background: rgba(0, 103, 84, 0.25);
     border-radius: 16px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
@@ -101,10 +101,10 @@ td {
   /* .input input {
     width: clamp(1rem, 20vw, 3.5rem);
   } */
-  .attempts {
+  .scoreboard {
     font-size: clamp(0.85rem, 7.5vw, 0.9rem);
   }
-  .attempts h2 {
+  .scoreboard h2 {
     font-size: clamp(1.5rem, 10vw, 2.5rem);
   }
 }
@@ -112,7 +112,7 @@ td {
 /* ==== LARGE SCREENS ==== */
 /* ========================*/
 @media (min-width: 600px) {
-  .attempts {
+  .scoreboard {
     height: 25rem;
     width: 100%;
     background: var(--deep-green);
@@ -120,7 +120,7 @@ td {
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   }
 
-  .attempts h2 {
+  .scoreboard h2 {
     width: 100%;
     margin-inline: auto;
     margin-bottom: 0.5rem;

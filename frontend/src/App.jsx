@@ -160,18 +160,12 @@ const App = () => {
   };
 
   const refreshState = () => {
-    // setAccount();
-    // setChainId();
-    // setNetwork();
-    // setWalletAddress();
-    // setUserBalance();
     setConnected(false);
   };
 
   const disconnectWallet = async () => {
     await web3Modal.clearCachedProvider();
     refreshState();
-    // window.location.reload();
   };
 
   // Airdrop free DOW tokens to new players
@@ -191,7 +185,6 @@ const App = () => {
       return alert("Opps! You already claimed your free tokens");
     }
   };
-  // useEffect(() => {
   const checkClaimed = async () => {
     try {
       const signer = provider.getSigner();
@@ -202,9 +195,6 @@ const App = () => {
       console.log(error);
     }
   };
-  // checkClaimed();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [claimed, account]);
 
   // Gets user chain balance and DOW token balance
   const getUserBalance = async () => {

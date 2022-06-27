@@ -1,6 +1,6 @@
 import { React, useState, useEffect, useRef } from "react";
 import "./StartGame.css";
-import Attempts from "./Attempts";
+import Scoreboard from "./Scoreboard";
 import { useNavigate } from "react-router-dom";
 import Modal from "../../modal/Modal";
 import DOW_ABI from "../../../util/DOW_ABI.json";
@@ -465,8 +465,8 @@ const StartGame = ({
         </div>
       </form>
       <div className={`overlay ${viewScoreboard ? "view" : ""}`}></div>
-      <div className={`scoreboard ${viewScoreboard ? "view" : ""}`}>
-        <Attempts
+      <div className={`scoreboard-mobile ${viewScoreboard ? "view" : ""}`}>
+        <Scoreboard
           trial={trials}
           confirmedAttempt={playerInput}
           dead={dead}
@@ -475,7 +475,7 @@ const StartGame = ({
           flicker={flicker}
         />
       </div>
-      <button className="scoreboard-btn" onClick={toggleScoreboard}>
+      <button className="scoreboard-mobile-btn" onClick={toggleScoreboard}>
         {viewScoreboard ? "Continue" : "View Scoreboard"}
       </button>
       {/* <button onClick={handleStartSignal}>Signal</button> */}
