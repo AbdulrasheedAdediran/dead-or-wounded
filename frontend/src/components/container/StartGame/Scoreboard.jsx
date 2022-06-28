@@ -1,7 +1,7 @@
 import { React } from "react";
 import "./Scoreboard.css";
 
-const Attempts = (props) => {
+const Scoreboard = (props) => {
   const maxTrials = 7;
 
   return (
@@ -35,4 +35,4 @@ const Attempts = (props) => {
   );
 };
 
-export default Attempts;
+export default Scoreboard;
