@@ -1,11 +1,12 @@
 import { React, useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import { Contract } from "ethers";
+import "animate.css";
 import "./StartGame.css";
 import Scoreboard from "./Scoreboard";
-import { useNavigate } from "react-router-dom";
 import Modal from "../../modal/Modal";
 import DOW_ABI from "../../../util/DOW_ABI.json";
 import Loader from "../loader/Loader";
-import { Contract } from "ethers";
 const StartGame = ({
   generatedValues,
   playerStatistics,
@@ -27,7 +28,7 @@ const StartGame = ({
   const [isOpen, setIsOpen] = useState(false);
   const [message, setMessage] = useState(false);
   const [viewScoreboard, setViewScoreboard] = useState(false);
-  // const [startSignal, setStartSignal] = useState(false);
+  const [startSignal, setStartSignal] = useState(false);
   const [flicker, setFlicker] = useState(false);
   const randomNumbers = generatedValues;
   const [roundScores, setRoundScores] = useState([]);
@@ -56,9 +57,6 @@ const StartGame = ({
 
   const callStart = async () => {
     await startGame();
-    if (loadingSuccess) {
-      // await handleStartSignal();
-    }
     // startSignalRef.current.classList.remove("view");
   };
   //=================================//
@@ -194,9 +192,15 @@ const StartGame = ({
   //=============================//
   //--Toggles Scoreboard: Mobile-//
   //=============================//
-  // const handleStartSignal = async () => {
-  //   startSignalRef.current.classList.add("view");
-  // };
+  const handleStartSignal = async () => {
+    setStartSignal(true);
+  };
+  useEffect(() => {
+    if (loadingSuccess) {
+      console.log("Calling start signal...");
+      handleStartSignal();
+    }
+  }, [loadingSuccess]);
   //=============================//
   //--Toggles Scoreboard: Mobile-//
   //=============================//
@@ -284,6 +288,7 @@ const StartGame = ({
       await getUserBalance();
       await getPlayerStatistics();
       setTrials(1);
+      setStartSignal(false);
       trials <= 2
         ? setTokenwon(25)
         : trials >= 3 || trials <= 7
@@ -298,6 +303,7 @@ const StartGame = ({
       setIsOpen(true);
       entries.reset();
       setTrials(1);
+      setStartSignal(false);
     }
   };
 
@@ -306,13 +312,15 @@ const StartGame = ({
       {loader && <Loader />}
       {isLoading && <Loader />}
       {loadingSuccess === false && navigate("/")}
-      {/* <p
+      <p
         ref={startSignalRef}
-        className="start-signal"
-        className={`start-signal ${startSignal ? "view" : ""}`}
+        // className="start-signal"
+        className={`animate__animated ${
+          startSignal ? "animate__zoomInDown" : ""
+        }`}
       >
         START
-      </p> */}
+      </p>
 
       <form className="entries" action="#" onSubmit={handlePlay}>
         <label htmlFor="player-inputs">Enter four unique numbers</label>

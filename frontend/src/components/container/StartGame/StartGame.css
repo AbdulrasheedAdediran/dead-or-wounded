@@ -258,3 +258,52 @@ input:focus {
   }
 }
 /* animate__zoomInDown */
+.animate__animated {
+  position: absolute;
+  display: none;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: clamp(3rem, 50vw, 6rem);
+  z-index: -10;
+  opacity: 0;
+  color: var(--light-green);
+}
+.animate__animated.animate__zoomInDown {
+  display: inline-block;
+  /* top: 40%; */
+  opacity: 1;
+  animation-name: zoom_in_down;
+  animation-duration: 3s;
+}
+@keyframes zoom_in_down {
+  10% {
+    opacity: 0.1;
+    top: 50;
+  }
+  20% {
+    opacity: 0.4;
+    top: 40;
+  }
+  30% {
+    opacity: 0.6;
+    top: 30;
+  }
+  70% {
+    opacity: 1;
+    top: 20;
+  }
+  100% {
+    opacity: 0;
+    top: 0;
+    display: none;
+  }
+}
+/* @keyframes zoom_in_down {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+} */
