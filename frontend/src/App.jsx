@@ -49,7 +49,7 @@ const App = () => {
     //***Initiate web3modal***//
     const uauthOptions = {
       clientID: "client_id",
-      redirectUri: "http://localhost:3000",
+      redirectUri: "https://deadorwounded.vercel.app",
       scope: "openid wallet",
     };
     const providerOptions = {
