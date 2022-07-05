@@ -1,4 +1,4 @@
-import { React, useState, useEffect, useRef } from "react";
+import { React, useState, useEffect, useLayoutEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Contract } from "ethers";
 import "animate.css";
@@ -31,6 +31,7 @@ const StartGame = ({
   const [startSignal, setStartSignal] = useState(false);
   const [flicker, setFlicker] = useState(false);
   const randomNumbers = generatedValues;
+  // const randomNumbers = [0, 1, 2, 3];
   const [roundScores, setRoundScores] = useState([]);
   let [dead, setDead] = useState(0);
   let [wounded, setWounded] = useState(0);
@@ -55,8 +56,11 @@ const StartGame = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // useLayoutEffect(() => {
+  //   console.log(randomNumbers);
+  // }, [randomNumbers]);
   const callStart = async () => {
-    await startGame();
+    // await startGame();
     // startSignalRef.current.classList.remove("view");
   };
   //=================================//
@@ -239,6 +243,8 @@ const StartGame = ({
       return;
     } else {
       if (trials <= 7 && dead !== 4) {
+        setStartSignal(false);
+        setFlicker(false);
         setDead((dead = 0));
         setWounded((wounded = 0));
         setTrials((trials) => (trials += 1));
@@ -269,7 +275,8 @@ const StartGame = ({
           },
         ]);
         toggleScoreboard();
-        setFlicker(!flicker);
+        setFlicker(true);
+        setStartSignal(true);
         entries.reset();
         setIndex(0);
         setPlayerInput([]);

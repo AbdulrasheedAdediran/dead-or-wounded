@@ -9,7 +9,7 @@ const Scoreboard = (props) => {
       <h2>Scoreboard</h2>
       <table>
         <thead>
-          <tr className={`table-row ${props.flicker ? "flicker" : ""}`}>
+          <tr className="table-row">
             <th className="table__trial">Trial</th>
             <th className="table__attempt">Attempt</th>
             <th className="table__score score">Score</th>
@@ -17,7 +17,10 @@ const Scoreboard = (props) => {
         </thead>
         <tbody>
           {props.roundScores.map((roundScore) => (
-            <tr key={roundScore.trial}>
+            <tr
+              key={roundScore.trial}
+              className={`table-row ${props.flicker ? "flicker" : ""}`}
+            >
               <td className="table__trial">
                 {roundScore.trial}/{maxTrials}
               </td>

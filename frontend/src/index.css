@@ -125,7 +125,7 @@ button {
   background: transparent;
   color: var(--antique-white);
   border: none;
-  transition: 0.3s ease-out;
+  transition: all 0.3s ease-out;
   font-size: clamp(0.75rem, 7.5vw, 1rem);
   letter-spacing: 0.2rem;
   cursor: pointer;

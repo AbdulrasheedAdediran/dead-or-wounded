@@ -37,8 +37,8 @@ td {
   border-block: 1px solid rgb(191, 255, 201, 0.1);
 }
 /* Flicker */
-/* .table-row.flicker {
-  animation: flicker-animation 0.1s forwards 4;
+.table-row.flicker {
+  animation: flicker-animation 0.15s forwards 3;
 }
 
 @keyframes flicker-animation {
@@ -48,12 +48,14 @@ td {
 
   66% {
     opacity: 0.01;
+    background: var(--antique-white);
+    color: var(--light-green);
   }
 
   100% {
     opacity: 1;
   }
-} */
+}
 /* ========================*/
 /* ==== SMALLEST SCREENS ==== */
 /* ========================*/
