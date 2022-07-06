@@ -50,7 +50,7 @@ const App = () => {
     const uauthOptions = {
       clientID: process.env.REACT_APP_UD_CLIENT_ID,
       redirectUri: "https://deadorwounded.vercel.app",
-      scope: "openid wallet",
+      scope: "openid wallet email:optional humanity_check:optional",
     };
     const providerOptions = {
       //***Injected Wallet***//
