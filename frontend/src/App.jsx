@@ -49,7 +49,7 @@ const App = () => {
     //***Initiate web3modal***//
     const uauthOptions = {
       clientID: process.env.REACT_APP_UD_CLIENT_ID,
-      redirectUri: "http://localhost",
+      redirectUri: "https://deadorwounded.vercel.app",
       scope: "openid wallet",
     };
     const providerOptions = {
