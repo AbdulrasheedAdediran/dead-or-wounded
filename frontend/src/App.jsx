@@ -147,12 +147,9 @@ const App = () => {
       } else {
         setWalletAddress(accounts[0]);
         setAccount(accounts[0]);
-        // await checkClaimed();
-        // await getPlayerStatistics();
         await getUserBalance();
         setChainId(chainData.chainId);
         setConnected(true);
-        // console.log(await getUserBalance());
       }
     } catch (err) {
       console.log(err);
@@ -215,7 +212,6 @@ const App = () => {
         networkCoinBalance: formartedNetworkCoinBalance,
       });
       await checkClaimed();
-      // console.log(checkClaimed());
       return { formartedNetworkCoinBalance, formartedDOWTokenBalance };
     } catch (error) {
       console.error(error);
@@ -228,7 +224,6 @@ const App = () => {
 
     const playerStats = await DOWContractInstance.checkStreak();
 
-    // await playerStats.wait();
     const played = playerStats.gamesPlayed;
     const won = playerStats.gamesWon;
     const lost = playerStats.gamesLost;
@@ -265,7 +260,6 @@ const App = () => {
       const convertedValues = randomNumbers.map((randomNumber) =>
         Number(randomNumber)
       );
-      // console.log(convertedValues)
       setGeneratedValues(convertedValues);
       await getUserBalance();
       setLoader(false);
@@ -413,7 +407,6 @@ const App = () => {
               setUserBalance={setUserBalance}
               getPlayerStatistics={getPlayerStatistics}
               connectWallet={connectWallet}
-              // eagerConnect={eagerConnect}
               startGame={startGame}
               checkTrials={checkTrials}
               claimFreeTokens={claimFreeTokens}
@@ -430,8 +423,6 @@ const App = () => {
         <Route path="/options" exact element={<Options />} />
         <Route path="/about" exact element={<About />} />
       </Routes>
-      {/* </BrowserRouter> */}
-      {/* <Footer /> */}
     </>
   );
 };
