@@ -40,7 +40,7 @@ Lastly, The user experience is also a major appeal for the game, which is why we
 2. **Install dependencies**
 
 ```
-Yarn add or npm install
+run `yarn`
 ```
 
 3. **Setup frontend environment variables**
@@ -52,7 +52,7 @@ cd packages/react-app &&  .env
 4. **Start react-app (frontend)**
 
 ```
-yarn react-app:start
+run `yarn start`
 ```
 
 5. **That's it!**
